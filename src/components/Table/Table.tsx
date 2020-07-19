@@ -40,12 +40,14 @@ const Table: FC<TableProps> = ({
           data.map((obj, index) => {
             // spread the extra data to each object
             const row = { ...obj, ...extraData }
+            //@ts-ignore
+            const value = row[key]
             return (
               <Tr key={index}>
                 {keys.map((key) => (
                   <Td
                     key={key}
-                    value={row[key]}
+                    value={value}
                     rowIndex={index}
                     row={obj}
                     data={data}
