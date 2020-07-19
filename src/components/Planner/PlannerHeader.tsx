@@ -18,6 +18,10 @@ interface PlannerHeaderProps {
   onPlannerIntervalChange: (plannerInterval: PlannerInterval) => void
   onActiveDateChange: (date: Date) => void
   className?: string
+  onSettingsClick: () => void
+  onImportClick: () => void
+  onExportClick: () => void
+  onAddClick: () => void
 }
 
 const PlannerHeader: FC<PlannerHeaderProps> = ({
@@ -30,6 +34,10 @@ const PlannerHeader: FC<PlannerHeaderProps> = ({
   onActiveDateChange,
   activeColumn,
   activeDate,
+  onSettingsClick,
+  onImportClick,
+  onExportClick,
+  onAddClick,
 }) => {
   const [month, setMonth] = useState('')
   const [year, setYear] = useState('')
@@ -58,6 +66,10 @@ const PlannerHeader: FC<PlannerHeaderProps> = ({
         onActiveDateChange={onActiveDateChange}
         plannerInterval={plannerInterval}
         onPlannerIntervalChange={onPlannerIntervalChange}
+        onSettingsClick={onSettingsClick}
+        onImportClick={onImportClick}
+        onExportClick={onExportClick}
+        onAddClick={onAddClick}
       />
       <DateRowWrapper>
         <CalWrapper range={range.length + 1}></CalWrapper>

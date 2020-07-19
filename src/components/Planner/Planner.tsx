@@ -14,6 +14,10 @@ interface PlannerProps {
   className?: string
   events?: PlannerEventGroup[]
   plannerInterval: PlannerInterval
+  onSettingsClick: () => void
+  onImportClick: () => void
+  onExportClick: () => void
+  onAddClick: () => void
   onPlannerIntervalChange: (PlannerInterval: PlannerInterval) => void
   onEmptyClick: (row: string | number, date: Date) => void
   onEmptyDoubleClick: (row: string | number, date: Date) => void
@@ -33,6 +37,10 @@ const Planner: FC<PlannerProps> = ({
   className,
   events,
   plannerInterval,
+  onSettingsClick,
+  onImportClick,
+  onExportClick,
+  onAddClick,
   onEmptyClick,
   onEmptyDoubleClick,
   onEventClick,
@@ -145,6 +153,19 @@ const Planner: FC<PlannerProps> = ({
     setActiveDate(date)
   }
 
+  const handleSettingsClick = () => {
+    onSettingsClick()
+  }
+  const handleImportClick = () => {
+    onImportClick()
+  }
+  const handleExportClick = () => {
+    onExportClick()
+  }
+  const handleAddClick = () => {
+    onAddClick()
+  }
+
   return (
     <div className={className}>
       {/* START: background grid */}
@@ -171,6 +192,10 @@ const Planner: FC<PlannerProps> = ({
           onHeaderClick={handleColumnHeaderClick}
           onHeaderDoubleClick={handleColumnHeaderDoubleClick}
           onPlannerIntervalChange={handlePlannerIntervalChange}
+          onSettingsClick={handleSettingsClick}
+          onImportClick={handleImportClick}
+          onExportClick={handleExportClick}
+          onAddClick={handleAddClick}
         />
         {events ? (
           events.map((row) => (
@@ -216,7 +241,6 @@ export default styled(Planner)`
   box-sizing: border-box;
   position: relative;
   border-radius: 2px;
-  box-shadow: ${({ theme }) => theme.shadow.up.one};
   background: ${({ theme }) => theme.color.blue[500]};
 `
 

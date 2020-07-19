@@ -9,7 +9,7 @@ export { Planner } from './Planner'
 export { FlowChart } from './FlowChart'
 export { TouchMove } from './TouchMove'
 export { Form, Input, FormButton } from './FormElements'
-export { ViewportModalBar } from './ViewportModalBar'
+export { ViewportModalContainer, ViewportModal } from './ViewportModal'
 
 export { H1 } from './H1'
 export { H2 } from './H2'

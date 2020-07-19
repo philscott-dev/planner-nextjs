@@ -17,7 +17,7 @@ const Button = styled.button<ButtonProps>`
   justify-content: space-between;
   white-space: nowrap;
   align-items: center;
-  border-radius: 16px;
+  border-radius: 8px;
   /* border-radius: 72px; */
   outline: none;
   pointer-events: all;
@@ -46,6 +46,7 @@ const Primary = styled(Button)`
     color: ${({ theme }) => theme.color.white[100]};
     background: ${({ theme }) => theme.color.blue[300]};
     box-shadow: ${({ theme }) => theme.shadow.up.two};
+    border-color: ${({ theme }) => theme.color.blue[300]};
   }
 `
 
@@ -66,11 +67,12 @@ const Secondary = styled(Button)`
 
 const Tertiary = styled(Button)`
   color: ${({ theme }) => theme.color.white[100]};
-  background: ${({ theme }) => theme.color.blue[600]};
+  background: transparent;
+  /* background: ${({ theme }) => theme.color.blue[600]}; */
   border-color: ${({ theme }) => theme.color.blue[400]};
   &:hover {
     color: ${({ theme }) => theme.color.white[100]};
-    background: ${({ theme }) => theme.color.blue[500]};
+    border-color: ${({ theme }) => theme.color.blue[300]};
   }
 `
 

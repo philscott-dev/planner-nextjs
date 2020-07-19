@@ -1,12 +1,12 @@
 export interface PlannerEvent {
   id: number | string
   assigneeId?: number | string
-  title: string
+  title?: string
   startTime: Date
   endTime: Date
-  isAllDay: boolean
-  isRepeat: boolean
-  label: string
+  isAllDay?: boolean
+  isRepeat?: boolean
+  label?: string
   color: string
   repeateFrequency?: 'day' | 'week' | 'month' | 'year'
   repeateInterval?: number

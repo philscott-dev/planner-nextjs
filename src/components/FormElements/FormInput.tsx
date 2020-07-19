@@ -85,6 +85,8 @@ interface ContainerProps {
 }
 
 const Container = styled.div<ContainerProps>`
+  overflow-y: visible;
+  overflow: visible;
   display: flex;
   position: relative;
   width: 100%;
@@ -117,11 +119,16 @@ const StyledInput = styled.input<StyledInputProps>`
   background-clip: padding-box;
   font-family: ${({ theme }) => theme.font.family};
   font-weight: 200;
-  border: 1px solid
+  border: 2px solid
     ${({ theme, error }) =>
-      !error ? theme.color.white[100] : theme.color.red[300]};
+      !error ? theme.color.blue[400] : theme.color.red[300]};
   color: ${({ theme }) => theme.color.white[100]};
-  background: ${({ theme }) => theme.color.blue[600]};
+  background: ${({ theme }) => theme.color.blue[500]};
+  &:focus {
+    border: 2px solid
+      ${({ theme, error }) =>
+        !error ? theme.color.blue[300] : theme.color.red[300]};
+  }
   &::placeholder {
     color: ${({ theme, error }) =>
       !error ? theme.color.gray[300] : theme.color.red[300]};
@@ -138,6 +145,7 @@ const StyledInput = styled.input<StyledInputProps>`
   @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
     border-right: 1px solid ${({ theme }) => theme.color.white[100]};
   }
+  transition: all 0.3s ease-in-out;
 `
 
 interface StyledLabelProps {
@@ -148,7 +156,7 @@ interface StyledLabelProps {
 const StyledLabel = styled.label<StyledLabelProps>`
   position: absolute;
   left: 20px;
-  background: ${({ theme }) => theme.color.blue[600]};
+  background: ${({ theme }) => theme.color.blue[500]};
   padding: 0 4px;
   transition: all 0.2s ease-in-out;
   visibility: ${({ isVisible }) => (isVisible ? 'visibility' : 'hidden')};

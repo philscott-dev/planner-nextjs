@@ -12,6 +12,7 @@ const IconButton = styled.button`
   box-sizing: border-box;
   cursor: pointer;
   color: ${({ theme }) => theme.color.white[100]};
+  outline: none;
   &:hover {
     & * {
       color: ${({ theme }) => theme.color.blue[300]};

@@ -3,9 +3,13 @@ import styled from '@emotion/styled'
 import { FC, MouseEvent, useState, createRef } from 'react'
 import { jsx, css } from '@emotion/react'
 import { Button } from 'components'
+import { FaCaretDown } from 'react-icons/fa'
 import { Picker, Controls, Calendar } from 'components/Datepicker'
 import { PlannerInterval } from './types'
 import { useOnClickOutside } from 'hooks'
+import PlannerControl from './PlannerControl'
+import { FaFileImport, FaFileExport, FaCog } from 'react-icons/fa'
+import { FiPlus } from 'react-icons/fi'
 
 interface PlannerHeaderToolbarProps {
   month: string
@@ -15,6 +19,10 @@ interface PlannerHeaderToolbarProps {
   className?: string
   plannerInterval: PlannerInterval
   onPlannerIntervalChange: (plannerInterval: PlannerInterval) => void
+  onSettingsClick: () => void
+  onImportClick: () => void
+  onExportClick: () => void
+  onAddClick: () => void
 }
 
 const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
@@ -25,6 +33,10 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
   onActiveDateChange,
   plannerInterval,
   onPlannerIntervalChange,
+  onSettingsClick,
+  onImportClick,
+  onExportClick,
+  onAddClick,
 }) => {
   const pickerRef = createRef<HTMLDivElement>()
   const [isPickerVisible, setPickerVisibility] = useState<boolean>(false)
@@ -49,20 +61,30 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
   return (
     <div className={className}>
       <Flex>
+        <PlannerControl text="Settings" onMouseDown={onSettingsClick}>
+          <FaCog />
+        </PlannerControl>
+        <PlannerControl text="Export" onMouseDown={onExportClick}>
+          <FaFileExport />
+        </PlannerControl>
+        <PlannerControl text="Import" onMouseDown={onImportClick}>
+          <FaFileImport />
+        </PlannerControl>
+      </Flex>
+      <Flex>
         <PickerWrapper>
           <PickerButton
             onMouseDown={() => setPickerVisibility(!isPickerVisible)}
           >
             <Heading>{month}</Heading>
             <Heading css={subCss}>{year}</Heading>
+            <FaCaretDown css={arrowDown} />
           </PickerButton>
           <Picker ref={pickerRef} isVisible={isPickerVisible}>
             <Controls date={activeDate} onChange={handleRangeChange} />
             <Calendar date={activeDate} onSelectedDate={handleDateChange} />
           </Picker>
         </PickerWrapper>
-      </Flex>
-      <Flex>
         <IntButton
           value="week"
           isActive={plannerInterval === 'week'}
@@ -85,6 +107,11 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
         >
           Year
         </IntButton>
+      </Flex>
+      <Flex>
+        <PlannerControl text="Add" onMouseDown={onAddClick}>
+          <FiPlus />
+        </PlannerControl>
       </Flex>
     </div>
   )
@@ -114,9 +141,11 @@ const Heading = styled.h2`
 const PickerButton = styled.button`
   position: relative;
   display: flex;
+  align-items: center;
   border: none;
   padding: 0;
   margin: 0;
+  margin-right: 16px;
   outline: 0;
   background: transparent;
   cursor: pointer;
@@ -128,10 +157,15 @@ const PickerWrapper = styled.div`
 
 const Flex = styled.div`
   display: flex;
+  align-items: center;
+`
+
+const arrowDown = css`
+  color: #fcfcfc;
 `
 
 const subCss = css`
-  margin: 0 32px 0 8px;
+  margin: 0 8px;
   font-weight: 100;
 `
 const IntButton = styled(Button.Alt)`

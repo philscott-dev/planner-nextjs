@@ -1,14 +1,16 @@
 /** @jsx jsx */
+import styled from '@emotion/styled'
 import { FC, useState, useContext, useEffect } from 'react'
 import { jsx, css } from '@emotion/react'
 import { ValidationContext } from './Form'
 import { LoadingStatus } from './hooks/useLoadingStatus'
 
 export interface ButtonProps {
+  className?: string
   name?: string
 }
 
-const Button: FC<ButtonProps> = ({ name, children }) => {
+const Button: FC<ButtonProps> = ({ name, children, className }) => {
   const { delayedStatus, animationSpeed } = useContext(ValidationContext)
   const [previousStatus, setPreviousStatus] = useState(LoadingStatus.Normal)
   const [animation, setAnimation] = useState(baseCss)
@@ -48,7 +50,7 @@ const Button: FC<ButtonProps> = ({ name, children }) => {
   const disabled = delayedStatus !== LoadingStatus.Normal
 
   return (
-    <button type="submit" disabled={disabled} name={name} css={animation}>
+    <button type="submit" disabled={disabled} name={name} className={className}>
       {children}
     </button>
   )
@@ -142,4 +144,37 @@ export const successToNormal = css`
   transition: all ${700}ms ease-in-out;
 `
 
-export default Button
+export default styled(Button)`
+  display: flex;
+  font-size: 16px;
+  justify-content: space-between;
+  white-space: nowrap;
+  align-items: center;
+  border-radius: 8px;
+  outline: none;
+  pointer-events: all;
+  border-style: solid;
+  cursor: pointer;
+  transition: ${({ theme }) => theme.transition.all};
+  &:hover {
+    background-size: 100% 100%;
+  }
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
+    display: block;
+    width: 100%;
+  }
+  color: ${({ theme }) => theme.color.white[100]};
+  background: ${({ theme }) => theme.color.blue[400]};
+  border-color: ${({ theme }) => theme.color.blue[400]};
+  box-shadow: ${({ theme }) => theme.shadow.up.one};
+  &:hover {
+    color: ${({ theme }) => theme.color.white[100]};
+    background: ${({ theme }) => theme.color.blue[300]};
+    box-shadow: ${({ theme }) => theme.shadow.up.two};
+    border-color: ${({ theme }) => theme.color.blue[300]};
+  }
+`
