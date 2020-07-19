@@ -13,6 +13,6 @@ const Base: FC<IconProps> = ({ name, className }) => (
 )
 const Icon = styled(Base)<{ size?: number }>`
   --ggs: ${({ size }) => (size ? size : 1)};
-  color: ${({ theme }) => theme.color.gray[100]};
+  color: ${({ theme }) => theme.color.gray[200]};
 `
 export default Icon
