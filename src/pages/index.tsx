@@ -155,7 +155,7 @@ const IndexPage: NextPage = () => {
   const handleExportClick = () => {
     download(JSON.stringify(events), 'planner_events.json', 'application/json')
   }
-  const handleAddClick = () => {
+  const handleAddEventClick = () => {
     const newEvent: PlannerEvent = {
       id: uuid(),
       startTime: new Date(),
@@ -164,6 +164,8 @@ const IndexPage: NextPage = () => {
     }
     setEditableItems([...editableItems.slice(0, 1), newEvent])
   }
+
+  const handleAddRowClick = () => {}
 
   const handleSettingsClick = () => {}
 
@@ -186,7 +188,8 @@ const IndexPage: NextPage = () => {
         onPlannerIntervalChange={handlePlannerIntervalChange}
         onSettingsClick={handleSettingsClick}
         onExportClick={handleExportClick}
-        onAddClick={handleAddClick}
+        onAddEventClick={handleAddEventClick}
+        onAddRowClick={handleAddRowClick}
         onImportJSON={handleImportJSON}
       />
       <ViewportModalContainer>

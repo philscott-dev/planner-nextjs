@@ -6,7 +6,7 @@ import { FaDownload } from 'react-icons/fa'
 import { IconButton } from 'components/IconButton'
 import { FiX } from 'react-icons/fi'
 import { isString } from 'util'
-//import { useOnClickOutside } from 'hooks'
+import { useOnClickOutside } from 'hooks'
 import {
   FC,
   DragEvent,
@@ -29,8 +29,8 @@ const PlannerFileImport: FC<PlannerFileImportProps> = ({
   onImport,
   onClose,
 }) => {
-  // const ref = createRef<HTMLDivElement>()
-  //useOnClickOutside(ref, () => onClose(), isVisible)
+  const ref = createRef<HTMLDivElement>()
+  useOnClickOutside(ref, () => onClose(), isVisible)
   const [shouldMount, setMount] = useState(false)
   useEffect(() => {
     if (isVisible) {
@@ -38,7 +38,7 @@ const PlannerFileImport: FC<PlannerFileImportProps> = ({
     } else {
       const timeout = setTimeout(() => {
         setMount(false)
-      }, 300)
+      }, 1000)
       return () => clearTimeout(timeout)
     }
   }, [isVisible])
@@ -79,7 +79,6 @@ const PlannerFileImport: FC<PlannerFileImportProps> = ({
     e.stopPropagation()
     const fileReader: FileReader = new FileReader()
     const files = e.target.files
-    console.log(files, e.target.value)
     const file = files?.item(0)
     if (file && file.type === 'application/json') {
       fileReader.onload = function () {
@@ -90,8 +89,10 @@ const PlannerFileImport: FC<PlannerFileImportProps> = ({
       fileReader.readAsText(file)
     }
   }
+
   return (
     <Modal
+      ref={ref}
       isVisible={isVisible}
       shouldMount={shouldMount}
       className={className}
@@ -151,9 +152,9 @@ interface ModalProps {
   shouldMount: boolean
 }
 const Modal = styled.div<ModalProps>`
-  display: ${({ shouldMount }) => (!shouldMount ? 'none' : null)};
+  display: ${({ isVisible }) => (!isVisible ? 'none' : 'visible')};
   position: absolute;
-  top: ${({ isVisible }) => (isVisible ? 0 : '-100%')};
+  top: ${({ isVisible }) => (isVisible ? '0' : '300px')};
   width: 500px;
   left: 50%;
   margin-left: -250px;
@@ -163,7 +164,7 @@ const Modal = styled.div<ModalProps>`
   z-index: 150;
   box-sizing: border-box;
   box-shadow: ${({ theme }) => theme.shadow.up.two};
-  transition: all 0.3s ease-in-out;
+  transition: all 1s ease-in-out;
 `
 
 const Form = styled.form`

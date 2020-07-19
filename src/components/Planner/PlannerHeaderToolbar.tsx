@@ -10,6 +10,7 @@ import { useOnClickOutside } from 'hooks'
 import PlannerControl from './PlannerControl'
 import { FaFileImport, FaFileExport, FaCog } from 'react-icons/fa'
 import { FiPlus } from 'react-icons/fi'
+import { AiFillDatabase } from 'react-icons/ai'
 
 interface PlannerHeaderToolbarProps {
   month: string
@@ -22,7 +23,8 @@ interface PlannerHeaderToolbarProps {
   onSettingsClick: () => void
   onImportClick: () => void
   onExportClick: () => void
-  onAddClick: () => void
+  onAddEventClick: () => void
+  onAddRowClick: () => void
 }
 
 const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
@@ -36,7 +38,8 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
   onSettingsClick,
   onImportClick,
   onExportClick,
-  onAddClick,
+  onAddEventClick,
+  onAddRowClick,
 }) => {
   const pickerRef = createRef<HTMLDivElement>()
   const [isPickerVisible, setPickerVisibility] = useState<boolean>(false)
@@ -109,7 +112,10 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
         </IntButton>
       </Flex>
       <Flex>
-        <PlannerControl text="Add" onMouseDown={onAddClick}>
+        <PlannerControl text="Row" onMouseDown={onAddRowClick}>
+          <AiFillDatabase />
+        </PlannerControl>
+        <PlannerControl text="Add" onMouseDown={onAddEventClick}>
           <FiPlus />
         </PlannerControl>
       </Flex>

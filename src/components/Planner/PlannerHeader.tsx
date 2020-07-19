@@ -21,7 +21,8 @@ interface PlannerHeaderProps {
   onSettingsClick: () => void
   onImportClick: () => void
   onExportClick: () => void
-  onAddClick: () => void
+  onAddEventClick: () => void
+  onAddRowClick: () => void
 }
 
 const PlannerHeader: FC<PlannerHeaderProps> = ({
@@ -37,7 +38,8 @@ const PlannerHeader: FC<PlannerHeaderProps> = ({
   onSettingsClick,
   onImportClick,
   onExportClick,
-  onAddClick,
+  onAddEventClick,
+  onAddRowClick,
 }) => {
   const [month, setMonth] = useState('')
   const [year, setYear] = useState('')
@@ -69,7 +71,8 @@ const PlannerHeader: FC<PlannerHeaderProps> = ({
         onSettingsClick={onSettingsClick}
         onImportClick={onImportClick}
         onExportClick={onExportClick}
-        onAddClick={onAddClick}
+        onAddEventClick={onAddEventClick}
+        onAddRowClick={onAddRowClick}
       />
       <DateRowWrapper>
         <CalWrapper range={range.length + 1}></CalWrapper>

@@ -19,7 +19,8 @@ interface PlannerProps {
   onSettingsClick: () => void
   onImportJSON: (json: string) => void
   onExportClick: () => void
-  onAddClick: () => void
+  onAddEventClick: () => void
+  onAddRowClick: () => void
   onPlannerIntervalChange: (PlannerInterval: PlannerInterval) => void
   onEmptyClick: (row: string | number, date: Date) => void
   onEmptyDoubleClick: (row: string | number, date: Date) => void
@@ -42,7 +43,8 @@ const Planner: FC<PlannerProps> = ({
   onSettingsClick,
   onImportJSON,
   onExportClick,
-  onAddClick,
+  onAddEventClick,
+  onAddRowClick,
   onEmptyClick,
   onEmptyDoubleClick,
   onEventClick,
@@ -165,8 +167,12 @@ const Planner: FC<PlannerProps> = ({
   const handleExportClick = () => {
     onExportClick()
   }
-  const handleAddClick = () => {
-    onAddClick()
+  const handleAddEventClick = () => {
+    onAddEventClick()
+  }
+
+  const handleAddRowClick = () => {
+    onAddRowClick()
   }
 
   const handleImportJSON = (json: string) => {
@@ -203,7 +209,8 @@ const Planner: FC<PlannerProps> = ({
           onSettingsClick={handleSettingsClick}
           onImportClick={handleImportClick}
           onExportClick={handleExportClick}
-          onAddClick={handleAddClick}
+          onAddEventClick={handleAddEventClick}
+          onAddRowClick={handleAddRowClick}
         />
         {events ? (
           events.map((row) => (
