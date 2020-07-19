@@ -16,6 +16,7 @@ interface PlannerHeaderProps {
   onHeaderClick: (e: MouseEvent) => void
   onHeaderDoubleClick: (e: MouseEvent) => void
   onPlannerIntervalChange: (plannerInterval: PlannerInterval) => void
+  onActiveDateChange: (date: Date) => void
   className?: string
 }
 
@@ -26,6 +27,7 @@ const PlannerHeader: FC<PlannerHeaderProps> = ({
   onHeaderClick,
   onHeaderDoubleClick,
   onPlannerIntervalChange,
+  onActiveDateChange,
   activeColumn,
   activeDate,
 }) => {
@@ -52,6 +54,8 @@ const PlannerHeader: FC<PlannerHeaderProps> = ({
       <PlannerHeaderToolbar
         month={month}
         year={year}
+        activeDate={activeDate}
+        onActiveDateChange={onActiveDateChange}
         plannerInterval={plannerInterval}
         onPlannerIntervalChange={onPlannerIntervalChange}
       />
@@ -84,7 +88,7 @@ export default styled(PlannerHeader)`
 const DateRowWrapper = styled.div`
   display: flex;
   min-height: 80px;
-  &:nth-child(2) {
+  &:nth-of-type(2) {
     > p {
       color: ${({ theme }) => theme.color.blue[500]};
     }

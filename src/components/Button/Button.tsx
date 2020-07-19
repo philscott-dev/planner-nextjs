@@ -28,7 +28,8 @@ const Button = styled.button<ButtonProps>`
     background-size: 100% 100%;
   }
   &:disabled {
-    background: gray;
+    opacity: 0.5;
+    pointer-events: none;
   }
   @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
     display: block;

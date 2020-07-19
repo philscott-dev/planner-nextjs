@@ -53,11 +53,7 @@ const Planner: FC<PlannerProps> = ({
 
   const handleColumnHeaderClick = (e: MouseEvent) => {
     const col = getDataAttrForMouseEvent(e, 'data-planner-column')
-    const d = getDataAttrForMouseEvent(e, 'data-planner-date')
-    console.log(col)
-    if (col && d) {
-      const date = new Date(d)
-      setActiveDate(date)
+    if (col) {
       setColumn(parseInt(col, 10))
     }
     setActiveEvent(undefined)
@@ -65,9 +61,7 @@ const Planner: FC<PlannerProps> = ({
 
   const handleRowHeaderDoubleClick = (e: MouseEvent) => {
     const col = getDataAttrForMouseEvent(e, 'data-row-id')
-    const d = getDataAttrForMouseEvent(e, 'data-planner-date')
-    if (col && d) {
-      //const date = new Date(d)
+    if (col) {
       onRowHeaderDoubleClick(col)
     }
   }
@@ -83,11 +77,8 @@ const Planner: FC<PlannerProps> = ({
   const handleEventClick = (e: MouseEvent, plannerEvent: PlannerEvent) => {
     const col = getDataAttrForMouseEvent(e, 'data-planner-column')
     const row = getDataAttrForMouseEvent(e, 'data-row-id')
-    const d = getDataAttrForMouseEvent(e, 'data-planner-date')
-    if (col && row && d) {
-      const date = new Date(d)
+    if (col && row) {
       setColumn(parseInt(col, 10))
-      setActiveDate(date)
       setActiveRow(row)
       setActiveEvent(plannerEvent)
       onEventClick(plannerEvent)
@@ -109,7 +100,6 @@ const Planner: FC<PlannerProps> = ({
       const date = new Date(d)
       setColumn(parseInt(col, 10))
       setActiveRow(row)
-      setActiveDate(date)
       setActiveEvent(undefined)
       onEmptyClick(row, date)
     }
@@ -151,6 +141,10 @@ const Planner: FC<PlannerProps> = ({
     onPlannerIntervalChange(interval)
   }
 
+  const handleActiveDateChange = (date: Date) => {
+    setActiveDate(date)
+  }
+
   return (
     <div className={className}>
       {/* START: background grid */}
@@ -173,6 +167,7 @@ const Planner: FC<PlannerProps> = ({
           activeDate={activeDate}
           activeColumn={column}
           plannerInterval={plannerInterval}
+          onActiveDateChange={handleActiveDateChange}
           onHeaderClick={handleColumnHeaderClick}
           onHeaderDoubleClick={handleColumnHeaderDoubleClick}
           onPlannerIntervalChange={handlePlannerIntervalChange}
