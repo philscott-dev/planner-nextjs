@@ -44,7 +44,6 @@ const Primary = styled(Button)`
   &:hover {
     color: ${({ theme }) => theme.color.white[100]};
     background: ${({ theme }) => theme.color.blue[300]};
-    border-color: ${({ theme }) => theme.color.white[300]};
     box-shadow: ${({ theme }) => theme.shadow.up.two};
   }
 `
@@ -57,7 +56,6 @@ const Secondary = styled(Button)`
   &:hover {
     color: ${({ theme }) => theme.color.white[100]};
     background: ${({ theme }) => theme.color.blue[500]};
-    border-color: ${({ theme }) => theme.color.white[500]};
     box-shadow: ${({ theme }) => theme.shadow.up.two};
   }
   &:active {
@@ -72,7 +70,6 @@ const Tertiary = styled(Button)`
   &:hover {
     color: ${({ theme }) => theme.color.white[100]};
     background: ${({ theme }) => theme.color.blue[500]};
-    border-color: ${({ theme }) => theme.color.white[200]};
   }
 `
 

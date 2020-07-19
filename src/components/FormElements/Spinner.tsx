@@ -9,9 +9,9 @@ interface SpinnerProps {
   className?: string
 }
 
-const Spinner: FC<SpinnerProps> = (props) => {
+const Spinner: FC<SpinnerProps> = () => {
   return (
-    <SpinnerContainer {...props}>
+    <SpinnerContainer>
       <SvgElement viewBox={'25 25 50 50'} className={'svgElement'}>
         <Circle className={'circle'} />
       </SvgElement>
