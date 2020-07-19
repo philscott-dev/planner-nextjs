@@ -17,6 +17,7 @@ import {
   ViewportModal,
   Input,
 } from 'components'
+import { parseJsonDates } from 'helpers/date'
 
 const IndexPage: NextPage = () => {
   const [events, setEvents] = useState<PlannerEventGroup[]>(plannerEvents)
@@ -128,12 +129,10 @@ const IndexPage: NextPage = () => {
    * Toolbar Interactions
    */
 
-  const handleSettingsClick = () => {}
-  const handleImportClick = () => {
-    const input = document.getElementById('planner__upload')
-    if (input) {
-      input.click()
-    }
+  const handleImportJSON = (json: string) => {
+    const imported: PlannerEventGroup[] = JSON.parse(json, parseJsonDates)
+    console.log(imported)
+    setEvents(imported)
   }
   const handleExportClick = () => {
     download(JSON.stringify(events), 'planner_events.json', 'application/json')
@@ -147,6 +146,8 @@ const IndexPage: NextPage = () => {
     }
     setEditableItems([...editableItems.slice(0, 1), newEvent])
   }
+
+  const handleSettingsClick = () => {}
 
   /**
    * Render Page
@@ -166,9 +167,9 @@ const IndexPage: NextPage = () => {
         onDropEvent={handleDropEvent}
         onPlannerIntervalChange={handlePlannerIntervalChange}
         onSettingsClick={handleSettingsClick}
-        onImportClick={handleImportClick}
         onExportClick={handleExportClick}
         onAddClick={handleAddClick}
+        onImportJSON={handleImportJSON}
       />
       <ViewportModalContainer>
         {editableItems.map((item, index) => (

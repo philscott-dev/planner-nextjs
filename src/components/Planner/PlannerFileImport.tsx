@@ -1,17 +1,48 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
 import { jsx, css } from '@emotion/react'
-import { FC, DragEvent, FormEvent, useEffect } from 'react'
 import { H1, Text } from 'components'
 import { FaDownload } from 'react-icons/fa'
 import { IconButton } from 'components/IconButton'
 import { FiX } from 'react-icons/fi'
+import { isString } from 'util'
+//import { useOnClickOutside } from 'hooks'
+import {
+  FC,
+  DragEvent,
+  ChangeEvent,
+  useEffect,
+  useState,
+  createRef,
+} from 'react'
 
 interface PlannerFileImportProps {
   className?: string
+  isVisible: boolean
+  onImport: (json: string) => void
+  onClose: () => void
 }
 
-const PlannerFileImport: FC<PlannerFileImportProps> = ({ className }) => {
+const PlannerFileImport: FC<PlannerFileImportProps> = ({
+  className,
+  isVisible,
+  onImport,
+  onClose,
+}) => {
+  // const ref = createRef<HTMLDivElement>()
+  //useOnClickOutside(ref, () => onClose(), isVisible)
+  const [shouldMount, setMount] = useState(false)
+  useEffect(() => {
+    if (isVisible) {
+      setMount(true)
+    } else {
+      const timeout = setTimeout(() => {
+        setMount(false)
+      }, 300)
+      return () => clearTimeout(timeout)
+    }
+  }, [isVisible])
+
   useEffect(() => {
     function prevDef(e: Event) {
       e.preventDefault()
@@ -35,20 +66,39 @@ const PlannerFileImport: FC<PlannerFileImportProps> = ({ className }) => {
     const file = droppedFiles.item(0)
     if (file && file.type === 'application/json') {
       fileReader.onload = function () {
-        console.log(fileReader.result)
+        if (fileReader.result && isString(fileReader.result)) {
+          onImport(fileReader.result)
+        }
       }
       fileReader.readAsText(file)
     }
   }
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
+    e.stopPropagation()
+    const fileReader: FileReader = new FileReader()
+    const files = e.target.files
+    console.log(files, e.target.value)
+    const file = files?.item(0)
+    if (file && file.type === 'application/json') {
+      fileReader.onload = function () {
+        if (fileReader.result && isString(fileReader.result)) {
+          onImport(fileReader.result)
+        }
+      }
+      fileReader.readAsText(file)
+    }
   }
   return (
-    <div className={className}>
+    <Modal
+      isVisible={isVisible}
+      shouldMount={shouldMount}
+      className={className}
+    >
       <Flex>
         <H1>Import</H1>
-        <IconButton>
+        <IconButton onMouseDown={onClose}>
           <FiX />
         </IconButton>
       </Flex>
@@ -66,6 +116,7 @@ const PlannerFileImport: FC<PlannerFileImportProps> = ({ className }) => {
             name="file__uploader"
             id="file__uploader"
             accept=".json,application/json"
+            onChange={handleSubmit}
           />
           <Label htmlFor="file__uploader">
             <Text
@@ -91,13 +142,18 @@ const PlannerFileImport: FC<PlannerFileImportProps> = ({ className }) => {
           Error! <span></span>.
         </div> */}
       </Form>
-    </div>
+    </Modal>
   )
 }
 
-export default styled(PlannerFileImport)`
+interface ModalProps {
+  isVisible: boolean
+  shouldMount: boolean
+}
+const Modal = styled.div<ModalProps>`
+  display: ${({ shouldMount }) => (!shouldMount ? 'none' : null)};
   position: absolute;
-  top: 0;
+  top: ${({ isVisible }) => (isVisible ? 0 : '-100%')};
   width: 500px;
   left: 50%;
   margin-left: -250px;
@@ -107,6 +163,7 @@ export default styled(PlannerFileImport)`
   z-index: 150;
   box-sizing: border-box;
   box-shadow: ${({ theme }) => theme.shadow.up.two};
+  transition: all 0.3s ease-in-out;
 `
 
 const Form = styled.form`
@@ -162,3 +219,5 @@ const Flex = styled.div`
   display: flex;
   justify-content: space-between;
 `
+
+export default PlannerFileImport

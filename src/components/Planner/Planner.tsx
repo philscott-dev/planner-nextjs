@@ -17,7 +17,7 @@ interface PlannerProps {
   events?: PlannerEventGroup[]
   plannerInterval: PlannerInterval
   onSettingsClick: () => void
-  onImportClick: () => void
+  onImportJSON: (json: string) => void
   onExportClick: () => void
   onAddClick: () => void
   onPlannerIntervalChange: (PlannerInterval: PlannerInterval) => void
@@ -40,7 +40,7 @@ const Planner: FC<PlannerProps> = ({
   events,
   plannerInterval,
   onSettingsClick,
-  onImportClick,
+  onImportJSON,
   onExportClick,
   onAddClick,
   onEmptyClick,
@@ -53,6 +53,7 @@ const Planner: FC<PlannerProps> = ({
   onPlannerIntervalChange,
 }) => {
   const today = new Date()
+  const [isImportVisible, setImportVisibility] = useState(false)
   const [activeDate, setActiveDate] = useState(startOfDay(today))
   const [activeEvent, setActiveEvent] = useState<PlannerEvent | undefined>()
   const [column, setColumn] = useState<number>()
@@ -159,13 +160,18 @@ const Planner: FC<PlannerProps> = ({
     onSettingsClick()
   }
   const handleImportClick = () => {
-    //setImportModalVisibility()
+    setImportVisibility(true)
   }
   const handleExportClick = () => {
     onExportClick()
   }
   const handleAddClick = () => {
     onAddClick()
+  }
+
+  const handleImportJSON = (json: string) => {
+    setImportVisibility(false)
+    onImportJSON(json)
   }
 
   return (
@@ -236,7 +242,11 @@ const Planner: FC<PlannerProps> = ({
         )}
       </Wrapper>
       <Portal mountId="portal">
-        <PlannerFileImport />
+        <PlannerFileImport
+          isVisible={isImportVisible}
+          onImport={handleImportJSON}
+          onClose={() => setImportVisibility(false)}
+        />
       </Portal>
     </div>
   )

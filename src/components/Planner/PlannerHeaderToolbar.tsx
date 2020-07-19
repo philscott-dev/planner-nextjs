@@ -61,14 +61,14 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
   return (
     <div className={className}>
       <Flex>
-        <PlannerControl text="Settings" onMouseDown={onSettingsClick}>
+        {/* <PlannerControl text="Settings" onMouseDown={onSettingsClick}>
           <FaCog />
+        </PlannerControl> */}
+        <PlannerControl text="Import" onMouseDown={onImportClick}>
+          <FaFileImport />
         </PlannerControl>
         <PlannerControl text="Export" onMouseDown={onExportClick}>
           <FaFileExport />
-        </PlannerControl>
-        <PlannerControl text="Import" onMouseDown={onImportClick}>
-          <FaFileImport />
         </PlannerControl>
       </Flex>
       <Flex>
