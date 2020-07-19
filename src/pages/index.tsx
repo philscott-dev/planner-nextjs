@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NextPage } from 'next'
 import { plannerEvents } from 'mock/mockPlannerEvents'
 import { isSameDay, differenceInDays } from 'date-fns'
 import { startOfDay, subDays } from 'date-fns'
 import { remove, add, removeByIndex } from 'helpers/array'
+import { download } from 'helpers/file'
 import {
   PlannerEvent,
   PlannerEventGroup,
@@ -22,6 +23,16 @@ const IndexPage: NextPage = () => {
     'month',
   )
   const [editableItems, setEditableItems] = useState<PlannerEvent[]>([])
+
+  // useEffect(() => {
+  //   const input = document.getElementById('planner__upload')
+  //   console.log(input)
+  //   function onUpload(e: any) {
+  //     console.log(e)
+  //   }
+  //   input?.addEventListener('click', onUpload)
+  //   return () => input?.removeEventListener('click', onUpload)
+  // }, [])
 
   /**
    * Planner Grid Interactions
@@ -117,8 +128,15 @@ const IndexPage: NextPage = () => {
    */
 
   const handleSettingsClick = () => {}
-  const handleImportClick = () => {}
-  const handleExportClick = () => {}
+  const handleImportClick = () => {
+    const input = document.getElementById('planner__upload')
+    if (input) {
+      input.click()
+    }
+  }
+  const handleExportClick = () => {
+    download(JSON.stringify(events), 'planner_events.json', 'application/json')
+  }
   const handleAddClick = () => {
     const newEvent: PlannerEvent = {
       id: '',
@@ -132,8 +150,6 @@ const IndexPage: NextPage = () => {
   /**
    * Render Page
    */
-
-  console.log(editableItems)
 
   return (
     <>

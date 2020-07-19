@@ -9,6 +9,8 @@ import useDateRange from './useDateRange'
 import { PlannerEventGroup, PlannerEvent, PlannerInterval } from './types'
 import PlannerColumn, { Column } from './PlannerColumn'
 import { getDataAttrForMouseEvent } from 'helpers/event'
+import Portal from 'components/Portal/Portal'
+import PlannerFileImport from './PlannerFileImport'
 
 interface PlannerProps {
   className?: string
@@ -157,7 +159,7 @@ const Planner: FC<PlannerProps> = ({
     onSettingsClick()
   }
   const handleImportClick = () => {
-    onImportClick()
+    //setImportModalVisibility()
   }
   const handleExportClick = () => {
     onExportClick()
@@ -233,6 +235,9 @@ const Planner: FC<PlannerProps> = ({
           />
         )}
       </Wrapper>
+      <Portal mountId="portal">
+        <PlannerFileImport />
+      </Portal>
     </div>
   )
 }

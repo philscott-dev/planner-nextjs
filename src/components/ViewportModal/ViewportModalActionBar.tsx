@@ -16,9 +16,6 @@ const ViewportModalActionBar: FC<ActionBarProps> = ({
   return (
     <div className={className}>
       <FormButton css={buttonCss}>Confirm</FormButton>
-      <Button.Tertiary onMouseDown={onCancel} css={buttonCss}>
-        Cancel
-      </Button.Tertiary>
     </div>
   )
 }

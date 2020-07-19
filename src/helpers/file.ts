@@ -10,6 +10,4 @@ export function download(
   a.click()
 }
 
-export function upload(){
-  
-}
+export function upload() {}
