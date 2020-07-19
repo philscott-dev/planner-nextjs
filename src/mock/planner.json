@@ -1,0 +1,268 @@
+[
+  {
+    "id": 0,
+    "icon": "icon",
+    "label": "User 0",
+    "events": [
+      {
+        "id": "00",
+        "assigneeId": 0,
+        "title": "Title 0",
+        "startTime": "2020-07-13T12:42:38.294Z",
+        "endTime": "2020-07-16T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#028FFF"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "icon": "icon",
+    "label": "User 1",
+    "events": [
+      {
+        "id": "11",
+        "assigneeId": 1,
+        "title": "Title 1",
+        "startTime": "2020-07-14T12:42:38.294Z",
+        "endTime": "2020-07-16T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#FF00B8"
+      },
+      {
+        "id": "16",
+        "assigneeId": 1,
+        "title": "Title 6",
+        "startTime": "2020-07-14T12:42:38.294Z",
+        "endTime": "2020-07-19T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#028FFF"
+      },
+      {
+        "id": "12",
+        "assigneeId": 1,
+        "title": "Title 2",
+        "startTime": "2020-07-17T12:42:38.294Z",
+        "endTime": "2020-07-18T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#028FFF"
+      },
+      {
+        "id": "13",
+        "assigneeId": 1,
+        "title": "Title 3",
+        "startTime": "2020-07-17T12:42:38.294Z",
+        "endTime": "2020-07-19T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#028FFF"
+      },
+      {
+        "id": "14",
+        "assigneeId": 1,
+        "title": "Title 4",
+        "startTime": "2020-07-18T12:42:38.294Z",
+        "endTime": "2020-07-19T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#FF00B8"
+      },
+      {
+        "id": "15",
+        "assigneeId": 1,
+        "title": "Title 5",
+        "startTime": "2020-07-21T12:42:38.294Z",
+        "endTime": "2020-07-22T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#52A147"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "icon": "icon",
+    "label": "User 2",
+    "events": [
+      {
+        "id": "26",
+        "assigneeId": 2,
+        "title": "Title 6",
+        "startTime": "2020-07-14T12:42:38.294Z",
+        "endTime": "2020-07-15T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#FF00B8"
+      },
+      {
+        "id": "21",
+        "assigneeId": 2,
+        "title": "Title 1",
+        "startTime": "2020-07-15T12:42:38.294Z",
+        "endTime": "2020-07-19T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#FF00B8"
+      },
+      {
+        "id": "22",
+        "assigneeId": 2,
+        "title": "Title 2",
+        "startTime": "2020-07-16T12:42:38.294Z",
+        "endTime": "2020-07-18T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#52A147"
+      },
+      {
+        "id": "25",
+        "assigneeId": 2,
+        "title": "Title 5",
+        "startTime": "2020-07-16T12:42:38.294Z",
+        "endTime": "2020-07-16T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#028FFF"
+      },
+      {
+        "id": "24",
+        "assigneeId": 2,
+        "title": "Title 4",
+        "startTime": "2020-07-20T12:42:38.294Z",
+        "endTime": "2020-07-21T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#52A147"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "icon": "icon",
+    "label": "User 3",
+    "events": [
+      {
+        "id": "37",
+        "assigneeId": 3,
+        "title": "Title 7",
+        "startTime": "2020-07-11T12:42:38.294Z",
+        "endTime": "2020-07-21T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#52A147"
+      },
+      {
+        "id": "33",
+        "assigneeId": 3,
+        "title": "Title 3",
+        "startTime": "2020-07-14T04:00:00.000Z",
+        "endTime": "2020-07-15T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#028FFF"
+      },
+      {
+        "id": "31",
+        "assigneeId": 3,
+        "title": "Title 1",
+        "startTime": "2020-07-15T12:42:38.294Z",
+        "endTime": "2020-07-15T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#028FFF"
+      },
+      {
+        "id": "32",
+        "assigneeId": 3,
+        "title": "Title 2",
+        "startTime": "2020-07-16T12:42:38.294Z",
+        "endTime": "2020-07-20T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#52A147"
+      },
+      {
+        "id": "35",
+        "assigneeId": 3,
+        "title": "Title 5",
+        "startTime": "2020-07-17T12:42:38.294Z",
+        "endTime": "2020-07-19T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#028FFF"
+      },
+      {
+        "id": "36",
+        "assigneeId": 3,
+        "title": "Title 6",
+        "startTime": "2020-07-17T12:42:38.294Z",
+        "endTime": "2020-07-20T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#FF00B8"
+      },
+      {
+        "id": "34",
+        "assigneeId": 3,
+        "title": "Title 4",
+        "startTime": "2020-07-19T12:42:38.294Z",
+        "endTime": "2020-07-19T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#028FFF"
+      },
+      {
+        "id": "23",
+        "assigneeId": 3,
+        "title": "Title 3",
+        "startTime": "2020-07-17T04:00:00.000Z",
+        "endTime": "2020-07-19T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#028FFF"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "icon": "icon",
+    "label": "User 4",
+    "events": [
+      {
+        "id": "40",
+        "assigneeId": 4,
+        "title": "Title 0",
+        "startTime": "2020-07-11T12:42:38.294Z",
+        "endTime": "2020-07-29T12:42:38.294Z",
+        "isAllDay": false,
+        "isRepeat": false,
+        "label": "string",
+        "color": "#028FFF"
+      }
+    ]
+  }
+]
