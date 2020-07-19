@@ -29,12 +29,13 @@ export function drawRoundRect(
       br: borderRadius,
       bl: borderRadius,
     }
-  } else {
-    let defaultRadius = { tl: 0, tr: 0, br: 0, bl: 0 }
-    for (let side in defaultRadius) {
-      borderRadius[side] = borderRadius[side] || defaultRadius[side]
-    }
   }
+  // else {
+  //   let defaultRadius = { tl: 0, tr: 0, br: 0, bl: 0 }
+  //   for (let side in defaultRadius) {
+  //     borderRadius[side] = borderRadius[side] || defaultRadius[side]
+  //   }
+  // }
   ctx.beginPath()
 
   ctx.shadowColor = '#00000040'
