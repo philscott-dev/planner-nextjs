@@ -19,12 +19,30 @@ import {
 } from 'components'
 import { parseJsonDates } from 'helpers/date'
 
+const LOCAL_STORAGE_KEY = 'planner_save_state'
+
 const IndexPage: NextPage = () => {
-  const [events, setEvents] = useState<PlannerEventGroup[]>(plannerEvents)
+  const [events, setEvents] = useState<PlannerEventGroup[]>([])
   const [plannerInterval, setPlannerInterval] = useState<PlannerInterval>(
     'month',
   )
   const [editableItems, setEditableItems] = useState<PlannerEvent[]>([])
+
+  useEffect(() => {
+    const json = localStorage.getItem(LOCAL_STORAGE_KEY)
+    if (json) {
+      const parse = JSON.parse(json, parseJsonDates)
+      setEvents(parse)
+    }
+  }, [])
+
+  useEffect(() => {
+    function saveLocalStorage() {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(events))
+    }
+    window.addEventListener('beforeunload', saveLocalStorage)
+    return () => window.removeEventListener('beforeunload', saveLocalStorage)
+  }, [events])
 
   // useEffect(() => {
   //   const input = document.getElementById('planner__upload')
