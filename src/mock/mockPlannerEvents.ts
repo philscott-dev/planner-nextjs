@@ -1,17 +1,24 @@
 import { addDays, subDays } from 'date-fns'
 import { PlannerEventGroup } from 'components/Planner/types'
 import { theme } from 'theme'
+import { v4 as uuid } from 'uuid'
 
 const today = addDays(new Date(), -4)
 
+const u0 = uuid()
+const u1 = uuid()
+const u2 = uuid()
+const u3 = uuid()
+const u4 = uuid()
+
 export const user0: PlannerEventGroup = {
-  id: 0,
+  id: u0,
   icon: 'icon',
   label: 'User 0',
   events: [
     {
-      id: '00',
-      assigneeId: 0,
+      id: uuid(),
+      assigneeId: u0,
       title: 'Title 0',
       startTime: subDays(today, 1),
       endTime: addDays(today, 2),
@@ -24,13 +31,13 @@ export const user0: PlannerEventGroup = {
 }
 
 export const user1: PlannerEventGroup = {
-  id: 1,
+  id: u1,
   icon: 'icon',
   label: 'User 1',
   events: [
     {
-      id: '11',
-      assigneeId: 1,
+      id: uuid(),
+      assigneeId: u1,
       title: 'Title 1',
       startTime: addDays(today, 0),
       endTime: addDays(today, 2),
@@ -40,8 +47,8 @@ export const user1: PlannerEventGroup = {
       color: theme.color.magenta[300],
     },
     {
-      id: '12',
-      assigneeId: 1,
+      id: uuid(),
+      assigneeId: u1,
       title: 'Title 2',
       startTime: addDays(today, 3),
       endTime: addDays(today, 4),
@@ -51,8 +58,8 @@ export const user1: PlannerEventGroup = {
       color: theme.color.blue[300],
     },
     {
-      id: '13',
-      assigneeId: 1,
+      id: uuid(),
+      assigneeId: u1,
       title: 'Title 3',
       startTime: addDays(today, 3),
       endTime: addDays(today, 5),
@@ -62,8 +69,8 @@ export const user1: PlannerEventGroup = {
       color: theme.color.blue[300],
     },
     {
-      id: '14',
-      assigneeId: 1,
+      id: uuid(),
+      assigneeId: u1,
       title: 'Title 4',
       startTime: addDays(today, 4),
       endTime: addDays(today, 5),
@@ -73,8 +80,8 @@ export const user1: PlannerEventGroup = {
       color: theme.color.magenta[300],
     },
     {
-      id: '15',
-      assigneeId: 1,
+      id: uuid(),
+      assigneeId: u1,
       title: 'Title 5',
       startTime: addDays(today, 7),
       endTime: addDays(today, 8),
@@ -84,8 +91,8 @@ export const user1: PlannerEventGroup = {
       color: theme.color.green[300],
     },
     {
-      id: '16',
-      assigneeId: 1,
+      id: uuid(),
+      assigneeId: u1,
       title: 'Title 6',
       startTime: addDays(today, 0),
       endTime: addDays(today, 5),
@@ -98,13 +105,13 @@ export const user1: PlannerEventGroup = {
 }
 
 export const user2: PlannerEventGroup = {
-  id: 2,
+  id: u2,
   icon: 'icon',
   label: 'User 2',
   events: [
     {
-      id: '21',
-      assigneeId: 2,
+      id: uuid(),
+      assigneeId: u2,
       title: 'Title 1',
       startTime: addDays(today, 1),
       endTime: addDays(today, 5),
@@ -114,8 +121,8 @@ export const user2: PlannerEventGroup = {
       color: theme.color.magenta[300],
     },
     {
-      id: '22',
-      assigneeId: 2,
+      id: uuid(),
+      assigneeId: u2,
       title: 'Title 2',
       startTime: addDays(today, 2),
       endTime: addDays(today, 4),
@@ -125,8 +132,8 @@ export const user2: PlannerEventGroup = {
       color: theme.color.green[300],
     },
     {
-      id: '23',
-      assigneeId: 2,
+      id: uuid(),
+      assigneeId: u2,
       title: 'Title 3',
       startTime: addDays(today, 3),
       endTime: addDays(today, 5),
@@ -136,8 +143,8 @@ export const user2: PlannerEventGroup = {
       color: theme.color.blue[300],
     },
     {
-      id: '24',
-      assigneeId: 2,
+      id: uuid(),
+      assigneeId: u2,
       title: 'Title 4',
       startTime: addDays(today, 6),
       endTime: addDays(today, 7),
@@ -147,8 +154,8 @@ export const user2: PlannerEventGroup = {
       color: theme.color.green[300],
     },
     {
-      id: '25',
-      assigneeId: 2,
+      id: uuid(),
+      assigneeId: u2,
       title: 'Title 5',
       startTime: addDays(today, 2),
       endTime: addDays(today, 2),
@@ -158,8 +165,8 @@ export const user2: PlannerEventGroup = {
       color: theme.color.blue[300],
     },
     {
-      id: '26',
-      assigneeId: 2,
+      id: uuid(),
+      assigneeId: u2,
       title: 'Title 6',
       startTime: addDays(today, 0),
       endTime: addDays(today, 1),
@@ -172,13 +179,13 @@ export const user2: PlannerEventGroup = {
 }
 
 export const user3: PlannerEventGroup = {
-  id: 3,
+  id: u3,
   icon: 'icon',
   label: 'User 3',
   events: [
     {
-      id: '31',
-      assigneeId: 3,
+      id: uuid(),
+      assigneeId: u3,
       title: 'Title 1',
       startTime: addDays(today, 1),
       endTime: addDays(today, 1),
@@ -188,8 +195,8 @@ export const user3: PlannerEventGroup = {
       color: theme.color.blue[300],
     },
     {
-      id: '32',
-      assigneeId: 3,
+      id: uuid(),
+      assigneeId: u3,
       title: 'Title 2',
       startTime: addDays(today, 2),
       endTime: addDays(today, 6),
@@ -199,8 +206,8 @@ export const user3: PlannerEventGroup = {
       color: theme.color.green[300],
     },
     {
-      id: '33',
-      assigneeId: 3,
+      id: uuid(),
+      assigneeId: u3,
       title: 'Title 3',
       startTime: addDays(today, 2),
       endTime: addDays(today, 3),
@@ -210,8 +217,8 @@ export const user3: PlannerEventGroup = {
       color: theme.color.blue[300],
     },
     {
-      id: '34',
-      assigneeId: 3,
+      id: uuid(),
+      assigneeId: u3,
       title: 'Title 4',
       startTime: addDays(today, 5),
       endTime: addDays(today, 5),
@@ -221,8 +228,8 @@ export const user3: PlannerEventGroup = {
       color: theme.color.blue[300],
     },
     {
-      id: '35',
-      assigneeId: 3,
+      id: uuid(),
+      assigneeId: u3,
       title: 'Title 5',
       startTime: addDays(today, 3),
       endTime: addDays(today, 5),
@@ -232,8 +239,8 @@ export const user3: PlannerEventGroup = {
       color: theme.color.blue[300],
     },
     {
-      id: '36',
-      assigneeId: 3,
+      id: uuid(),
+      assigneeId: u3,
       title: 'Title 6',
       startTime: addDays(today, 3),
       endTime: addDays(today, 6),
@@ -243,8 +250,8 @@ export const user3: PlannerEventGroup = {
       color: theme.color.magenta[300],
     },
     {
-      id: '37',
-      assigneeId: 3,
+      id: uuid(),
+      assigneeId: u3,
       title: 'Title 7',
       startTime: subDays(today, 3),
       endTime: addDays(today, 7),
@@ -257,13 +264,13 @@ export const user3: PlannerEventGroup = {
 }
 
 export const user4: PlannerEventGroup = {
-  id: 4,
+  id: u4,
   icon: 'icon',
   label: 'User 4',
   events: [
     {
-      id: '40',
-      assigneeId: 4,
+      id: uuid(),
+      assigneeId: u4,
       title: 'Title 0',
       startTime: subDays(today, 3),
       endTime: addDays(today, 15),

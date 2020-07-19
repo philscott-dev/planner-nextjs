@@ -5,18 +5,22 @@ interface PortalProps {
   mountId: string
 }
 
+let el: HTMLDivElement
+
 const Portal: FC<PortalProps> = ({ children, mountId }) => {
-  const el = document.createElement('div')
+  useEffect(() => {
+    el = document?.createElement('div')
+  }, [])
 
   useEffect(() => {
-    const portalRoot = document.getElementById(mountId)
+    const portalRoot = document?.getElementById(mountId)
     portalRoot!.appendChild(el)
     return () => {
       portalRoot!.removeChild(el)
     }
   })
 
-  return createPortal(children, el)
+  return el ? createPortal(children, el) : null
 }
 
 export default Portal

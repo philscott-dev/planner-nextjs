@@ -5,6 +5,7 @@ import { isSameDay, differenceInDays } from 'date-fns'
 import { startOfDay, subDays } from 'date-fns'
 import { remove, add, removeByIndex } from 'helpers/array'
 import { download } from 'helpers/file'
+import { v4 as uuid } from 'uuid'
 import {
   PlannerEvent,
   PlannerEventGroup,
@@ -49,7 +50,7 @@ const IndexPage: NextPage = () => {
   const handleEmptyDoubleClick = (row: string | number, date: Date) => {
     //console.log(row, date)
     const newEvent: PlannerEvent = {
-      id: '',
+      id: uuid(),
       assigneeId: row,
       startTime: date,
       endTime: date,
@@ -139,7 +140,7 @@ const IndexPage: NextPage = () => {
   }
   const handleAddClick = () => {
     const newEvent: PlannerEvent = {
-      id: '',
+      id: uuid(),
       startTime: new Date(),
       endTime: new Date(),
       color: 'blue',
