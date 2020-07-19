@@ -24,7 +24,7 @@ const Input = styled.input`
   &:hover {
     color: ${({ theme }) => theme.color.white[100]};
     background: ${({ theme }) => theme.color.blue[500]};
-    border-color: ${({ theme }) => theme.color.white[200]};
+    border-color: ${({ theme }) => theme.color.white[100]};
   }
   @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
     display: block;

@@ -5,9 +5,5 @@ export function capitalize(string: string): string {
 }
 
 export function splitAndCapitalize(string: string): string {
-  return humps
-    .decamelize(string)
-    .split('_')
-    .map(capitalize)
-    .join(' ')
+  return humps.decamelize(string).split('_').map(capitalize).join(' ')
 }

@@ -7,7 +7,9 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "lint": "eslint . --ext js,jsx,ts,tsx",
+    "lint:fix": "eslint . --ext js,jsx,ts,tsx --fix"
   },
   "dependencies": {
     "@emotion/react": "^11.0.0-next.13",

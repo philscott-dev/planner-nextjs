@@ -18,7 +18,7 @@ const TouchMove: FC<TouchMoveProps> = ({ className }) => {
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
     let img = new Image()
-    img.onload = function() {
+    img.onload = function () {
       //@ts-ignore
       setImage({ width: this.width, height: this.height, src: this.src })
     }

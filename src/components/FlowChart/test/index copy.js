@@ -4,7 +4,7 @@ canvas.height = 600
 
 var gkhead = new Image()
 
-window.onload = function() {
+window.onload = function () {
   var ctx = canvas.getContext('2d')
   trackTransforms(ctx)
 
@@ -31,7 +31,7 @@ window.onload = function() {
 
   canvas.addEventListener(
     'mousedown',
-    function(evt) {
+    function (evt) {
       console.log('mousedown')
       document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect =
         'none'
@@ -45,7 +45,7 @@ window.onload = function() {
 
   canvas.addEventListener(
     'mousemove',
-    function(evt) {
+    function (evt) {
       console.log('mousemove')
       lastX = evt.offsetX || evt.pageX - canvas.offsetLeft
       lastY = evt.offsetY || evt.pageY - canvas.offsetTop
@@ -61,7 +61,7 @@ window.onload = function() {
 
   canvas.addEventListener(
     'mouseup',
-    function(evt) {
+    function (evt) {
       console.log('mouseup')
       dragStart = null
       if (!dragged) zoom(evt.shiftKey ? -1 : 1)
@@ -71,7 +71,7 @@ window.onload = function() {
 
   var scaleFactor = 1.1
 
-  var zoom = function(clicks) {
+  var zoom = function (clicks) {
     console.log('zoom')
     var pt = ctx.transformedPoint(lastX, lastY)
     ctx.translate(pt.x, pt.y)
@@ -81,7 +81,7 @@ window.onload = function() {
     redraw()
   }
 
-  var handleScroll = function(evt) {
+  var handleScroll = function (evt) {
     console.log('handleScroll')
     var delta = evt.wheelDelta
       ? evt.wheelDelta / 40
@@ -104,49 +104,49 @@ function trackTransforms(ctx) {
   console.log('trackTransforms')
   var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
   var xform = svg.createSVGMatrix()
-  ctx.getTransform = function() {
+  ctx.getTransform = function () {
     console.log('getTransform')
     return xform
   }
 
   var savedTransforms = []
   var save = ctx.save
-  ctx.save = function() {
+  ctx.save = function () {
     console.log('save')
     savedTransforms.push(xform.translate(0, 0))
     return save.call(ctx)
   }
 
   var restore = ctx.restore
-  ctx.restore = function() {
+  ctx.restore = function () {
     console.log('restore')
     xform = savedTransforms.pop()
     return restore.call(ctx)
   }
 
   var scale = ctx.scale
-  ctx.scale = function(sx, sy) {
+  ctx.scale = function (sx, sy) {
     console.log('scale')
     xform = xform.scaleNonUniform(sx, sy)
     return scale.call(ctx, sx, sy)
   }
 
   var rotate = ctx.rotate
-  ctx.rotate = function(radians) {
+  ctx.rotate = function (radians) {
     console.log('rotate')
     xform = xform.rotate((radians * 180) / Math.PI)
     return rotate.call(ctx, radians)
   }
 
   var translate = ctx.translate
-  ctx.translate = function(dx, dy) {
+  ctx.translate = function (dx, dy) {
     console.log('translate')
     xform = xform.translate(dx, dy)
     return translate.call(ctx, dx, dy)
   }
 
   var transform = ctx.transform
-  ctx.transform = function(a, b, c, d, e, f) {
+  ctx.transform = function (a, b, c, d, e, f) {
     console.log('transform')
     var m2 = svg.createSVGMatrix()
     m2.a = a
@@ -160,7 +160,7 @@ function trackTransforms(ctx) {
   }
 
   var setTransform = ctx.setTransform
-  ctx.setTransform = function(a, b, c, d, e, f) {
+  ctx.setTransform = function (a, b, c, d, e, f) {
     console.log('setTransform')
     xform.a = a
     xform.b = b
@@ -172,7 +172,7 @@ function trackTransforms(ctx) {
   }
 
   var pt = svg.createSVGPoint()
-  ctx.transformedPoint = function(x, y) {
+  ctx.transformedPoint = function (x, y) {
     console.log('transformedPoint')
     pt.x = x
     pt.y = y
