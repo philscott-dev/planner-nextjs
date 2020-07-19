@@ -10,6 +10,8 @@
     "plugin:prettier/recommended"
   ],
   "rules": {
+    "eqeqeq": 0,
+    "@typescript-eslint/no-unused-vars": 0,
     "@typescript-eslint/consistent-type-assertions": 0,
     "react/react-in-jsx-scope": 0,
     "react/proptypes": 0,

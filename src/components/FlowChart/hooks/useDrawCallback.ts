@@ -68,7 +68,7 @@ export default function useDraw(
         )
       })
     }
-  }, [canvas, ctx, scale, translateOffset, isDragging, nodes, activeId])
+  }, [canvas, ctx, scale, translateOffset, nodes, activeId])
   useEffect(draw)
   return draw
 }
