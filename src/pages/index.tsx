@@ -1,12 +1,15 @@
+import styled from '@emotion/styled'
 import React, { useState, useEffect } from 'react'
 import { NextPage } from 'next'
-import styled from '@emotion/styled'
-import { plannerEvents } from 'mock/mockPlannerEvents'
-import { isSameDay, differenceInDays } from 'date-fns'
-import { startOfDay, subDays, format } from 'date-fns'
-import { remove, add, removeByIndex } from 'helpers/array'
+import { removeByIndex } from 'helpers/array'
 import { download } from 'helpers/file'
 import { v4 as uuid } from 'uuid'
+import { parseJsonDates } from 'helpers/date'
+import { EventColors } from 'constants/colors'
+import { Entries } from 'components/FormElements/types'
+import { updateByNextId, updateByPrevId } from 'helpers/_planner'
+import { DATE_PICKER_FORMAT, LOCAL_STORAGE_KEY } from 'constants/constants'
+import { theme } from 'theme'
 import {
   PlannerEvent,
   PlannerEventGroup,
@@ -17,13 +20,15 @@ import {
   ViewportModalContainer,
   ViewportModal,
   Input,
-  Datepicker,
 } from 'components'
-import { parseJsonDates } from 'helpers/date'
-import { EventColors } from 'constants/colors'
-import { Entries } from 'components/FormElements/types'
-
-const LOCAL_STORAGE_KEY = 'planner_save_state'
+import {
+  isSameDay,
+  differenceInDays,
+  startOfDay,
+  subDays,
+  format,
+  parse as parseDate,
+} from 'date-fns'
 
 const IndexPage: NextPage = () => {
   const [events, setEvents] = useState<PlannerEventGroup[]>([])
@@ -81,7 +86,6 @@ const IndexPage: NextPage = () => {
 
   const handleEventDoubleClick = (plannerEvent: PlannerEvent) => {
     console.log('handleEventDoubleClick')
-    console.log(plannerEvent)
     setEditableItems([...editableItems.slice(0, 1), plannerEvent])
   }
 
@@ -103,20 +107,7 @@ const IndexPage: NextPage = () => {
       )
       event.startTime = date
       event.endTime = subDays(event.endTime, diff)
-
-      const updatedPlanner = events.map((user) => {
-        // remove the event
-        if (user.id === event.assigneeId) {
-          event.assigneeId = row
-          user.events = remove(user.events, event)
-        }
-
-        // add the event back
-        if (user.id === row) {
-          user.events = add(user.events, event)
-        }
-        return user
-      })
+      const updatedPlanner = updateByNextId(events, event, row)
       setEvents(updatedPlanner)
     }
   }
@@ -140,13 +131,39 @@ const IndexPage: NextPage = () => {
   const handleModalConfirm = (entries: Entries, index: number) => {
     //get the entry by it's index,
     const event = editableItems[index]
-    const newEvent: PlannerEvent = {
-      id: (entries.id as string) || uuid(),
-      startTime: new Date(),
-      endTime: new Date(),
-      color: 'blue',
+    if (
+      !entries.title ||
+      !entries.startTime ||
+      !entries.endTime ||
+      !entries.color ||
+      !entries.assigneeId
+    ) {
+      return
     }
-    //setEvents(updatedPlanner)
+    console.log(entries)
+    const referenceDate = new Date()
+    const newEvent: PlannerEvent = {
+      ...event,
+      title: entries.title as string,
+      id: event.id || uuid(),
+      startTime: parseDate(
+        entries.startTime as string,
+        DATE_PICKER_FORMAT,
+        referenceDate,
+      ),
+      endTime: parseDate(
+        entries.endTime as string,
+        DATE_PICKER_FORMAT,
+        referenceDate,
+      ),
+      color: (entries.color as string) || theme.color.blue[300],
+    }
+    const updatedPlanner = updateByNextId(
+      events,
+      newEvent,
+      entries.assigneeId as string,
+    )
+    setEvents(updatedPlanner)
     setEditableItems(removeByIndex(editableItems, index))
   }
 
@@ -229,7 +246,9 @@ const IndexPage: NextPage = () => {
                 name="startTime"
                 placeholder="Start Date"
                 defaultValue={
-                  item.startTime ? format(item.startTime, 'yyyy-MM-dd') : null
+                  item.startTime
+                    ? format(item.startTime, DATE_PICKER_FORMAT)
+                    : null
                 }
               />
               <Input
@@ -237,7 +256,7 @@ const IndexPage: NextPage = () => {
                 name="endTime"
                 placeholder="End Date"
                 defaultValue={
-                  item.endTime ? format(item.endTime, 'yyyy-MM-dd') : null
+                  item.endTime ? format(item.endTime, DATE_PICKER_FORMAT) : null
                 }
               />
             </Flex>
