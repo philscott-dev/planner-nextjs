@@ -1,4 +1,7 @@
-export function find<T extends { id?: number }>(array: T[], entity: T) {
+export function find<T extends { id?: number | string }>(
+  array: T[],
+  entity: T,
+) {
   for (let i = 0; i < array.length; i += 1) {
     // check for id first
     if (array[i].id === entity.id) {

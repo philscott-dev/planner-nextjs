@@ -138,15 +138,15 @@ const IndexPage: NextPage = () => {
   }
 
   const handleModalConfirm = (entries: Entries, index: number) => {
-    // const entry = entries as PlannerEvent
+    //get the entry by it's index,
+    const event = editableItems[index]
     const newEvent: PlannerEvent = {
-      id: uuid(),
+      id: (entries.id as string) || uuid(),
       startTime: new Date(),
       endTime: new Date(),
       color: 'blue',
     }
-    
-    setEvents(updatedPlanner)
+    //setEvents(updatedPlanner)
     setEditableItems(removeByIndex(editableItems, index))
   }
 
