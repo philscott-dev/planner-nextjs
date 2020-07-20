@@ -65,6 +65,8 @@ const Planner: FC<PlannerProps> = ({
   const range = useDateRange(activeDate, plannerInterval)
 
   const handleColumnHeaderClick = (e: MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
     const col = getDataAttrForMouseEvent(e, 'data-planner-column')
     if (col) {
       setColumn(parseInt(col, 10))
@@ -73,6 +75,8 @@ const Planner: FC<PlannerProps> = ({
   }
 
   const handleRowHeaderDoubleClick = (e: MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
     const col = getDataAttrForMouseEvent(e, 'data-row-id')
     if (col) {
       onRowHeaderDoubleClick(col)
@@ -80,6 +84,8 @@ const Planner: FC<PlannerProps> = ({
   }
 
   const handleColumnHeaderDoubleClick = (e: MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
     const d = getDataAttrForMouseEvent(e, 'data-planner-date')
     if (d) {
       const date = new Date(d)
@@ -88,6 +94,8 @@ const Planner: FC<PlannerProps> = ({
   }
 
   const handleEventClick = (e: MouseEvent, plannerEvent: PlannerEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
     const col = getDataAttrForMouseEvent(e, 'data-planner-column')
     const row = getDataAttrForMouseEvent(e, 'data-row-id')
     if (col && row) {
@@ -102,10 +110,14 @@ const Planner: FC<PlannerProps> = ({
     e: MouseEvent,
     plannerEvent: PlannerEvent,
   ) => {
+    e.preventDefault()
+    e.stopPropagation()
     onEventDoubleClick(plannerEvent)
   }
 
   const handleEmptyClick = (e: MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
     const row = getDataAttrForMouseEvent(e, 'data-row-id')
     const col = getDataAttrForMouseEvent(e, 'data-planner-column')
     const d = getDataAttrForMouseEvent(e, 'data-planner-date')
@@ -119,6 +131,8 @@ const Planner: FC<PlannerProps> = ({
   }
 
   const handleEmptyDoubleClick = (e: MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
     const row = getDataAttrForMouseEvent(e, 'data-row-id')
     const d = getDataAttrForMouseEvent(e, 'data-planner-date')
     if (row && d) {
@@ -128,12 +142,15 @@ const Planner: FC<PlannerProps> = ({
   }
 
   const handleRowHeaderClick = (e: MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
     const row = getDataAttrForMouseEvent(e, 'data-row-id')
     setActiveRow(row)
   }
 
   const handleEventDragOver = (e: DragEvent) => {
     e.preventDefault()
+    e.stopPropagation()
     const row = getDataAttrForMouseEvent(e, 'data-row-id')
     const col = getDataAttrForMouseEvent(e, 'data-planner-column')
     if (col) setColumn(parseInt(col, 10))
@@ -141,6 +158,8 @@ const Planner: FC<PlannerProps> = ({
   }
 
   const handleEventDrop = (e: DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
     const row = getDataAttrForMouseEvent(e, 'data-row-id')
     const col = getDataAttrForMouseEvent(e, 'data-planner-column')
     const d = getDataAttrForMouseEvent(e, 'data-planner-date')

@@ -45,6 +45,7 @@ const Input: FC<InputProps> = ({
   useEffect(() => {
     if (defaultValue != undefined) {
       setLabelVisibility(true)
+      console.log(defaultValue)
     }
   }, [defaultValue])
 

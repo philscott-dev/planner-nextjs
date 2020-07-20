@@ -44,32 +44,24 @@ const IndexPage: NextPage = () => {
     return () => window.removeEventListener('beforeunload', saveLocalStorage)
   }, [events])
 
-  // useEffect(() => {
-  //   const input = document.getElementById('planner__upload')
-  //   console.log(input)
-  //   function onUpload(e: any) {
-  //     console.log(e)
-  //   }
-  //   input?.addEventListener('click', onUpload)
-  //   return () => input?.removeEventListener('click', onUpload)
-  // }, [])
-
   /**
    * Planner Grid Interactions
    */
 
   const handleColumnHeaderDoubleClick = (date: Date) => {
+    console.log('handleColumnHeaderDoubleClick')
     //console.log(date)
   }
 
   const handleEmptyClick = (row: string | number, date: Date) => {
+    console.log('handleEmptyClick')
     console.log(row, date)
   }
 
   const handleEmptyDoubleClick = (row: string | number, date: Date) => {
-    //console.log(row, date)
+    console.log('handleEmptyDoubleClick')
     const newEvent: PlannerEvent = {
-      id: uuid(),
+      id: row,
       assigneeId: row,
       startTime: date,
       endTime: date,
@@ -79,14 +71,18 @@ const IndexPage: NextPage = () => {
   }
 
   const handleEventClick = (plannerEvent: PlannerEvent) => {
+    console.log('handleEventClick')
     //console.log(plannerEvent)
   }
 
   const handleEventDoubleClick = (plannerEvent: PlannerEvent) => {
+    console.log('handleEventDoubleClick')
+    console.log(plannerEvent)
     setEditableItems([...editableItems.slice(0, 1), plannerEvent])
   }
 
   const handleRowHeaderDoubleClick = (id: string | number) => {
+    console.log('handleRowHeaderDoubleClick')
     //console.log(id)
   }
 
@@ -149,20 +145,21 @@ const IndexPage: NextPage = () => {
 
   const handleImportJSON = (json: string) => {
     const imported: PlannerEventGroup[] = JSON.parse(json, parseJsonDates)
-    console.log(imported)
     setEvents(imported)
   }
   const handleExportClick = () => {
     download(JSON.stringify(events), 'planner_events.json', 'application/json')
   }
+
   const handleAddEventClick = () => {
+    console.log('handleAddEventClick')
     const newEvent: PlannerEvent = {
       id: uuid(),
       startTime: new Date(),
       endTime: new Date(),
       color: 'blue',
     }
-    setEditableItems([...editableItems.slice(0, 1), newEvent])
+    //setEditableItems([...editableItems.slice(0, 1), newEvent])
   }
 
   const handleAddRowClick = () => {}
@@ -173,6 +170,7 @@ const IndexPage: NextPage = () => {
    * Render Page
    */
 
+  console.log(editableItems)
   return (
     <>
       <Planner
