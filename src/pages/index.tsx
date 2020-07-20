@@ -7,7 +7,7 @@ import { v4 as uuid } from 'uuid'
 import { parseJsonDates } from 'helpers/date'
 import { EventColors } from 'constants/colors'
 import { Entries } from 'components/FormElements/types'
-import { updateByNextId, updateByPrevId } from 'helpers/_planner'
+import { updateByNextId } from 'helpers/_planner'
 import { DATE_PICKER_FORMAT, LOCAL_STORAGE_KEY } from 'constants/constants'
 import { theme } from 'theme'
 import {
