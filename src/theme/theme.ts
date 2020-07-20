@@ -1,20 +1,5 @@
 import { Theme } from '@emotion/react'
 
-// const color = {
-//   gray: {
-//     300: '#8A8A8A',
-//   },
-//   white: {
-//     100: '#FCFCFC',
-//   },
-//   blue: {
-//     300: '#028FFF',
-//     400: '#0253B1',
-//     500: '#0F1337',
-//     600: '#0C0F2B',
-//     700: '#06091F',
-//   },
-// }
 const theme: Theme = {
   color: {
     black: {
@@ -27,12 +12,18 @@ const theme: Theme = {
     white: {
       100: '#FCFCFC',
     },
+    aqua: {
+      300: '#0287B1',
+    },
     blue: {
       300: '#028FFF',
       400: '#0253B1',
       500: '#0F1337',
       600: '#0C0F2B',
       700: '#06091F',
+    },
+    navy: {
+      300: '#0253B1',
     },
     magenta: {
       300: '#FF00B8',
@@ -41,7 +32,14 @@ const theme: Theme = {
       300: '#52A147',
     },
     red: {
+      200: '#FF0202',
       300: '#ae2727',
+    },
+    purple: {
+      300: '#9E00FF',
+    },
+    orange: {
+      300: '#FF8A00',
     },
   },
   gradient: {

@@ -1,5 +1,12 @@
 /** @jsx jsx */
-import { FC, useState, createRef, ChangeEvent, KeyboardEvent } from 'react'
+import {
+  FC,
+  useState,
+  createRef,
+  ChangeEvent,
+  KeyboardEvent,
+  useEffect,
+} from 'react'
 import { jsx } from '@emotion/react'
 import { useOnClickOutside } from 'hooks'
 import styled from '@emotion/styled'
@@ -10,15 +17,21 @@ import Input from './Input'
 import Picker from './Picker'
 
 export interface DatepickerProps {
+  name?: string
   date?: Date
   onChange: (date: Date) => void
   className?: string
 }
 
-const Datepicker: FC<DatepickerProps> = ({ date, onChange, className }) => {
+const Datepicker: FC<DatepickerProps> = ({
+  date,
+  onChange,
+  name,
+  className,
+}) => {
   const pickerRef = createRef<HTMLDivElement>()
   const inputRef = createRef<HTMLInputElement>()
-  const [isVisible, setVisible] = useState<boolean>(true)
+  const [isVisible, setVisible] = useState<boolean>(false)
   useOnClickOutside(pickerRef, () => setVisible(false), isVisible)
 
   const handleShowPicker = () => {
@@ -53,6 +66,7 @@ const Datepicker: FC<DatepickerProps> = ({ date, onChange, className }) => {
   return (
     <div className={className}>
       <Input
+        name={name}
         ref={inputRef}
         type="date"
         value={date ? format(date, 'yyyy-MM-dd') : undefined}

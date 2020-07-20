@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { NextPage } from 'next'
+import styled from '@emotion/styled'
 import { plannerEvents } from 'mock/mockPlannerEvents'
 import { isSameDay, differenceInDays } from 'date-fns'
-import { startOfDay, subDays } from 'date-fns'
+import { startOfDay, subDays, format } from 'date-fns'
 import { remove, add, removeByIndex } from 'helpers/array'
 import { download } from 'helpers/file'
 import { v4 as uuid } from 'uuid'
@@ -16,8 +17,10 @@ import {
   ViewportModalContainer,
   ViewportModal,
   Input,
+  Datepicker,
 } from 'components'
 import { parseJsonDates } from 'helpers/date'
+import { EventColors } from 'constants/colors'
 
 const LOCAL_STORAGE_KEY = 'planner_save_state'
 
@@ -211,11 +214,90 @@ const IndexPage: NextPage = () => {
               placeholder="Event Title"
               defaultValue={item.title}
             />
+            <Flex>
+              <Input
+                type="date"
+                name="startTime"
+                placeholder="Start Date"
+                defaultValue={
+                  item.startTime ? format(item.startTime, 'yyyy-MM-dd') : null
+                }
+              />
+              <Input
+                type="date"
+                name="endTime"
+                placeholder="End Date"
+                defaultValue={
+                  item.endTime ? format(item.endTime, 'yyyy-MM-dd') : null
+                }
+              />
+            </Flex>
+            <Select name="assigneeId" defaultValue={item.assigneeId}>
+              <option>Assignee</option>
+              {events.map((event) => (
+                <option key={event.id} value={event.id}>
+                  {event.label}
+                </option>
+              ))}
+            </Select>
+            <Select name="color" defaultValue={item.color}>
+              <option>Color</option>
+              {Object.entries(EventColors).map((value, index) => {
+                return (
+                  <option key={index} value={value[1]}>
+                    {value[0]}
+                  </option>
+                )
+              })}
+            </Select>
           </ViewportModal>
         ))}
       </ViewportModalContainer>
     </>
   )
 }
+
+const Flex = styled.div`
+  display: flex;
+  margin: 8px 0;
+  div:nth-of-type(1) {
+    margin-right: 24px;
+  }
+`
+
+const Select = styled.select`
+  height: 54px;
+  margin-bottom: 24px;
+  padding: 0 24px;
+  border-radius: 8px;
+  outline: none;
+  width: 100%;
+  font-size: 14px;
+  background-clip: padding-box;
+  font-family: ${({ theme }) => theme.font.family};
+  font-weight: 200;
+  border: 2px solid ${({ theme }) => theme.color.blue[400]};
+  color: ${({ theme }) => theme.color.white[100]};
+  background: ${({ theme }) => theme.color.blue[500]};
+  &:focus {
+    border: 2px solid ${({ theme }) => theme.color.blue[300]};
+  }
+  &::placeholder {
+    color: ${({ theme }) => theme.color.gray[300]};
+    font-family: ${({ theme }) => theme.font.family};
+  }
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus {
+    border: 1px solid ${({ theme }) => theme.color.white[100]};
+    -webkit-text-fill-color: ${({ theme }) => theme.color.white[100]};
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+  @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
+    border-right: 1px solid ${({ theme }) => theme.color.white[100]};
+  }
+  transition: all 0.3s ease-in-out;
+`
 
 export default IndexPage
