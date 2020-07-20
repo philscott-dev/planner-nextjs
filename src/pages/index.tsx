@@ -39,9 +39,12 @@ const IndexPage: NextPage = () => {
 
   useEffect(() => {
     const json = localStorage.getItem(LOCAL_STORAGE_KEY)
+    console.log(json)
     if (json) {
       const parse = JSON.parse(json, parseJsonDates)
-      setEvents(parse)
+      if (parse.length) {
+        setEvents(parse)
+      }
     }
   }, [])
 

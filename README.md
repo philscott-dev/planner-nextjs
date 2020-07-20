@@ -12,6 +12,9 @@ I really want to be able to ingest existing calendars, and add support for major
 ## "Year" View
 My custom hook was pretty flexible when adding Month view, and when showing 365 days in the Year view, but a 365 day view is pretty worthless and super laggy. I've got the view created and intervals set, but need to rework my hook a little bit.
 
+## Filters
+You need to be able to filter by label/color
+
 ## Custom Labels
 The ability to store your own custom labels and colors and use support for using a color picker to set colors.
 
