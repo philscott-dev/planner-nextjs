@@ -21,6 +21,7 @@ import {
 } from 'components'
 import { parseJsonDates } from 'helpers/date'
 import { EventColors } from 'constants/colors'
+import { Entries } from 'components/FormElements/types'
 
 const LOCAL_STORAGE_KEY = 'planner_save_state'
 
@@ -133,12 +134,20 @@ const IndexPage: NextPage = () => {
    */
 
   const handleModalCancel = (index: number) => {
-    console.log(index, 'cancel')
     setEditableItems(removeByIndex(editableItems, index))
   }
 
-  const handleModalConfirm = (index?: number) => {
-    console.log(index, 'confirm')
+  const handleModalConfirm = (entries: Entries, index: number) => {
+    // const entry = entries as PlannerEvent
+    const newEvent: PlannerEvent = {
+      id: uuid(),
+      startTime: new Date(),
+      endTime: new Date(),
+      color: 'blue',
+    }
+    
+    setEvents(updatedPlanner)
+    setEditableItems(removeByIndex(editableItems, index))
   }
 
   /**

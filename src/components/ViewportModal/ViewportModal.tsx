@@ -13,7 +13,7 @@ interface ViewportModalProps {
   title?: string
   index: number
   onCancel: (index: number) => void
-  onConfirm: (index: number) => void
+  onConfirm: (entries: Entries, index: number) => void
 }
 
 const ViewportModal: FC<ViewportModalProps> = ({
@@ -30,8 +30,7 @@ const ViewportModal: FC<ViewportModalProps> = ({
     onCancel(index)
   }
   const handleConfirm = (e: Entries) => {
-    console.log(e)
-    onConfirm(index)
+    onConfirm(e, index)
   }
 
   const handleMinimize = () => {
