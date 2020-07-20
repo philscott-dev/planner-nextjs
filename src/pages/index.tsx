@@ -92,8 +92,7 @@ const IndexPage: NextPage = () => {
     col: string,
     date: Date,
   ) => {
-    const rowId = parseInt(row, 10)
-    if (!isSameDay(event.startTime, date) || event.assigneeId !== rowId) {
+    if (!isSameDay(event.startTime, date) || event.assigneeId !== row) {
       const diff = differenceInDays(
         startOfDay(event.startTime),
         startOfDay(date),
@@ -104,12 +103,12 @@ const IndexPage: NextPage = () => {
       const updatedPlanner = events.map((user) => {
         // remove the event
         if (user.id === event.assigneeId) {
-          event.assigneeId = rowId
+          event.assigneeId = row
           user.events = remove(user.events, event)
         }
 
         // add the event back
-        if (user.id === rowId) {
+        if (user.id === row) {
           user.events = add(user.events, event)
         }
         return user
@@ -159,10 +158,17 @@ const IndexPage: NextPage = () => {
       endTime: new Date(),
       color: 'blue',
     }
-    //setEditableItems([...editableItems.slice(0, 1), newEvent])
+    setEditableItems([...editableItems.slice(0, 1), newEvent])
   }
 
-  const handleAddRowClick = () => {}
+  const handleAddRowClick = () => {
+    const newGroup: PlannerEventGroup = {
+      id: uuid(),
+      label: `User ${events.length}`,
+      events: [],
+    }
+    setEvents([newGroup, ...events])
+  }
 
   const handleSettingsClick = () => {}
 

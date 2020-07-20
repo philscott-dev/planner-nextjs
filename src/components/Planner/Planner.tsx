@@ -94,8 +94,8 @@ const Planner: FC<PlannerProps> = ({
   }
 
   const handleEventClick = (e: MouseEvent, plannerEvent: PlannerEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
+    //e.preventDefault()
+    // e.stopPropagation()
     const col = getDataAttrForMouseEvent(e, 'data-planner-column')
     const row = getDataAttrForMouseEvent(e, 'data-row-id')
     if (col && row) {

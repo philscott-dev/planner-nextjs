@@ -14,7 +14,7 @@ export interface PlannerEvent {
 
 export interface PlannerEventGroup {
   id: number | string
-  icon: string
+  icon?: string
   label: string
   events: PlannerEvent[]
 }
