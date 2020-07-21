@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { jsx } from '@emotion/react'
 import styled from '@emotion/styled'
 import { Node } from './types'
-import { FormButton, Form, Input } from 'components'
+import { FormButton, Form, Input } from 'lib'
 
 interface EditPanelProps {
   className?: string

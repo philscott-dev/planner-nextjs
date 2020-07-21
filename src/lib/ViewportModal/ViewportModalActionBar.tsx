@@ -2,7 +2,7 @@
 import styled from '@emotion/styled'
 import { jsx, css } from '@emotion/react'
 import { FC } from 'react'
-import { FormButton, IconButton } from 'components'
+import { FormButton, IconButton } from 'lib'
 import { FaTrashAlt } from 'react-icons/fa'
 
 interface ActionBarProps {

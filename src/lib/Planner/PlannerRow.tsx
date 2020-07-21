@@ -7,7 +7,7 @@ import PlannerRowHeader from './PlannerRowHeader'
 import PlannerRowWrapper from './PlannerRowWrapper'
 import usePlannerEventRow from './usePlannerEventRow'
 import { PlannerEvent, PlannerEventGroup } from './types'
-import { Text } from 'components'
+import { Text } from 'lib'
 
 interface PlannerRowProps {
   className?: string

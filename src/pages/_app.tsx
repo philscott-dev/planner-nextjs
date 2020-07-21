@@ -1,7 +1,7 @@
 import { AppProps } from 'next/app'
 import { ThemeProvider } from '@emotion/react'
 import { theme } from 'theme'
-import PortalMount from 'components/Portal/PortalMount'
+import PortalMount from 'lib/Portal/PortalMount'
 import 'styles/fonts.css'
 import 'styles/default.css'
 

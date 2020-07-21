@@ -9,7 +9,7 @@ import useDateRange from './useDateRange'
 import { PlannerEventGroup, PlannerEvent, PlannerInterval } from './types'
 import PlannerColumn, { Column } from './PlannerColumn'
 import { getDataAttrForMouseEvent } from 'helpers/event'
-import Portal from 'components/Portal/Portal'
+import Portal from 'lib/Portal/Portal'
 import PlannerFileImport from './PlannerFileImport'
 
 interface PlannerProps {

@@ -2,7 +2,7 @@
 import styled from '@emotion/styled'
 import { jsx } from '@emotion/react'
 import { FC } from 'react'
-import { IconButton, Text } from 'components'
+import { IconButton } from 'lib'
 
 interface PlannerControlProps {
   className?: string

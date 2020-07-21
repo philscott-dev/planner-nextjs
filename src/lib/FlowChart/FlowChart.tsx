@@ -7,7 +7,7 @@ import { Node, Point } from './types'
 import { getCanvasPoint } from './helpers/helpers'
 import useTransformRefs from './hooks/useTransformRefs'
 import { NODE_HEIGHT, NODE_WIDTH, colors } from './constants'
-import { Text } from 'components'
+import { Text } from 'lib'
 import EditPanel from './EditPanel'
 
 interface FlowChartProps {

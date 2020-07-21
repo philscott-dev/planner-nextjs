@@ -2,7 +2,7 @@
 import { useContext, FC } from 'react'
 import { jsx, css, Theme } from '@emotion/react'
 import { ValidationContext } from './Form'
-import { Text } from 'components'
+import { Text } from 'lib'
 
 export interface ErrorProps {
   name: string

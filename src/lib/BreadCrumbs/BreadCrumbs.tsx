@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import styled from '@emotion/styled'
-import { Anchor } from 'components/Anchor'
+import { Anchor } from 'lib/Anchor'
 import Slash from './Slash'
 import HomePath from './HomePath'
 

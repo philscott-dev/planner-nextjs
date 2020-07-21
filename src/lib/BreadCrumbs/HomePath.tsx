@@ -2,7 +2,7 @@
 import { FC } from 'react'
 import { css, jsx } from '@emotion/react'
 import { FiHome } from 'react-icons/fi'
-import { Anchor } from 'components/Anchor'
+import { Anchor } from 'lib/Anchor'
 
 const HomePath: FC<{ homePath?: string }> = ({ homePath }) => {
   return (

@@ -5,8 +5,8 @@ import { FC, useState } from 'react'
 import ViewportModalTitleBar from './ViewportModalTitleBar'
 import ViewportModalActionBar from './ViewportModalActionBar'
 import ViewportModalBody from './ViewportModalBody'
-import { Form } from 'components'
-import { Entries } from 'components/FormElements/types'
+import { Form } from 'lib'
+import { Entries } from 'lib/FormElements/types'
 
 interface ViewportModalProps {
   className?: string

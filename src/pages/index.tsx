@@ -1,40 +1,29 @@
 /** @jsx jsx */
-import styled from '@emotion/styled'
 import { useState, useEffect } from 'react'
-import { jsx, css } from '@emotion/react'
+import { jsx } from '@emotion/react'
 import { NextPage } from 'next'
 import { removeByIndex } from 'helpers/array'
 import { download } from 'helpers/file'
 import { v4 as uuid } from 'uuid'
 import { parseJsonDates } from 'helpers/date'
-import { EventColors } from 'constants/colors'
-import { Entries } from 'components/FormElements/types'
 import { updateByNextId } from 'helpers/_planner'
 import { DATE_PICKER_FORMAT, LOCAL_STORAGE_KEY } from 'constants/constants'
+import { Entries } from 'lib/FormElements/types'
+import { Planner } from 'lib'
+import { EventEditor } from 'components'
 import { theme } from 'theme'
 import {
   PlannerEvent,
   PlannerEventGroup,
   PlannerInterval,
-} from 'components/Planner/types'
-import {
-  Planner,
-  ViewportModalContainer,
-  ViewportModal,
-  Input,
-  Select,
-  Datepicker,
-  H3,
-} from 'components'
+} from 'lib/Planner/types'
 import {
   isSameDay,
   differenceInDays,
   startOfDay,
   subDays,
-  format,
   parse as parseDate,
 } from 'date-fns'
-import { capitalize } from 'helpers/string'
 
 const IndexPage: NextPage = () => {
   const [events, setEvents] = useState<PlannerEventGroup[]>([])
@@ -46,7 +35,6 @@ const IndexPage: NextPage = () => {
 
   useEffect(() => {
     const json = localStorage.getItem(LOCAL_STORAGE_KEY)
-    console.log(json)
     if (json) {
       const parse = JSON.parse(json, parseJsonDates)
       if (parse.length) {
@@ -133,19 +121,19 @@ const IndexPage: NextPage = () => {
   }
 
   /**
-   * Modal Bar Interactions
+   * Event Editor Bar Interactions
    */
 
-  const handleModalCancel = (index: number) => {
+  const handleEventEditorCancel = (index: number) => {
     setEditableItems(removeByIndex(editableItems, index))
   }
 
-  const handleModalDelete = (index: number) => {
+  const handleEventEditorDelete = (index: number) => {
     //trigger an actual fullscreen modal
     setEditableDeleteIndex(index)
   }
 
-  const handleConfirmDelete = () => {
+  const handleEventConfirmDelete = () => {
     // remove the bottom editable event modal
     if (editableDeleteIndex) {
       setEditableItems(removeByIndex(editableItems, editableDeleteIndex))
@@ -157,7 +145,7 @@ const IndexPage: NextPage = () => {
     }
   }
 
-  const handleModalConfirm = (entries: Entries, index: number) => {
+  const handleEventEditorConfirm = (entries: Entries, index: number) => {
     //get the entry by it's index,
     const event = editableItems[index]
     if (
@@ -248,89 +236,15 @@ const IndexPage: NextPage = () => {
         onAddRowClick={handleAddRowClick}
         onImportJSON={handleImportJSON}
       />
-      <ViewportModalContainer>
-        {editableItems.map((item, index) => (
-          <ViewportModal
-            key={item.id}
-            index={index}
-            title={item.title}
-            onCancel={handleModalCancel}
-            onConfirm={handleModalConfirm}
-            onDelete={handleModalDelete}
-          >
-            <H3
-              css={css`
-                margin-left: 24px;
-                margin-bottom: 32px;
-              `}
-            >
-              Manage Event
-            </H3>
-            <ModalWrapper>
-              <Flex>
-                <Input
-                  type="text"
-                  name="title"
-                  placeholder="Event Title"
-                  defaultValue={item.title}
-                />
-              </Flex>
-              <Flex>
-                <Datepicker name="startTime" placeholder="Start Date" />
-                <Datepicker name="endTime" placeholder="End Date" />
-              </Flex>
-              <Flex>
-                <Select
-                  placeholder="User"
-                  name="assigneeId"
-                  defaultValue={item.assigneeId}
-                >
-                  <option value="" selected disabled hidden>
-                    Assign a User
-                  </option>
-                  {events.map((event) => (
-                    <option key={event.id} value={event.id}>
-                      {event.label}
-                    </option>
-                  ))}
-                </Select>
-              </Flex>
-              <Flex>
-                <Select
-                  placeholder="Color"
-                  name="color"
-                  defaultValue={item.color}
-                >
-                  <option value="" selected disabled hidden>
-                    Pick a Color
-                  </option>
-                  {Object.entries(EventColors).map((value, index) => {
-                    return (
-                      <option key={index} value={value[1]}>
-                        {capitalize(value[0])}
-                      </option>
-                    )
-                  })}
-                </Select>
-              </Flex>
-            </ModalWrapper>
-          </ViewportModal>
-        ))}
-      </ViewportModalContainer>
+      <EventEditor
+        events={events}
+        editableItems={editableItems}
+        onCancel={handleEventEditorCancel}
+        onDelete={handleEventEditorDelete}
+        onConfirm={handleEventEditorConfirm}
+      />
     </>
   )
 }
-
-const Flex = styled.div`
-  display: flex;
-  margin-bottom: 32px;
-  div:nth-of-type(2) {
-    margin-left: 32px;
-  }
-`
-
-const ModalWrapper = styled.div`
-  padding: 0 24px;
-`
 
 export default IndexPage

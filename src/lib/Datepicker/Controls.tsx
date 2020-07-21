@@ -3,7 +3,7 @@ import { jsx } from '@emotion/react'
 import { FC } from 'react'
 import styled from '@emotion/styled'
 import { subMonths, addMonths, subYears, addYears, format } from 'date-fns'
-import { IconButton, Text } from '../'
+import { IconButton, Text } from '..'
 import {
   FiChevronsLeft,
   FiChevronRight,

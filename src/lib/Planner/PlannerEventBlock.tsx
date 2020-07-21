@@ -2,7 +2,7 @@
 import styled from '@emotion/styled'
 import { FC, MouseEvent } from 'react'
 import { jsx, css } from '@emotion/react'
-import { Text } from 'components'
+import { Text } from 'lib'
 import { PlannerEvent } from './types'
 import { format } from 'date-fns'
 import { lightenColor } from 'helpers/color'

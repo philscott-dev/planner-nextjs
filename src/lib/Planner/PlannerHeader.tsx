@@ -2,7 +2,7 @@
 import styled from '@emotion/styled'
 import { FC, MouseEvent, useEffect, useState } from 'react'
 import { jsx } from '@emotion/react'
-import { Text } from 'components'
+import { Text } from 'lib'
 import PlannerHeaderDay from './PlannerHeaderDay'
 import PlannerHeaderToolbar from './PlannerHeaderToolbar'
 import { PlannerInterval } from './types'

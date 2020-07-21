@@ -2,7 +2,7 @@
 import styled from '@emotion/styled'
 import { FC, MouseEvent } from 'react'
 import { jsx } from '@emotion/react'
-import { Text } from 'components'
+import { Text } from 'lib'
 import { PlannerInterval } from './types'
 import { format } from 'date-fns'
 

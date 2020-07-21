@@ -2,7 +2,7 @@
 import styled from '@emotion/styled'
 import { jsx, css } from '@emotion/react'
 import { FC, MouseEvent } from 'react'
-import { IconButton, Text } from 'components'
+import { IconButton, Text } from 'lib'
 import { FiMinimize2, FiMaximize2, FiX } from 'react-icons/fi'
 
 interface ViewportModalTitleBarProps {

@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
 import { jsx, css } from '@emotion/react'
-import { H1, Text } from 'components'
+import { H1, Text } from 'lib'
 import { FaDownload } from 'react-icons/fa'
-import { IconButton } from 'components/IconButton'
+import { IconButton } from 'lib/IconButton'
 import { FiX } from 'react-icons/fi'
 import { isString } from 'util'
 import { useOnClickOutside } from 'hooks'

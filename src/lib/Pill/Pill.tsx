@@ -2,7 +2,7 @@
 import { FC } from 'react'
 import styled from '@emotion/styled'
 import { jsx } from '@emotion/react'
-import { Text } from 'components/Text'
+import { Text } from 'lib/Text'
 import CloseButton from './CloseButton'
 
 interface PillProps {
