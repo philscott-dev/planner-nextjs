@@ -8,6 +8,7 @@ export { IconButton } from './IconButton'
 export { Planner } from './Planner'
 export { FlowChart } from './FlowChart'
 export { TouchMove } from './TouchMove'
+export { Dropdown, DropdownOption } from './Dropdown'
 export { ViewportModalContainer, ViewportModal } from './ViewportModal'
 
 export {

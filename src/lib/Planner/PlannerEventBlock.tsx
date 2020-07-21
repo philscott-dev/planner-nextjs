@@ -59,8 +59,12 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
           {event.title}
         </Text>
         <Text.Light ellipsis size="small" css={textCss}>
-          {format(event.startTime, formatString)} -{' '}
-          {format(event.endTime, formatString)}
+          {event.startTime && event.endTime
+            ? `${format(event.startTime, formatString)} - ${format(
+                event.endTime,
+                formatString,
+              )}`
+            : null}
         </Text.Light>
       </Block>
     </BlockWrapper>
@@ -96,7 +100,7 @@ const BlockWrapper = styled.div<BlockProps>`
   user-select: none;
 `
 
-const Block = styled.div<{ color: string; isActive: boolean }>`
+const Block = styled.div<{ color?: string; isActive: boolean }>`
   box-sizing: border-box;
   height: 100%;
   padding: 8px;

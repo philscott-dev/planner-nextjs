@@ -23,17 +23,19 @@ export default function useOnClickOutside(
       }
     }
 
-    events.forEach((event) => document.addEventListener(event, onClickOutside))
+    events.forEach((event) =>
+      document.addEventListener(event, onClickOutside, true),
+    )
 
     if (!shouldListen) {
       events.forEach((event) =>
-        document.removeEventListener(event, onClickOutside),
+        document.removeEventListener(event, onClickOutside, true),
       )
     }
 
     return () => {
       events.forEach((event) =>
-        document.removeEventListener(event, onClickOutside),
+        document.removeEventListener(event, onClickOutside, true),
       )
     }
   }, [ref, handler, shouldListen])

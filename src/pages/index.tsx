@@ -24,6 +24,7 @@ import {
   subDays,
   parse as parseDate,
 } from 'date-fns'
+import Portal from 'lib/Portal/Portal'
 
 const IndexPage: NextPage = () => {
   const [events, setEvents] = useState<PlannerEventGroup[]>([])
@@ -72,7 +73,6 @@ const IndexPage: NextPage = () => {
       assigneeId: row,
       startTime: date,
       endTime: date,
-      color: 'blue',
     }
     setEditableItems([...editableItems.slice(0, 1), newEvent])
   }

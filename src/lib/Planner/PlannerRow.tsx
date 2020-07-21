@@ -8,6 +8,7 @@ import PlannerRowWrapper from './PlannerRowWrapper'
 import usePlannerEventRow from './usePlannerEventRow'
 import { PlannerEvent, PlannerEventGroup } from './types'
 import { Text } from 'lib'
+import PlannerRowControls from './PlannerRowControls'
 
 interface PlannerRowProps {
   className?: string
@@ -53,6 +54,7 @@ const PlannerRow: FC<PlannerRowProps> = ({
         onMouseDown={onRowHeaderClick}
         onDoubleClick={onRowHeaderDoubleClick}
       >
+        <PlannerRowControls />
         <Text size="small">{row ? row.label : null}</Text>
       </PlannerRowHeader>
       <PlannerRowWrapper
@@ -81,11 +83,12 @@ const PlannerRow: FC<PlannerRowProps> = ({
 }
 
 export default styled(PlannerRow)`
-  box-sizing: border-box;
+  box-sizing: content-box;
   z-index: 0;
   display: flex;
   justify-content: flex-start;
   border-bottom: 2px solid black;
+  min-height: 72px;
 
   &:last-child {
     border-bottom: none;

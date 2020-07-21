@@ -132,7 +132,7 @@ export default styled(PlannerHeaderToolbar)`
 `
 const Heading = styled.h2`
   text-align: inherit;
-  font-size: 32px;
+  font-size: 28px;
   line-height: 42px;
   margin: 0;
   font-weight: 300;

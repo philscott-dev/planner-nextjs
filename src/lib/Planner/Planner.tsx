@@ -66,7 +66,7 @@ const Planner: FC<PlannerProps> = ({
 
   const handleColumnHeaderClick = (e: MouseEvent) => {
     e.preventDefault()
-    e.stopPropagation()
+    //e.stopPropagation()
     const col = getDataAttrForMouseEvent(e, 'data-planner-column')
     if (col) {
       setColumn(parseInt(col, 10))
@@ -117,7 +117,7 @@ const Planner: FC<PlannerProps> = ({
 
   const handleEmptyClick = (e: MouseEvent) => {
     e.preventDefault()
-    e.stopPropagation()
+    //e.stopPropagation()
     const row = getDataAttrForMouseEvent(e, 'data-row-id')
     const col = getDataAttrForMouseEvent(e, 'data-planner-column')
     const d = getDataAttrForMouseEvent(e, 'data-planner-date')
@@ -143,7 +143,7 @@ const Planner: FC<PlannerProps> = ({
 
   const handleRowHeaderClick = (e: MouseEvent) => {
     e.preventDefault()
-    e.stopPropagation()
+    //e.stopPropagation()
     const row = getDataAttrForMouseEvent(e, 'data-row-id')
     setActiveRow(row)
   }
