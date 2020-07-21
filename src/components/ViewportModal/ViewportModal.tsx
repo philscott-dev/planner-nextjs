@@ -71,7 +71,7 @@ const ViewportModal: FC<ViewportModalProps> = ({
             <ViewportModalBody>{children}</ViewportModalBody>
             <ViewportModalActionBar
               onCancel={handleCancel}
-              onDelete={onDelete ? handleDelete : null}
+              onDelete={onDelete ? handleDelete : undefined}
             />
           </>
         ) : null}

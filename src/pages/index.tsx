@@ -261,9 +261,10 @@ const IndexPage: NextPage = () => {
             <H3
               css={css`
                 margin-left: 24px;
+                margin-bottom: 32px;
               `}
             >
-              Event
+              Manage Event
             </H3>
             <ModalWrapper>
               <Flex>
