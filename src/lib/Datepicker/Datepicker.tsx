@@ -1,12 +1,5 @@
 /** @jsx jsx */
-import {
-  FC,
-  useState,
-  createRef,
-  ChangeEvent,
-  KeyboardEvent,
-  useEffect,
-} from 'react'
+import { FC, useState, createRef, ChangeEvent, KeyboardEvent } from 'react'
 import { jsx } from '@emotion/react'
 import { useOnClickOutside } from 'hooks'
 import styled from '@emotion/styled'

@@ -11,7 +11,7 @@ import {
   ViewportModal,
   Input,
   Select,
-  Datepicker,
+  DateInput,
   H3,
 } from 'lib'
 
@@ -59,8 +59,8 @@ const EventEditor: FC<EventEditorProps> = ({
               />
             </Flex>
             <Flex>
-              <Datepicker name="startTime" placeholder="Start Date" />
-              <Datepicker name="endTime" placeholder="End Date" />
+              <DateInput name="startTime" placeholder="Start Date" />
+              <DateInput name="endTime" placeholder="End Date" />
             </Flex>
             <Flex>
               <Select

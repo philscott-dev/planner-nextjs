@@ -1,21 +1,10 @@
-import Form from './Form'
-import Input from './FormInput'
-import Select from './FormSelect'
-import Label from './Label'
-import Error from './Error'
-import Spinner from './Spinner'
-import { LoadingStatus } from './hooks/useLoadingStatus'
-import { rules } from './rules'
-import FormButton from './FormButton'
-
-export {
-  LoadingStatus,
-  Form,
-  FormButton,
-  Input,
-  Select,
-  Label,
-  Error,
-  Spinner,
-  rules,
-}
+export { default as Form } from './Form'
+export { default as Input } from './FormInput'
+export { default as DateInput } from './FormDateInput'
+export { default as Select } from './FormSelect'
+export { default as Label } from './Label'
+export { default as Error } from './Error'
+export { default as Spinner } from './Spinner'
+export { default as FormButton } from './FormButton'
+export { LoadingStatus } from './hooks/useLoadingStatus'
+export { rules } from './rules'
