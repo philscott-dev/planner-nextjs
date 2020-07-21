@@ -7,7 +7,7 @@ import { Size } from './types'
 import { INPUT_LARGE, INPUT_SMALL } from './constants'
 import FormLabel from './FormLabel'
 import Select from './Select'
-import ArrowDown from './ArrowDown'
+import { FaCaretDown } from 'react-icons/fa'
 
 export interface FormSelectProps {
   className?: string
@@ -79,6 +79,7 @@ const FormSelect: FC<FormSelectProps> = ({
       >
         {children}
       </Select>
+      <ArrowDown />
     </Container>
   )
 }
@@ -91,6 +92,15 @@ const Container = styled.div<{ inputSize: Size }>`
   width: 100%;
   border-radius: ${({ inputSize }) =>
     inputSize === 'large' ? INPUT_LARGE : INPUT_SMALL}px;
+`
+
+const ArrowDown = styled(FaCaretDown)`
+  position: absolute;
+  color: ${({ theme }) => theme.color.gray[200]};
+  right: 24px;
+  top: 50%;
+  margin-top: -8px;
+  pointer-events: none;
 `
 
 export default FormSelect

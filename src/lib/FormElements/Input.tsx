@@ -42,7 +42,7 @@ export default styled.input<InputProps>`
   }
   &::placeholder {
     color: ${({ theme, error }) =>
-      !error ? theme.color.gray[300] : theme.color.red[300]};
+      !error ? theme.color.gray[200] : theme.color.red[300]};
     font-family: ${({ theme }) => theme.font.family};
   }
   &:-webkit-autofill,

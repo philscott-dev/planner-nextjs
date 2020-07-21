@@ -8,8 +8,16 @@ export { IconButton } from './IconButton'
 export { Planner } from './Planner'
 export { FlowChart } from './FlowChart'
 export { TouchMove } from './TouchMove'
-export { Form, Input, FormButton, Select, DateInput } from './FormElements'
 export { ViewportModalContainer, ViewportModal } from './ViewportModal'
+
+export {
+  Form,
+  Input,
+  FormButton,
+  Select,
+  DateInput,
+  SelectPlaceholder,
+} from './FormElements'
 
 export { H1 } from './H1'
 export { H2 } from './H2'

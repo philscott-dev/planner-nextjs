@@ -10,6 +10,7 @@ import { parseISO, format } from 'date-fns'
 import { Picker, Controls, Calendar } from 'lib/Datepicker'
 import FormLabel from './FormLabel'
 import Input from './Input'
+import { GoCalendar } from 'react-icons/go'
 
 export interface FormDateInputProps {
   name: string
@@ -104,6 +105,7 @@ const FormDateInput: FC<FormDateInputProps> = ({
         {...props}
         {...fns}
       />
+      <CalendarIcon />
       <Picker isVisible={isPickerVisible}>
         <Controls
           date={value.length > 0 ? value : new Date()}
@@ -127,6 +129,15 @@ const Container = styled.div<{ inputSize: Size }>`
   width: 100%;
   border-radius: ${({ inputSize }) =>
     inputSize === 'large' ? INPUT_LARGE : INPUT_SMALL}px;
+`
+
+const CalendarIcon = styled(GoCalendar)`
+  position: absolute;
+  color: ${({ theme }) => theme.color.gray[200]};
+  right: 24px;
+  top: 50%;
+  margin-top: -8px;
+  pointer-events: none;
 `
 
 export default FormDateInput

@@ -30,7 +30,8 @@ export default styled.select<SelectProps>`
   border: 2px solid
     ${({ theme, error }) =>
       !error ? theme.color.blue[400] : theme.color.red[300]};
-  color: ${({ theme }) => theme.color.white[100]};
+  color: ${({ theme, value }) =>
+    value ? theme.color.white[100] : theme.color.gray[200]};
   background: ${({ theme }) => theme.color.blue[500]};
   &:focus {
     border: 2px solid
@@ -53,7 +54,7 @@ export default styled.select<SelectProps>`
   @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
     border-right: 1px solid ${({ theme }) => theme.color.white[100]};
   }
-  transition: all 0.3s ease-in-out;
+  transition: border 0.3s ease-in-out;
   > option {
     :nth-of-type(1) {
       color: ${({ theme }) => theme.color.gray[200]};

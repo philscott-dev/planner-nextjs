@@ -13,6 +13,7 @@ import {
   Select,
   DateInput,
   H3,
+  SelectPlaceholder,
 } from 'lib'
 
 interface EventEditorProps {
@@ -76,9 +77,7 @@ const EventEditor: FC<EventEditorProps> = ({
                 name="assigneeId"
                 defaultValue={item.assigneeId}
               >
-                <option value="" disabled hidden>
-                  Assign a User
-                </option>
+                <SelectPlaceholder text="Assign a User" />
                 {events.map((event) => (
                   <option key={event.id} value={event.id}>
                     {event.label}
@@ -92,9 +91,7 @@ const EventEditor: FC<EventEditorProps> = ({
                 name="color"
                 defaultValue={item.color}
               >
-                <option value="" disabled hidden>
-                  Pick a Color
-                </option>
+                <SelectPlaceholder text="Pick a Color" />
                 {Object.entries(EventColors).map((value, index) => {
                   return (
                     <option key={index} value={value[1]}>
