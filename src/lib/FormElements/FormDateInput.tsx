@@ -1,12 +1,12 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
-import { FC, useState, useEffect, createRef } from 'react'
+import { FC, useState, useEffect, createRef, ChangeEvent } from 'react'
 import { jsx } from '@emotion/react'
 import { useInputValidation } from './hooks/useInputValidation'
 import { useOnClickOutside } from 'hooks'
 import { Size } from './types'
 import { INPUT_LARGE, INPUT_SMALL } from './constants'
-import { format } from 'date-fns'
+import { parseISO, format } from 'date-fns'
 import { Picker, Controls, Calendar } from 'lib/Datepicker'
 import FormLabel from './FormLabel'
 import Input from './Input'
@@ -39,14 +39,19 @@ const FormDateInput: FC<FormDateInputProps> = ({
     defaultValue,
   )
 
-  const pickerRef = createRef<HTMLDivElement>()
-  const inputRef = createRef<HTMLInputElement>()
+  const ref = createRef<HTMLDivElement>()
   const [isPickerVisible, setPickerVisibility] = useState<boolean>(false)
   const [isLabelVisible, setLabelVisibility] = useState(false)
   const [type, setType] = useState<'date' | 'text'>('text')
   useOnClickOutside(
-    pickerRef,
-    () => setPickerVisibility(false),
+    ref,
+    () => {
+      if (!value || value.length <= 0) {
+        setType('text')
+        setLabelVisibility(false)
+      }
+      setPickerVisibility(false)
+    },
     isPickerVisible,
   )
 
@@ -64,39 +69,48 @@ const FormDateInput: FC<FormDateInputProps> = ({
   }
 
   const handleOnBlur = () => {
-    if (!value) {
-      setType('text')
-    }
-    setLabelVisibility(false)
     onBlur()
   }
 
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const date = parseISO(e.target.value)
+    onChange(date)
+  }
+
+  const handleMonthChange = (date: Date) => {
+    onChange(date)
+  }
+
   const handleDateChange = (date: Date) => {
-    //onChange()
+    onChange(date)
+    setPickerVisibility(false)
   }
 
   return (
-    <Container inputSize={inputSize}>
+    <Container ref={ref} inputSize={inputSize}>
       <FormLabel error={!!error} isVisible={isLabelVisible || value.length > 0}>
         {placeholder}
       </FormLabel>
       <Input
         type={type}
         name={name}
-        value={value ? format(value, 'yyyy-MM-dd') : undefined}
+        value={value ? format(value, 'yyyy-MM-dd') : ''}
         error={!!error}
         placeholder={isLabelVisible ? '' : placeholder}
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
         inputSize={inputSize}
-        onChange={onChange}
+        onChange={handleInputChange}
         {...props}
         {...fns}
       />
-      <Picker ref={pickerRef} isVisible={isPickerVisible}>
-        <Controls date={value || new Date()} onChange={handleDateChange} />
+      <Picker isVisible={isPickerVisible}>
+        <Controls
+          date={value.length > 0 ? value : new Date()}
+          onChange={handleMonthChange}
+        />
         <Calendar
-          date={value || new Date()}
+          date={value.length > 0 ? value : new Date()}
           onSelectedDate={handleDateChange}
         />
       </Picker>

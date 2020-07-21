@@ -47,7 +47,7 @@ const EventEditor: FC<EventEditorProps> = ({
               margin-bottom: 32px;
             `}
           >
-            Manage Event
+            Event Details
           </H3>
           <ModalWrapper>
             <Flex>
@@ -59,8 +59,16 @@ const EventEditor: FC<EventEditorProps> = ({
               />
             </Flex>
             <Flex>
-              <DateInput name="startTime" placeholder="Start Date" />
-              <DateInput name="endTime" placeholder="End Date" />
+              <DateInput
+                name="startTime"
+                placeholder="Start Date"
+                defaultValue={item.startTime}
+              />
+              <DateInput
+                name="endTime"
+                placeholder="End Date"
+                defaultValue={item.endTime}
+              />
             </Flex>
             <Flex>
               <Select

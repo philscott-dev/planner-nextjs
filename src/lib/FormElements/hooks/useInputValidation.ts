@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { LoadingStatus } from './useLoadingStatus'
 import { ValidationContext } from '../Form'
+import { isString, isNumber } from 'helpers/typecheck'
 
 export function useInputValidation(name: string, defaultValue: any) {
   const [value, setValue] = useState(defaultValue || '')
@@ -35,8 +36,14 @@ export function useInputValidation(name: string, defaultValue: any) {
     e:
       | React.ChangeEvent<HTMLSelectElement>
       | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>,
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | string
+      | number
+      | Date,
   ) => {
+    if (isString(e) || isNumber(e) || e instanceof Date) {
+      return setValue(e)
+    }
     setValue(e.target.value)
   }
 
