@@ -1,4 +1,4 @@
-export function findById<T extends { id?: number | string }>(
+export function find<T extends { id?: number | string }>(
   array: T[],
   entity: T,
 ) {
@@ -17,7 +17,7 @@ export function findById<T extends { id?: number | string }>(
 }
 
 export function replace<T>(array: T[], entity: T, index?: number): T[] {
-  index = index ? index : findById(array, entity)
+  index = index ? index : find(array, entity)
   if (index > -1) {
     return [...array.slice(0, index), entity, ...array.slice(index + 1)]
   }
@@ -29,7 +29,7 @@ export function add<T>(array: T[], entity: T): T[] {
 }
 
 export function addUnique<T>(array: T[], entity: T): T[] {
-  const index = findById(array, entity)
+  const index = find(array, entity)
   if (index >= 0) {
     return array
   }
@@ -37,7 +37,7 @@ export function addUnique<T>(array: T[], entity: T): T[] {
 }
 
 export function remove<T>(array: T[], entity: T): T[] {
-  const index = findById(array, entity)
+  const index = find(array, entity)
   if (index > -1) {
     return [...array.slice(0, index), ...array.slice(index + 1)]
   }

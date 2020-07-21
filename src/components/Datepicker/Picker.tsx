@@ -2,6 +2,8 @@ import styled from '@emotion/styled'
 
 const Picker = styled.div<{ isVisible: boolean }>`
   position: absolute;
+  box-sizing: border-box;
+  z-index: 1;
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   left: 0;
   top: 100%;

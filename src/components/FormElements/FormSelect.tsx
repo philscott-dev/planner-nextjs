@@ -1,15 +1,16 @@
 /** @jsx jsx */
-import { FC, ChangeEvent, useState, useEffect } from 'react'
+import { FC, useState, useEffect, ChangeEvent } from 'react'
 import { jsx } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useInputValidation } from './hooks/useInputValidation'
+import FormLabel from './FormLabel'
+import { Size } from './types'
+import { INPUT_LARGE, INPUT_SMALL } from './constants'
 
-type Size = 'large' | 'small'
-
-export interface InputProps {
+export interface FormSelectProps {
+  className?: string
   name: string
   placeholder: string
-  type: string
   label?: string
   autofocus?: boolean
   list?: string
@@ -20,18 +21,17 @@ export interface InputProps {
   step?: number
   defaultValue?: any
   inputSize?: Size
+  children: React.ReactNode
 }
 
-const INPUT_LARGE: number = 54
-const INPUT_SMALL: number = 40
-
-const Input: FC<InputProps> = ({
+const FormSelect: FC<FormSelectProps> = ({
+  className,
   name,
   label,
   inputSize = 'large',
   placeholder,
   defaultValue,
-  type,
+  children,
   ...props
 }) => {
   const { value, error, onBlur, ...fns } = useInputValidation(
@@ -45,7 +45,6 @@ const Input: FC<InputProps> = ({
   useEffect(() => {
     if (defaultValue != undefined) {
       setLabelVisibility(true)
-      console.log(defaultValue)
     }
   }, [defaultValue])
 
@@ -54,19 +53,19 @@ const Input: FC<InputProps> = ({
   }
 
   const handleOnBlur = () => {
-    if (!value) {
+    if (!value || !value.length) {
       setLabelVisibility(false)
     }
     onBlur()
   }
 
   return (
-    <Container inputSize={inputSize}>
-      <StyledLabel error={!!error} isVisible={isVisible || value.length > 0}>
+    <Container className={className} inputSize={inputSize}>
+      <FormLabel error={!!error} isVisible={isVisible || value.length > 0}>
         {placeholder}
-      </StyledLabel>
-      <StyledInput
-        type={type}
+      </FormLabel>
+
+      <Select
         name={name}
         value={value}
         error={!!error}
@@ -76,16 +75,14 @@ const Input: FC<InputProps> = ({
         inputSize={inputSize}
         {...props}
         {...fns}
-      />
+      >
+        {children}
+      </Select>
     </Container>
   )
 }
 
-interface ContainerProps {
-  inputSize: Size
-}
-
-const Container = styled.div<ContainerProps>`
+const Container = styled.div<{ inputSize: Size }>`
   overflow-y: visible;
   overflow: visible;
   display: flex;
@@ -95,8 +92,7 @@ const Container = styled.div<ContainerProps>`
     inputSize === 'large' ? INPUT_LARGE : INPUT_SMALL}px;
 `
 
-interface StyledInputProps {
-  type: string
+interface SelectProps {
   name: string
   error: boolean
   inputSize: Size
@@ -108,12 +104,10 @@ interface StyledInputProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const StyledInput = styled.input<StyledInputProps>`
-  ::-webkit-calendar-picker-indicator {
-  }
+const Select = styled.select<SelectProps>`
+  -webkit-appearance: none;
   height: ${({ inputSize }) =>
     inputSize === 'large' ? INPUT_LARGE : INPUT_SMALL}px;
-  margin-bottom: 16px;
   padding: 0 24px;
   border-radius: 8px;
   outline: none;
@@ -151,28 +145,4 @@ const StyledInput = styled.input<StyledInputProps>`
   transition: all 0.3s ease-in-out;
 `
 
-interface StyledLabelProps {
-  isVisible: boolean
-  error: boolean
-}
-
-const StyledLabel = styled.label<StyledLabelProps>`
-  position: absolute;
-  left: 20px;
-  background: ${({ theme }) => theme.color.blue[500]};
-  padding: 0 4px;
-  transition: all 0.2s ease-in-out;
-  visibility: ${({ isVisible }) => (isVisible ? 'visibility' : 'hidden')};
-  top: ${({ isVisible }) => (isVisible ? -8 : 12)}px;
-  opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
-  color: ${({ theme, error }) =>
-    !error ? theme.color.white[100] : theme.color.red[300]};
-  font-family: ${({ theme }) => theme.font.family};
-  font-size: 14px;
-`
-
-Input.defaultProps = {
-  type: 'text',
-}
-
-export default Input
+export default FormSelect

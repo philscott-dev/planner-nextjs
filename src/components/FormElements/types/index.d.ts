@@ -69,6 +69,8 @@ export interface Entry {
   isValid: boolean
 }
 
+export type Size = 'large' | 'small'
+
 // export interface Entries {
 //   [key: string]: Entry
 // }

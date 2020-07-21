@@ -8,7 +8,7 @@ import { Picker, Controls, Calendar } from 'components/Datepicker'
 import { PlannerInterval } from './types'
 import { useOnClickOutside } from 'hooks'
 import PlannerControl from './PlannerControl'
-import { FaFileImport, FaFileExport, FaCog } from 'react-icons/fa'
+import { FaFileImport, FaFileExport } from 'react-icons/fa'
 import { FiPlus } from 'react-icons/fi'
 import { AiFillDatabase } from 'react-icons/ai'
 

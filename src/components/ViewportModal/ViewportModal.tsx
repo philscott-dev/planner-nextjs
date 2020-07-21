@@ -14,6 +14,7 @@ interface ViewportModalProps {
   index: number
   onCancel: (index: number) => void
   onConfirm: (entries: Entries, index: number) => void
+  onDelete?: (index: number) => void
 }
 
 const ViewportModal: FC<ViewportModalProps> = ({
@@ -23,12 +24,20 @@ const ViewportModal: FC<ViewportModalProps> = ({
   index,
   onCancel,
   onConfirm,
+  onDelete,
 }) => {
   const [isMinimized, setMinimized] = useState(false)
 
   const handleCancel = () => {
     onCancel(index)
   }
+
+  const handleDelete = () => {
+    if (onDelete) {
+      onDelete(index)
+    }
+  }
+
   const handleConfirm = (e: Entries) => {
     onConfirm(e, index)
   }
@@ -60,7 +69,10 @@ const ViewportModal: FC<ViewportModalProps> = ({
         {!isMinimized ? (
           <>
             <ViewportModalBody>{children}</ViewportModalBody>
-            <ViewportModalActionBar onCancel={handleCancel} />
+            <ViewportModalActionBar
+              onCancel={handleCancel}
+              onDelete={onDelete ? handleDelete : null}
+            />
           </>
         ) : null}
       </Form>

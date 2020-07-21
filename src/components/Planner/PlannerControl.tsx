@@ -19,7 +19,6 @@ const PlannerControl: FC<PlannerControlProps> = ({
   return (
     <div className={className}>
       <CtrlButton onMouseDown={onMouseDown}>{children}</CtrlButton>
-      {/* <CtrlText>{text}</CtrlText> */}
     </div>
   )
 }
@@ -43,11 +42,11 @@ const CtrlButton = styled(IconButton)`
   transition: all 0.3s ease-in-out;
 `
 
-const CtrlText = styled.p`
-  margin: 0;
-  margin-top: 6px;
-  font-weight: 400;
-  font-size: 10px;
-  color: ${({ theme }) => theme.color.white[100]};
-  font-family: ${({ theme }) => theme.font.family};
-`
+// const CtrlText = styled.p`
+//   margin: 0;
+//   margin-top: 6px;
+//   font-weight: 400;
+//   font-size: 10px;
+//   color: ${({ theme }) => theme.color.white[100]};
+//   font-family: ${({ theme }) => theme.font.family};
+// `

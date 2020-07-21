@@ -19,19 +19,22 @@ import Picker from './Picker'
 export interface DatepickerProps {
   name?: string
   date?: Date
-  onChange: (date: Date) => void
+  //onChange: (date: Date) => void
   className?: string
+  placeholder?: string
 }
 
 const Datepicker: FC<DatepickerProps> = ({
   date,
-  onChange,
+  //onChange,
   name,
   className,
+  placeholder,
 }) => {
   const pickerRef = createRef<HTMLDivElement>()
   const inputRef = createRef<HTMLInputElement>()
   const [isVisible, setVisible] = useState<boolean>(false)
+  const [type, setType] = useState<'date' | 'text'>('text')
   useOnClickOutside(pickerRef, () => setVisible(false), isVisible)
 
   const handleShowPicker = () => {
@@ -50,29 +53,42 @@ const Datepicker: FC<DatepickerProps> = ({
     const [year, month, day] = part
     const nextDate = new Date(year, month - 1, day)
     if (isValid(nextDate) && (date === undefined || !isEqual(date, nextDate))) {
-      onChange(nextDate)
+      //onChange(nextDate)
     }
   }
 
   const handleRangeChange = (date: Date) => {
-    onChange(date)
+    //onChange(date)
   }
 
   const handleDateChange = (date: Date) => {
-    onChange(date)
+    //onChange(date)
     setVisible(false)
+  }
+
+  const handleOnFocus = () => {
+    //setLabelVisibility(true)
+  }
+
+  const handleOnBlur = () => {
+    if (!date) {
+      setType('text')
+    }
   }
 
   return (
     <div className={className}>
       <Input
         name={name}
+        placeholder={placeholder}
         ref={inputRef}
-        type="date"
+        type={type}
         value={date ? format(date, 'yyyy-MM-dd') : undefined}
         onMouseDown={handleShowPicker}
         onChange={handleOnChange}
         onKeyDown={handleKeyDown}
+        onFocus={handleOnFocus}
+        onBlur={handleOnBlur}
       />
       <Picker ref={pickerRef} isVisible={isVisible}>
         <Controls date={date} onChange={handleRangeChange} />
@@ -83,6 +99,8 @@ const Datepicker: FC<DatepickerProps> = ({
 }
 
 export default styled(Datepicker)`
-  display: inline-block;
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
 `

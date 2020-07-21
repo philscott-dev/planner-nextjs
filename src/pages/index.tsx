@@ -1,5 +1,7 @@
+/** @jsx jsx */
 import styled from '@emotion/styled'
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import { jsx, css } from '@emotion/react'
 import { NextPage } from 'next'
 import { removeByIndex } from 'helpers/array'
 import { download } from 'helpers/file'
@@ -20,6 +22,9 @@ import {
   ViewportModalContainer,
   ViewportModal,
   Input,
+  Select,
+  Datepicker,
+  H3,
 } from 'components'
 import {
   isSameDay,
@@ -29,13 +34,15 @@ import {
   format,
   parse as parseDate,
 } from 'date-fns'
+import { capitalize } from 'helpers/string'
 
 const IndexPage: NextPage = () => {
   const [events, setEvents] = useState<PlannerEventGroup[]>([])
+  const [editableDeleteIndex, setEditableDeleteIndex] = useState<number>()
+  const [editableItems, setEditableItems] = useState<PlannerEvent[]>([])
   const [plannerInterval, setPlannerInterval] = useState<PlannerInterval>(
     'month',
   )
-  const [editableItems, setEditableItems] = useState<PlannerEvent[]>([])
 
   useEffect(() => {
     const json = localStorage.getItem(LOCAL_STORAGE_KEY)
@@ -103,15 +110,17 @@ const IndexPage: NextPage = () => {
     col: string,
     date: Date,
   ) => {
-    if (!isSameDay(event.startTime, date) || event.assigneeId !== row) {
-      const diff = differenceInDays(
-        startOfDay(event.startTime),
-        startOfDay(date),
-      )
-      event.startTime = date
-      event.endTime = subDays(event.endTime, diff)
-      const updatedPlanner = updateByNextId(events, event, row)
-      setEvents(updatedPlanner)
+    if (event.startTime && event.endTime) {
+      if (!isSameDay(event.startTime, date) || event.assigneeId !== row) {
+        const diff = differenceInDays(
+          startOfDay(event.startTime),
+          startOfDay(date),
+        )
+        event.startTime = date
+        event.endTime = subDays(event.endTime, diff)
+        const updatedPlanner = updateByNextId(events, event, row)
+        setEvents(updatedPlanner)
+      }
     }
   }
 
@@ -131,6 +140,23 @@ const IndexPage: NextPage = () => {
     setEditableItems(removeByIndex(editableItems, index))
   }
 
+  const handleModalDelete = (index: number) => {
+    //trigger an actual fullscreen modal
+    setEditableDeleteIndex(index)
+  }
+
+  const handleConfirmDelete = () => {
+    // remove the bottom editable event modal
+    if (editableDeleteIndex) {
+      setEditableItems(removeByIndex(editableItems, editableDeleteIndex))
+
+      //hide the fullscreen modal
+      setEditableDeleteIndex(undefined)
+
+      // remove the event from the real events array
+    }
+  }
+
   const handleModalConfirm = (entries: Entries, index: number) => {
     //get the entry by it's index,
     const event = editableItems[index]
@@ -143,7 +169,6 @@ const IndexPage: NextPage = () => {
     ) {
       return
     }
-    console.log(entries)
     const referenceDate = new Date()
     const newEvent: PlannerEvent = {
       ...event,
@@ -186,9 +211,6 @@ const IndexPage: NextPage = () => {
     console.log('handleAddEventClick')
     const newEvent: PlannerEvent = {
       id: uuid(),
-      startTime: new Date(),
-      endTime: new Date(),
-      color: 'blue',
     }
     setEditableItems([...editableItems.slice(0, 1), newEvent])
   }
@@ -207,8 +229,6 @@ const IndexPage: NextPage = () => {
   /**
    * Render Page
    */
-
-  console.log(editableItems)
   return (
     <>
       <Planner
@@ -236,51 +256,63 @@ const IndexPage: NextPage = () => {
             title={item.title}
             onCancel={handleModalCancel}
             onConfirm={handleModalConfirm}
+            onDelete={handleModalDelete}
           >
-            <Input
-              type="text"
-              name="title"
-              placeholder="Event Title"
-              defaultValue={item.title}
-            />
-            <Flex>
-              <Input
-                type="date"
-                name="startTime"
-                placeholder="Start Date"
-                defaultValue={
-                  item.startTime
-                    ? format(item.startTime, DATE_PICKER_FORMAT)
-                    : null
-                }
-              />
-              <Input
-                type="date"
-                name="endTime"
-                placeholder="End Date"
-                defaultValue={
-                  item.endTime ? format(item.endTime, DATE_PICKER_FORMAT) : null
-                }
-              />
-            </Flex>
-            <Select name="assigneeId" defaultValue={item.assigneeId}>
-              <option>Assignee</option>
-              {events.map((event) => (
-                <option key={event.id} value={event.id}>
-                  {event.label}
-                </option>
-              ))}
-            </Select>
-            <Select name="color" defaultValue={item.color}>
-              <option>Color</option>
-              {Object.entries(EventColors).map((value, index) => {
-                return (
-                  <option key={index} value={value[1]}>
-                    {value[0]}
+            <H3
+              css={css`
+                margin-left: 24px;
+              `}
+            >
+              Event
+            </H3>
+            <ModalWrapper>
+              <Flex>
+                <Input
+                  type="text"
+                  name="title"
+                  placeholder="Event Title"
+                  defaultValue={item.title}
+                />
+              </Flex>
+              <Flex>
+                <Datepicker name="startTime" placeholder="Start Date" />
+                <Datepicker name="endTime" placeholder="End Date" />
+              </Flex>
+              <Flex>
+                <Select
+                  placeholder="User"
+                  name="assigneeId"
+                  defaultValue={item.assigneeId}
+                >
+                  <option value="" selected disabled hidden>
+                    Assign a User
                   </option>
-                )
-              })}
-            </Select>
+                  {events.map((event) => (
+                    <option key={event.id} value={event.id}>
+                      {event.label}
+                    </option>
+                  ))}
+                </Select>
+              </Flex>
+              <Flex>
+                <Select
+                  placeholder="Color"
+                  name="color"
+                  defaultValue={item.color}
+                >
+                  <option value="" selected disabled hidden>
+                    Pick a Color
+                  </option>
+                  {Object.entries(EventColors).map((value, index) => {
+                    return (
+                      <option key={index} value={value[1]}>
+                        {capitalize(value[0])}
+                      </option>
+                    )
+                  })}
+                </Select>
+              </Flex>
+            </ModalWrapper>
           </ViewportModal>
         ))}
       </ViewportModalContainer>
@@ -290,45 +322,14 @@ const IndexPage: NextPage = () => {
 
 const Flex = styled.div`
   display: flex;
-  margin: 8px 0;
-  div:nth-of-type(1) {
-    margin-right: 24px;
+  margin-bottom: 32px;
+  div:nth-of-type(2) {
+    margin-left: 32px;
   }
 `
 
-const Select = styled.select`
-  height: 54px;
-  margin-bottom: 24px;
+const ModalWrapper = styled.div`
   padding: 0 24px;
-  border-radius: 8px;
-  outline: none;
-  width: 100%;
-  font-size: 14px;
-  background-clip: padding-box;
-  font-family: ${({ theme }) => theme.font.family};
-  font-weight: 200;
-  border: 2px solid ${({ theme }) => theme.color.blue[400]};
-  color: ${({ theme }) => theme.color.white[100]};
-  background: ${({ theme }) => theme.color.blue[500]};
-  &:focus {
-    border: 2px solid ${({ theme }) => theme.color.blue[300]};
-  }
-  &::placeholder {
-    color: ${({ theme }) => theme.color.gray[300]};
-    font-family: ${({ theme }) => theme.font.family};
-  }
-  &:-webkit-autofill,
-  &:-webkit-autofill:hover,
-  &:-webkit-autofill:focus {
-    border: 1px solid ${({ theme }) => theme.color.white[100]};
-    -webkit-text-fill-color: ${({ theme }) => theme.color.white[100]};
-    -webkit-box-shadow: 0 0 0px 1000px transparent inset;
-    transition: background-color 5000s ease-in-out 0s;
-  }
-  @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
-    border-right: 1px solid ${({ theme }) => theme.color.white[100]};
-  }
-  transition: all 0.3s ease-in-out;
 `
 
 export default IndexPage

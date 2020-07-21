@@ -1,11 +1,27 @@
-/** @jsx jsx */
+import { ChangeEvent } from 'react'
 import styled from '@emotion/styled'
+import { Size } from './types'
+import { INPUT_LARGE, INPUT_SMALL } from './constants'
 
-const Input = styled.input<{ error?: boolean }>`
+interface InputProps {
+  type: string
+  name: string
+  error: boolean
+  inputSize: Size
+  required?: boolean
+  value?: string
+  placeholder: string
+  onFocus: () => void
+  onBlur: () => void
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+}
+
+export default styled.input<InputProps>`
   ::-webkit-calendar-picker-indicator {
     display: none;
   }
-  height: 54px;
+  height: ${({ inputSize }) =>
+    inputSize === 'large' ? INPUT_LARGE : INPUT_SMALL}px;
   padding: 0 24px;
   border-radius: 8px;
   outline: none;
@@ -42,5 +58,3 @@ const Input = styled.input<{ error?: boolean }>`
   }
   transition: all 0.3s ease-in-out;
 `
-
-export default Input

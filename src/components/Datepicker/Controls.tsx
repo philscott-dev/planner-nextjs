@@ -57,7 +57,7 @@ const Controls: FC<ControlsProps> = ({
 export default styled(Controls)`
   display: flex;
   justify-content: space-around;
-  margin-bottom: 8px;
+  margin: 0 0 8px 0;
   padding: 8px 2px;
   border-radius: 2px;
   background: ${({ theme }) => theme.color.blue[400]};
