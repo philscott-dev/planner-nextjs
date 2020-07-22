@@ -24,7 +24,7 @@ import {
   startOfDay,
   subDays,
   parseISO,
-  isBefore,
+  isAfter,
 } from 'date-fns'
 
 const IndexPage: NextPage = () => {
@@ -99,16 +99,19 @@ const IndexPage: NextPage = () => {
     col: string,
     date: Date,
   ) => {
+    console.log('drop event')
     if (event.startTime && event.endTime) {
       if (!isSameDay(event.startTime, date) || event.assigneeId !== row) {
         const diff = differenceInDays(
           startOfDay(event.startTime),
           startOfDay(date),
         )
-        //event.assigneeId = row
-        event.startTime = date
-        event.endTime = subDays(event.endTime, diff)
-        const updatedPlanner = updateByNextId(events, event, row)
+        const movedEvent = {
+          ...event,
+          startTime: date,
+          endTime: subDays(event.endTime, diff),
+        }
+        const updatedPlanner = updateByNextId(events, movedEvent, row)
         setEvents(updatedPlanner)
       }
     }
@@ -148,38 +151,28 @@ const IndexPage: NextPage = () => {
   }
 
   const handleEventEditorConfirm = (entries: Entries, index: number) => {
-    //get the entry by it's index,
-    const event = editableItems[index]
     if (
       !entries.title ||
       !entries.startTime ||
       !entries.endTime ||
       !entries.color ||
       !entries.assigneeId ||
-      isBefore(
+      isAfter(
         parseISO(entries.startTime as string),
         parseISO(entries.endTime as string),
       )
     ) {
       return
     }
-    const referenceDate = new Date()
+    //get the entry by it's index,
+    const event = editableItems[index]
     const newEvent: PlannerEvent = {
       ...event,
       title: entries.title as string,
       id: event.id || uuid(),
-      assigneeId: entries.assigneeId as string,
-      startTime: parseDate(
-        entries.startTime as string,
-        DATE_PICKER_FORMAT,
-        referenceDate,
-      ),
-      endTime: parseDate(
-        entries.endTime as string,
-        DATE_PICKER_FORMAT,
-        referenceDate,
-      ),
-      color: (entries.color as string) || theme.color.blue[300],
+      startTime: parseISO(entries.startTime as string),
+      endTime: parseISO(entries.endTime as string),
+      color: entries.color as string,
     }
     const updatedPlanner = updateByNextId(
       events,

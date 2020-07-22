@@ -80,6 +80,7 @@ const FormDateInput: FC<FormDateInputProps> = ({
 
   const handleOnBlur = () => {
     onBlur()
+    setPickerVisibility(false)
   }
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {

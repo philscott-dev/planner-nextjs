@@ -7,19 +7,28 @@ export function updateByNextId(
   event: PlannerEvent,
   nextGroupId: string | number,
 ) {
-  return groups.map((group) => {
-    // remove the event
+  const next = groups.map((group) => {
+    //if the event is staying in the same group
+    if (event.assigneeId === nextGroupId && group.id === nextGroupId) {
+      const removed = remove(group.events, event)
+      const events = add(removed, event)
+      return { ...group, events }
+    }
+
+    //otherwise remove from the current looped group
     if (group.id === event.assigneeId) {
-      console.log(group.id, event)
-      event.assigneeId = nextGroupId
-      group.events = remove(group.events, event)
+      // remove the event
+      const events = remove(group.events, event)
+      return { ...group, events }
     }
 
     // add the event back
     if (group.id === nextGroupId) {
-      group.events = add(group.events, event)
+      const events = add(group.events, { ...event, assigneeId: nextGroupId })
+      return { ...group, events }
     }
 
     return group
   })
+  return next
 }
