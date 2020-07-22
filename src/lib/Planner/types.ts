@@ -2,8 +2,8 @@ export interface PlannerEvent {
   id: number | string
   assigneeId?: number | string
   title?: string
-  startTime?: Date
-  endTime?: Date
+  startTime: Date
+  endTime: Date
   isAllDay?: boolean
   isRepeat?: boolean
   label?: string

@@ -57,10 +57,7 @@ export default function usePlannerEventRow(events?: PlannerEvent[]) {
     const arr = !events
       ? []
       : events
-          .sort(
-            (a, b) =>
-              (a.startTime?.getTime() ?? 0) - (b.startTime?.getTime() ?? 0),
-          )
+          .sort((a, b) => a.startTime?.getTime() - b.startTime?.getTime())
           .reduce<PlannerEvent[][]>(reduceDays, [[]])
     setRows(arr)
   }, [events])
