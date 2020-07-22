@@ -24,12 +24,11 @@ import {
   subDays,
   parse as parseDate,
 } from 'date-fns'
-import Portal from 'lib/Portal/Portal'
 
 const IndexPage: NextPage = () => {
   const [events, setEvents] = useState<PlannerEventGroup[]>([])
   const [editableDeleteIndex, setEditableDeleteIndex] = useState<number>()
-  const [editableItems, setEditableItems] = useState<PlannerEvent[]>([])
+  const [editableItems, setEditableItems] = useState<PlannerEvent[] | any[]>([])
   const [plannerInterval, setPlannerInterval] = useState<PlannerInterval>(
     'month',
   )
@@ -197,10 +196,13 @@ const IndexPage: NextPage = () => {
 
   const handleAddEventClick = () => {
     console.log('handleAddEventClick')
-    const newEvent: PlannerEvent = {
-      id: uuid(),
-    }
-    setEditableItems([...editableItems.slice(0, 1), newEvent])
+
+    setEditableItems([
+      ...editableItems.slice(0, 1),
+      {
+        id: uuid(),
+      },
+    ])
   }
 
   const handleAddRowClick = () => {
