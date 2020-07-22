@@ -21,6 +21,7 @@ export interface FormInputProps {
   required?: boolean
   step?: number
   defaultValue?: any
+  tabIndex?: number
   inputSize?: Size
 }
 

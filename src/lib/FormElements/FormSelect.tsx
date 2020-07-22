@@ -23,6 +23,7 @@ export interface FormSelectProps {
   step?: number
   defaultValue?: any
   inputSize?: Size
+  tabIndex?: number
   children: React.ReactNode
 }
 

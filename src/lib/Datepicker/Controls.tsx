@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react'
-import { FC } from 'react'
+import { FC, MouseEvent } from 'react'
 import styled from '@emotion/styled'
 import { subMonths, addMonths, subYears, addYears, format } from 'date-fns'
-import { IconButton, Text } from '..'
+import { IconButton, Text } from 'lib'
 import {
   FiChevronsLeft,
   FiChevronRight,
@@ -22,32 +22,36 @@ const Controls: FC<ControlsProps> = ({
   date = new Date(),
   className,
 }) => {
-  const handleNextMonth = () => {
+  const handleNextMonth = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
     onChange(addMonths(date, 1))
   }
-  const handlePreviousMonth = () => {
+  const handlePreviousMonth = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
     onChange(subMonths(date, 1))
   }
-  const handleNextYear = () => {
+  const handleNextYear = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
     onChange(addYears(date, 1))
   }
-  const handlePreviousYear = () => {
+  const handlePreviousYear = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
     onChange(subYears(date, 1))
   }
 
   return (
     <div className={className}>
-      <IconButton onClick={handlePreviousYear}>
+      <IconButton type="button" onMouseDown={handlePreviousYear}>
         <FiChevronsLeft />
       </IconButton>
-      <IconButton onClick={handlePreviousMonth}>
+      <IconButton type="button" onMouseDown={handlePreviousMonth}>
         <FiChevronLeft />
       </IconButton>
       <Text size="small">{format(date, 'MMM, yyyy')}</Text>
-      <IconButton onClick={handleNextMonth}>
+      <IconButton type="button" onMouseDown={handleNextMonth}>
         <FiChevronRight />
       </IconButton>
-      <IconButton onClick={handleNextYear}>
+      <IconButton type="button" onMouseDown={handleNextYear}>
         <FiChevronsRight />
       </IconButton>
     </div>

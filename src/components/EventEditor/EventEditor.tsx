@@ -55,6 +55,7 @@ const EventEditor: FC<EventEditorProps> = ({
               <Input
                 type="text"
                 name="title"
+                tabIndex={1}
                 placeholder="Event Title"
                 defaultValue={item.title}
               />
@@ -63,11 +64,13 @@ const EventEditor: FC<EventEditorProps> = ({
               <DateInput
                 name="startTime"
                 placeholder="Start Date"
+                tabIndex={2}
                 defaultValue={item.startTime}
               />
               <DateInput
                 name="endTime"
                 placeholder="End Date"
+                tabIndex={3}
                 defaultValue={item.endTime}
               />
             </Flex>
@@ -75,6 +78,7 @@ const EventEditor: FC<EventEditorProps> = ({
               <Select
                 placeholder="User"
                 name="assigneeId"
+                tabIndex={4}
                 defaultValue={item.assigneeId}
               >
                 <SelectPlaceholder text="Assign a User" />
@@ -89,6 +93,7 @@ const EventEditor: FC<EventEditorProps> = ({
               <Select
                 placeholder="Color"
                 name="color"
+                tabIndex={5}
                 defaultValue={item.color}
               >
                 <SelectPlaceholder text="Pick a Color" />

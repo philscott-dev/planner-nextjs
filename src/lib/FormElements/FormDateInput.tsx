@@ -1,6 +1,13 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
-import { FC, useState, useEffect, createRef, ChangeEvent } from 'react'
+import {
+  FC,
+  useState,
+  useEffect,
+  createRef,
+  ChangeEvent,
+  FocusEvent,
+} from 'react'
 import { jsx } from '@emotion/react'
 import { useInputValidation } from './hooks/useInputValidation'
 import { useOnClickOutside } from 'hooks'
@@ -24,6 +31,7 @@ export interface FormDateInputProps {
   required?: boolean
   step?: number
   defaultValue?: any
+  tabIndex?: number
   inputSize?: Size
 }
 
@@ -60,6 +68,7 @@ const FormDateInput: FC<FormDateInputProps> = ({
   useEffect(() => {
     if (defaultValue != undefined) {
       setLabelVisibility(true)
+      setType('date')
     }
   }, [defaultValue])
 
@@ -79,6 +88,7 @@ const FormDateInput: FC<FormDateInputProps> = ({
   }
 
   const handleMonthChange = (date: Date) => {
+    console.log(date)
     onChange(date)
   }
 
@@ -87,6 +97,7 @@ const FormDateInput: FC<FormDateInputProps> = ({
     setPickerVisibility(false)
   }
 
+  console.log(value)
   return (
     <Container ref={ref} inputSize={inputSize}>
       <FormLabel error={!!error} isVisible={isLabelVisible || value.length > 0}>
@@ -108,11 +119,11 @@ const FormDateInput: FC<FormDateInputProps> = ({
       <CalendarIcon />
       <Picker isVisible={isPickerVisible}>
         <Controls
-          date={value.length > 0 ? value : new Date()}
+          date={value instanceof Date ? value : new Date()}
           onChange={handleMonthChange}
         />
         <Calendar
-          date={value.length > 0 ? value : new Date()}
+          date={value instanceof Date ? value : new Date()}
           onSelectedDate={handleDateChange}
         />
       </Picker>
