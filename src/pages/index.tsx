@@ -18,11 +18,13 @@ import {
   PlannerInterval,
 } from 'lib/Planner/types'
 import {
+  parse as parseDate,
   isSameDay,
   differenceInDays,
   startOfDay,
   subDays,
-  parse as parseDate,
+  parseISO,
+  isBefore,
 } from 'date-fns'
 
 const IndexPage: NextPage = () => {
@@ -103,6 +105,7 @@ const IndexPage: NextPage = () => {
           startOfDay(event.startTime),
           startOfDay(date),
         )
+        //event.assigneeId = row
         event.startTime = date
         event.endTime = subDays(event.endTime, diff)
         const updatedPlanner = updateByNextId(events, event, row)
@@ -152,7 +155,11 @@ const IndexPage: NextPage = () => {
       !entries.startTime ||
       !entries.endTime ||
       !entries.color ||
-      !entries.assigneeId
+      !entries.assigneeId ||
+      isBefore(
+        parseISO(entries.startTime as string),
+        parseISO(entries.endTime as string),
+      )
     ) {
       return
     }
@@ -161,6 +168,7 @@ const IndexPage: NextPage = () => {
       ...event,
       title: entries.title as string,
       id: event.id || uuid(),
+      assigneeId: entries.assigneeId as string,
       startTime: parseDate(
         entries.startTime as string,
         DATE_PICKER_FORMAT,
@@ -195,8 +203,6 @@ const IndexPage: NextPage = () => {
   }
 
   const handleAddEventClick = () => {
-    console.log('handleAddEventClick')
-
     setEditableItems([
       ...editableItems.slice(0, 1),
       {
