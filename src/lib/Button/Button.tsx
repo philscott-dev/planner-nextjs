@@ -18,7 +18,6 @@ const Button = styled.button<ButtonProps>`
   white-space: nowrap;
   align-items: center;
   border-radius: 8px;
-  /* border-radius: 72px; */
   outline: none;
   pointer-events: all;
   border-style: solid;
