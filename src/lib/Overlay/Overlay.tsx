@@ -1,8 +1,7 @@
 import styled from '@emotion/styled'
 
 interface StyledProps {
-  isActive: boolean
-  animationSpeed?: number
+  isVisible: boolean
   onMouseDown?: () => void
 }
 
@@ -11,9 +10,9 @@ const Overlay = styled.div<StyledProps>`
   height: 100vh;
   width: 100%;
   background: ${({ theme }) => theme.color.blue[700]};
-  z-index: ${({ isActive, theme }) => (isActive ? theme.index[100] : 0)};
-  visibility: ${({ isActive }) => (isActive ? 'visible' : 'hidden')};
-  opacity: ${({ isActive }) => (isActive ? 0.9 : 0)};
+  z-index: ${({ isVisible, theme }) => (isVisible ? theme.index[100] : 0)};
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
+  opacity: ${({ isVisible }) => (isVisible ? 0.5 : 0)};
 `
 
 export default Overlay

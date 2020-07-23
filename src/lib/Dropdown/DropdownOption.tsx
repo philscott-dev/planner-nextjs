@@ -14,11 +14,11 @@ export default styled.button<{ isDelete?: boolean }>`
   border: none;
   margin: 0;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
   padding: 16px 16px;
   transition: ${({ theme }) => theme.transition.all};
   color: ${({ theme }) => theme.color.white[100]};
-  background: ${({ theme }) => theme.color.blue[600]};
+  background: ${({ theme }) => theme.color.blue[500]};
   /* &:nth-of-type(1) {
     border-radius: 8px 8px 0 0;
   }

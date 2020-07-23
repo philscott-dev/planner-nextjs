@@ -20,6 +20,7 @@ export default styled.input<InputProps>`
   ::-webkit-calendar-picker-indicator {
     display: none;
   }
+  box-sizing: border-box;
   height: ${({ inputSize }) =>
     inputSize === 'large' ? INPUT_LARGE : INPUT_SMALL}px;
   padding: 0 24px;

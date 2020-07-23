@@ -54,7 +54,13 @@ const PlannerRow: FC<PlannerRowProps> = ({
         onMouseDown={onRowHeaderClick}
         onDoubleClick={onRowHeaderDoubleClick}
       >
-        <PlannerRowControls />
+        <PlannerRowControls
+          label={row ? row.label : ''}
+          onRowUp={() => {}}
+          onRowDown={() => {}}
+          onRenameRow={() => {}}
+          onDeleteRow={() => {}}
+        />
         <Text size="small">{row ? row.label : null}</Text>
       </PlannerRowHeader>
       <PlannerRowWrapper

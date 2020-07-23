@@ -85,6 +85,16 @@ const Alt = styled(Button)`
   }
 `
 
+const Danger = styled(Button)`
+  color: ${({ theme }) => theme.color.red[300]};
+  background: transparent;
+  border-color: ${({ theme, isActive }) =>
+    isActive ? theme.color.blue[400] : theme.color.blue[700]};
+  &:hover {
+    border-color: ${({ theme }) => theme.color.blue[300]};
+  }
+`
+
 function sizes({ size }: { size?: Sizes }) {
   switch (size) {
     case 'small':
@@ -105,4 +115,10 @@ function sizes({ size }: { size?: Sizes }) {
   }
 }
 
-export default Object.assign(Button, { Primary, Secondary, Tertiary, Alt })
+export default Object.assign(Button, {
+  Primary,
+  Secondary,
+  Tertiary,
+  Alt,
+  Danger,
+})

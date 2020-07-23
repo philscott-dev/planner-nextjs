@@ -1,3 +1,1 @@
-import Overlay from './Overlay'
-
-export { Overlay }
+export { default as Overlay } from './Overlay'

@@ -116,7 +116,7 @@ const Planner: FC<PlannerProps> = ({
   }
 
   const handleEmptyClick = (e: MouseEvent) => {
-    e.preventDefault()
+    //e.preventDefault()
     //e.stopPropagation()
     const row = getDataAttrForMouseEvent(e, 'data-row-id')
     const col = getDataAttrForMouseEvent(e, 'data-planner-column')
@@ -142,8 +142,8 @@ const Planner: FC<PlannerProps> = ({
   }
 
   const handleRowHeaderClick = (e: MouseEvent) => {
-    e.preventDefault()
-    //e.stopPropagation()
+    //e.preventDefault()
+    e.stopPropagation()
     const row = getDataAttrForMouseEvent(e, 'data-row-id')
     setActiveRow(row)
   }

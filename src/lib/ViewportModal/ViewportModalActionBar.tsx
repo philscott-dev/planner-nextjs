@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { jsx, css } from '@emotion/react'
 import { FC } from 'react'
 import { FormButton, IconButton } from 'lib'
-import { FaTrashAlt } from 'react-icons/fa'
+import { FaTrashAlt, FaCheck } from 'react-icons/fa'
 
 interface ActionBarProps {
   className?: string
@@ -18,7 +18,14 @@ const ViewportModalActionBar: FC<ActionBarProps> = ({
 }) => {
   return (
     <div className={className}>
-      <FormButton css={buttonCss}>Confirm</FormButton>
+      <FormButton css={buttonCss}>
+        Confirm{' '}
+        <FaCheck
+          css={css`
+            margin-left: 8px;
+          `}
+        />
+      </FormButton>
       <CtrlButton onMouseDown={onDelete}>
         <FaTrashAlt />
       </CtrlButton>

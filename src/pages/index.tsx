@@ -7,11 +7,10 @@ import { download } from 'helpers/file'
 import { v4 as uuid } from 'uuid'
 import { parseJsonDates } from 'helpers/date'
 import { updateByNextId } from 'helpers/_planner'
-import { DATE_PICKER_FORMAT, LOCAL_STORAGE_KEY } from 'constants/constants'
+import { LOCAL_STORAGE_KEY } from 'constants/constants'
 import { Entries } from 'lib/FormElements/types'
-import { Planner } from 'lib'
+import { Planner, Portal, Modal, Overlay } from 'lib'
 import { EventEditor } from 'components'
-import { theme } from 'theme'
 import {
   PlannerEvent,
   PlannerEventGroup,
@@ -244,6 +243,17 @@ const IndexPage: NextPage = () => {
         onDelete={handleEventEditorDelete}
         onConfirm={handleEventEditorConfirm}
       />
+      {/* <Portal mountId="portal">
+        <Overlay isVisible={isModalVisible} onMouseDown={handleModalClose} />
+        <Modal
+          isVisible={isModalVisible}
+          title={modalTitle}
+          onClose={handleModalClose}
+        >
+          {' '}
+          stuff{' '}
+        </Modal>
+      </Portal> */}
     </>
   )
 }

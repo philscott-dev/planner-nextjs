@@ -10,7 +10,9 @@ export { FlowChart } from './FlowChart'
 export { TouchMove } from './TouchMove'
 export { Dropdown, DropdownOption } from './Dropdown'
 export { ViewportModalContainer, ViewportModal } from './ViewportModal'
-
+export { Portal, PortalMount } from './Portal'
+export { Overlay } from './Overlay'
+export { Modal } from './Modal'
 export {
   Form,
   Input,
