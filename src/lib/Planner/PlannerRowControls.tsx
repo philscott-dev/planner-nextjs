@@ -9,17 +9,23 @@ import { RenameDialog, DeleteDialog } from 'components'
 interface PlannerRowControlsProps {
   className?: string
   label: string
-  onRenameRow: (value: string) => void
-  onDeleteRow: () => void
-  onRowUp: () => void
-  onRowDown: () => void
+  id: string | number
+  index: number
+  rowCount: number
+  onRowRename: (value: string, rowId: string | number, index: number) => void
+  onRowDelete: (rowId: string | number, index: number) => void
+  onRowUp: (rowId: string | number, index: number) => void
+  onRowDown: (rowId: string | number, index: number) => void
 }
 
 const PlannerRowControls: FC<PlannerRowControlsProps> = ({
   className,
   label,
-  onDeleteRow,
-  onRenameRow,
+  id,
+  index,
+  rowCount,
+  onRowDelete,
+  onRowRename,
   onRowDown,
   onRowUp,
 }) => {
@@ -35,10 +41,10 @@ const PlannerRowControls: FC<PlannerRowControlsProps> = ({
     setRenameVisibility(true)
   }
   const handleRowUpClick = () => {
-    onRowUp()
+    onRowUp(id, index)
   }
   const handleRowDownClick = () => {
-    onRowDown()
+    onRowDown(id, index)
   }
   const handleDeleteRowClick = () => {
     setDeleteVisibility(true)
@@ -49,14 +55,16 @@ const PlannerRowControls: FC<PlannerRowControlsProps> = ({
   }
 
   const handleRenameConfirm = (value: string) => {
-    onRenameRow(value)
+    onRowRename(value, id, index)
+    setRenameVisibility(false)
   }
 
   const handleDeleteCancel = () => {
     setDeleteVisibility(false)
   }
   const handleDeleteConfirm = () => {
-    onDeleteRow()
+    onRowDelete(id, index)
+    setDeleteVisibility(false)
   }
 
   return (
@@ -71,10 +79,13 @@ const PlannerRowControls: FC<PlannerRowControlsProps> = ({
         <DropdownOption onMouseDown={handleRenameClick}>
           <FiEdit css={iconCss} /> Rename
         </DropdownOption>
-        <DropdownOption onMouseDown={handleRowUpClick}>
+        <DropdownOption disabled={index === 0} onMouseDown={handleRowUpClick}>
           <FaAngleDoubleUp css={iconCss} /> Row Up
         </DropdownOption>
-        <DropdownOption onMouseDown={handleRowDownClick}>
+        <DropdownOption
+          disabled={rowCount === index + 1}
+          onMouseDown={handleRowDownClick}
+        >
           <FaAngleDoubleDown css={iconCss} /> Row Down
         </DropdownOption>
         <DropdownOption isDelete={true} onMouseDown={handleDeleteRowClick}>
@@ -86,7 +97,7 @@ const PlannerRowControls: FC<PlannerRowControlsProps> = ({
         label={label}
         onCancel={handleDeleteCancel}
         onClickOutside={handleDeleteCancel}
-        onConfirm={handleDeleteConfirm}
+        onDelete={handleDeleteConfirm}
       />
       <RenameDialog
         isVisible={isRenameVisible}

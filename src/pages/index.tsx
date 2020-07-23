@@ -2,14 +2,14 @@
 import { useState, useEffect } from 'react'
 import { jsx } from '@emotion/react'
 import { NextPage } from 'next'
-import { removeByIndex } from 'helpers/array'
+import { removeByIndex, addByIndex, remove, replace } from 'helpers/array'
 import { download } from 'helpers/file'
 import { v4 as uuid } from 'uuid'
 import { parseJsonDates } from 'helpers/date'
 import { updateByNextId } from 'helpers/_planner'
 import { LOCAL_STORAGE_KEY } from 'constants/constants'
 import { Entries } from 'lib/FormElements/types'
-import { Planner, Portal, Modal, Overlay } from 'lib'
+import { Planner } from 'lib'
 import { EventEditor } from 'components'
 import {
   PlannerEvent,
@@ -215,6 +215,32 @@ const IndexPage: NextPage = () => {
   const handleSettingsClick = () => {}
 
   /**
+   * Row Options Interactions
+   */
+
+  const handleRowUp = (rowId: string | number, index: number) => {
+    console.log('up', rowId, index)
+    const row = events[index]
+    const rows = removeByIndex(events, index)
+    setEvents(addByIndex(rows, row, index - 1))
+  }
+  const handleRowDown = (_rowId: string | number, index: number) => {
+    const row = events[index]
+    const rows = removeByIndex(events, index)
+    setEvents(addByIndex(rows, row, index + 1))
+  }
+  const handleRowRename = (
+    label: string,
+    rowId: string | number,
+    index: number,
+  ) => {
+    setEvents(replace(events, { ...events[index], label }))
+  }
+  const handleRowDelete = (rowId: string | number, index: number) => {
+    setEvents(remove(events, events[index]))
+  }
+
+  /**
    * Render Page
    */
   return (
@@ -235,6 +261,10 @@ const IndexPage: NextPage = () => {
         onAddEventClick={handleAddEventClick}
         onAddRowClick={handleAddRowClick}
         onImportJSON={handleImportJSON}
+        onRowDelete={handleRowDelete}
+        onRowDown={handleRowDown}
+        onRowUp={handleRowUp}
+        onRowRename={handleRowRename}
       />
       <EventEditor
         events={events}

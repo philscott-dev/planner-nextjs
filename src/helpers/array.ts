@@ -28,6 +28,10 @@ export function add<T>(array: T[], entity: T): T[] {
   return [...array, entity]
 }
 
+export function addByIndex<T>(array: T[], entity: T, index: number): T[] {
+  return [...array.slice(0, index), entity, ...array.slice(index)]
+}
+
 export function addUnique<T>(array: T[], entity: T): T[] {
   const index = find(array, entity)
   if (index >= 0) {

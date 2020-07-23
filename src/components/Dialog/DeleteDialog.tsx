@@ -2,7 +2,7 @@
 import styled from '@emotion/styled'
 import { FC, createRef } from 'react'
 import { jsx } from '@emotion/react'
-import { FormButton, IconButton } from 'lib'
+import { IconButton, Button } from 'lib'
 import { FiTrash2, FiX } from 'react-icons/fi'
 import { useOnClickOutside } from 'hooks'
 import { Entries } from 'lib/FormElements/types'
@@ -21,7 +21,7 @@ export interface DialogProps {
   label: string
   onClickOutside: () => void
   onCancel: () => void
-  onConfirm: (value: string) => void
+  onDelete: () => void
 }
 
 const DeleteDialog: FC<DialogProps> = ({
@@ -29,18 +29,14 @@ const DeleteDialog: FC<DialogProps> = ({
   isVisible,
   label,
   onClickOutside,
-  onConfirm,
+  onDelete,
   onCancel,
 }) => {
   const ref = createRef<HTMLDivElement>()
   useOnClickOutside(ref, onClickOutside, true)
 
-  const handleSubmit = (entries: Entries) => {
-    const row = entries.label as string
-    if (row && row.length) {
-      console.log(row)
-      onConfirm(row)
-    }
+  const handleDelete = () => {
+    onDelete()
   }
   const handleCancel = () => {
     onCancel()
@@ -58,11 +54,13 @@ const DeleteDialog: FC<DialogProps> = ({
         Are you sure you want to permanently delete this row?
       </DialogText>
       <Flex>
-        <CancelButton onMouseDown={handleCancel}>Cancel</CancelButton>
-        <FormButton css={deleteCss}>
+        <CancelButton type="button" onMouseDown={handleCancel}>
+          Cancel
+        </CancelButton>
+        <Button.Primary onMouseDown={handleDelete} css={deleteCss}>
           Delete
           <FiTrash2 css={iconCss} />
-        </FormButton>
+        </Button.Primary>
       </Flex>
     </Dialog>
   )

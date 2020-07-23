@@ -70,7 +70,9 @@ const RenameDialog: FC<DialogProps> = ({
           css={inputCss}
         />
         <Flex>
-          <CancelButton onMouseDown={handleCancel}>Cancel</CancelButton>
+          <CancelButton type="button" onMouseDown={handleCancel}>
+            Cancel
+          </CancelButton>
           <FormButton css={submitCss}>
             Confirm
             <FaCheck css={iconCss} />

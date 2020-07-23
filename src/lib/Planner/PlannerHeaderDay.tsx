@@ -4,7 +4,7 @@ import { FC, MouseEvent } from 'react'
 import { jsx } from '@emotion/react'
 import { Text } from 'lib'
 import { PlannerInterval } from './types'
-import { format } from 'date-fns'
+import { format, isWeekend } from 'date-fns'
 
 interface PlannerHeaderDayProps {
   isActive?: boolean
@@ -34,6 +34,7 @@ const PlannerHeaderDay: FC<PlannerHeaderDayProps> = ({
       isActive={isActive}
       range={range}
       plannerInterval={plannerInterval}
+      isWeekend={isWeekend(date)}
       onMouseDown={onMouseDown}
       onDoubleClick={onDoubleClick}
     >
@@ -53,6 +54,7 @@ interface WrapperProps {
   range: number
   isActive?: boolean
   plannerInterval: PlannerInterval
+  isWeekend?: boolean
 }
 
 export const Wrapper = styled.div<WrapperProps>`
@@ -61,8 +63,12 @@ export const Wrapper = styled.div<WrapperProps>`
   justify-content: center;
   min-width: ${({ range }) => `calc((100% - 140px) / ${range - 1})`};
   box-sizing: border-box;
-  background: ${({ isActive, theme }) =>
-    isActive ? theme.color.blue[700] : theme.color.blue[500]};
+  background: ${({ isActive, isWeekend, theme }) =>
+    isActive
+      ? theme.color.blue[700]
+      : isWeekend
+      ? theme.color.blue[600]
+      : theme.color.blue[500]};
   border: ${({ isActive, theme }) =>
     isActive ? `1px solid ${theme.color.blue[300]}` : null};
   border-bottom: none;

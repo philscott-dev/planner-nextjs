@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 
-export default styled.button<{ isDelete?: boolean }>`
+export default styled.button<{ isDelete?: boolean; disabled?: boolean }>`
   display: flex;
   align-items: center;
   white-space: nowrap;

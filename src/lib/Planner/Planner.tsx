@@ -34,6 +34,10 @@ interface PlannerProps {
     col: string,
     date: Date,
   ) => void
+  onRowRename: (value: string, rowId: string | number, index: number) => void
+  onRowDelete: (rowId: string | number, index: number) => void
+  onRowUp: (rowId: string | number, index: number) => void
+  onRowDown: (rowId: string | number, index: number) => void
 }
 
 const Planner: FC<PlannerProps> = ({
@@ -53,6 +57,10 @@ const Planner: FC<PlannerProps> = ({
   onColumnHeaderDoubleClick,
   onDropEvent,
   onPlannerIntervalChange,
+  onRowRename,
+  onRowDelete,
+  onRowUp,
+  onRowDown,
 }) => {
   const today = new Date()
   const [isImportVisible, setImportVisibility] = useState(false)
@@ -199,6 +207,23 @@ const Planner: FC<PlannerProps> = ({
     onImportJSON(json)
   }
 
+  const handleRowUp = (rowId: string | number, index: number) => {
+    onRowUp(rowId, index)
+  }
+  const handleRowDown = (rowId: string | number, index: number) => {
+    onRowDown(rowId, index)
+  }
+  const handleRowRename = (
+    value: string,
+    rowId: string | number,
+    index: number,
+  ) => {
+    onRowRename(value, rowId, index)
+  }
+  const handleRowDelete = (rowId: string | number, index: number) => {
+    onRowDelete(rowId, index)
+  }
+
   return (
     <div className={className}>
       {/* START: background grid */}
@@ -231,41 +256,33 @@ const Planner: FC<PlannerProps> = ({
           onAddEventClick={handleAddEventClick}
           onAddRowClick={handleAddRowClick}
         />
-        {events ? (
-          events.map((row) => (
-            <PlannerRow
-              key={row.id}
-              label={row.label}
-              events={row.events}
-              row={row}
-              activeRow={activeRow}
-              activeEvent={activeEvent}
-              range={range}
-              onEmptyClick={handleEmptyClick}
-              onEventClick={handleEventClick}
-              onEmptyDoubleClick={handleEmptyDoubleClick}
-              onEventDoubleClick={handleEventDoubleClick}
-              onRowHeaderClick={handleRowHeaderClick}
-              onRowHeaderDoubleClick={handleRowHeaderDoubleClick}
-              onDragOver={handleEventDragOver}
-              onDrop={handleEventDrop}
-            />
-          ))
-        ) : (
-          <PlannerRow
-            activeRow={activeRow}
-            activeEvent={activeEvent}
-            range={range}
-            onEmptyClick={handleEmptyClick}
-            onEventClick={handleEventClick}
-            onEmptyDoubleClick={handleEmptyDoubleClick}
-            onEventDoubleClick={handleEventDoubleClick}
-            onRowHeaderClick={handleRowHeaderClick}
-            onRowHeaderDoubleClick={handleRowHeaderDoubleClick}
-            onDragOver={handleEventDragOver}
-            onDrop={handleEventDrop}
-          />
-        )}
+        {events
+          ? events.map((row, index) => (
+              <PlannerRow
+                key={row.id}
+                index={index}
+                label={row.label}
+                events={row.events}
+                row={row}
+                rowCount={events.length}
+                activeRow={activeRow}
+                activeEvent={activeEvent}
+                range={range}
+                onEmptyClick={handleEmptyClick}
+                onEventClick={handleEventClick}
+                onEmptyDoubleClick={handleEmptyDoubleClick}
+                onEventDoubleClick={handleEventDoubleClick}
+                onRowHeaderClick={handleRowHeaderClick}
+                onRowHeaderDoubleClick={handleRowHeaderDoubleClick}
+                onDragOver={handleEventDragOver}
+                onDrop={handleEventDrop}
+                onRowUp={handleRowUp}
+                onRowDown={handleRowDown}
+                onRowRename={handleRowRename}
+                onRowDelete={handleRowDelete}
+              />
+            ))
+          : null}
       </Wrapper>
       <Portal mountId="portal">
         <PlannerFileImport

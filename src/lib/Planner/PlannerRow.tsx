@@ -18,6 +18,8 @@ interface PlannerRowProps {
   range: Date[]
   label?: string
   row?: PlannerEventGroup
+  index: number
+  rowCount: number
   onEmptyClick: (e: MouseEvent) => void
   onEventClick: (e: MouseEvent, plannerEvent: PlannerEvent) => void
   onEmptyDoubleClick: (e: MouseEvent) => void
@@ -26,6 +28,10 @@ interface PlannerRowProps {
   onRowHeaderDoubleClick: (e: MouseEvent) => void
   onDragOver: (e: DragEvent) => void
   onDrop: (e: DragEvent) => void
+  onRowUp: (rowId: string | number, index: number) => void
+  onRowDown: (rowId: string | number, index: number) => void
+  onRowRename: (value: string, rowId: string | number, index: number) => void
+  onRowDelete: (rowId: string | number, index: number) => void
 }
 
 const PlannerRow: FC<PlannerRowProps> = ({
@@ -34,6 +40,8 @@ const PlannerRow: FC<PlannerRowProps> = ({
   activeRow,
   range,
   row,
+  index,
+  rowCount,
   onEmptyClick,
   onEventClick,
   onEmptyDoubleClick,
@@ -42,6 +50,10 @@ const PlannerRow: FC<PlannerRowProps> = ({
   onRowHeaderDoubleClick,
   onDragOver,
   onDrop,
+  onRowUp,
+  onRowDown,
+  onRowRename,
+  onRowDelete,
 }) => {
   const rows = usePlannerEventRow(row?.events)
   //if all events fall outside of the row
@@ -56,10 +68,13 @@ const PlannerRow: FC<PlannerRowProps> = ({
       >
         <PlannerRowControls
           label={row ? row.label : ''}
-          onRowUp={() => {}}
-          onRowDown={() => {}}
-          onRenameRow={() => {}}
-          onDeleteRow={() => {}}
+          id={row ? row.id : ''}
+          index={index}
+          rowCount={rowCount}
+          onRowUp={onRowUp}
+          onRowDown={onRowDown}
+          onRowRename={onRowRename}
+          onRowDelete={onRowDelete}
         />
         <Text size="small">{row ? row.label : null}</Text>
       </PlannerRowHeader>
