@@ -130,6 +130,7 @@ export default styled(PlannerHeaderToolbar)`
   background: ${({ theme }) => theme.color.blue[700]};
   padding: 24px;
 `
+
 const Heading = styled.h2`
   text-align: inherit;
   font-size: 28px;

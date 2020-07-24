@@ -89,7 +89,6 @@ const FormDateInput: FC<FormDateInputProps> = ({
   }
 
   const handleMonthChange = (date: Date) => {
-    console.log(date)
     onChange(date)
   }
 
@@ -98,7 +97,6 @@ const FormDateInput: FC<FormDateInputProps> = ({
     setPickerVisibility(false)
   }
 
-  console.log(value)
   return (
     <Container ref={ref} inputSize={inputSize}>
       <FormLabel error={!!error} isVisible={isLabelVisible || value.length > 0}>

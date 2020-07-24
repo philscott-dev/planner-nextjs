@@ -134,7 +134,17 @@ const IndexPage: NextPage = () => {
 
   const handleEventEditorDelete = (index: number) => {
     //trigger an actual fullscreen modal
-    setEditableDeleteIndex(index)
+    const event = editableItems[index]
+    const groups = events.map((group) => {
+      if (group.id === event.assigneeId) {
+        const events = remove(group.events, event)
+        return { ...group, events }
+      }
+      return group
+    })
+    //setEditableDeleteIndex(index)
+    setEditableItems(removeByIndex(editableItems, index))
+    setEvents(groups)
   }
 
   const handleEventConfirmDelete = () => {
