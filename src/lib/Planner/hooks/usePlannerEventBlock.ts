@@ -53,7 +53,7 @@ function addPrevSpacer(
 function addLastSpacer(arr: Block[], end: Date, prevEndTime?: Date): Block[] {
   if (!prevEndTime) return arr
   if (!isSameDay(end, prevEndTime) && isBefore(prevEndTime, end)) {
-    const size = differenceInDays(end, prevEndTime) + 1
+    const size = differenceInDays(end, prevEndTime)
     if (size > 0) {
       arr = [...arr, { size }]
     }

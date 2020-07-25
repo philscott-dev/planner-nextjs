@@ -14,8 +14,10 @@ import PlannerFileImport from './PlannerFileImport'
 
 interface PlannerProps {
   className?: string
+  title?: string
   eventGroups?: PlannerEventGroup[]
   plannerInterval: PlannerInterval
+  onNewPlannerClick: () => void
   onSettingsClick: () => void
   onImportJSON: (json: string) => void
   onExportClick: () => void
@@ -28,16 +30,17 @@ interface PlannerProps {
   onEventDoubleClick: (plannerEvent: PlannerEvent) => void
   onRowHeaderDoubleClick: (id: string | number) => void
   onColumnHeaderDoubleClick: (date: Date) => void
+  onPlannerRename: (title: string) => void
+  onRowRename: (value: string, rowId: string | number, index: number) => void
+  onRowDelete: (rowId: string | number, index: number) => void
+  onRowUp: (rowId: string | number, index: number) => void
+  onRowDown: (rowId: string | number, index: number) => void
   onDropEvent: (
     event: PlannerEvent,
     row: string,
     col: string,
     date: Date,
   ) => void
-  onRowRename: (value: string, rowId: string | number, index: number) => void
-  onRowDelete: (rowId: string | number, index: number) => void
-  onRowUp: (rowId: string | number, index: number) => void
-  onRowDown: (rowId: string | number, index: number) => void
 }
 
 const Planner: FC<PlannerProps> = ({
@@ -45,6 +48,7 @@ const Planner: FC<PlannerProps> = ({
   eventGroups,
   plannerInterval,
   onSettingsClick,
+  onNewPlannerClick,
   onImportJSON,
   onExportClick,
   onAddEventClick,
@@ -61,6 +65,7 @@ const Planner: FC<PlannerProps> = ({
   onRowDelete,
   onRowUp,
   onRowDown,
+  onPlannerRename,
 }) => {
   const today = new Date()
   const [isImportVisible, setImportVisibility] = useState(false)
@@ -189,6 +194,15 @@ const Planner: FC<PlannerProps> = ({
   const handleSettingsClick = () => {
     onSettingsClick()
   }
+
+  const handleNewPlannerClick = () => {
+    onNewPlannerClick()
+  }
+
+  const handleRenamePlannerClick = (title: string) => {
+    onPlannerRename(title)
+  }
+
   const handleImportClick = () => {
     setImportVisibility(true)
   }
@@ -252,6 +266,8 @@ const Planner: FC<PlannerProps> = ({
           onHeaderDoubleClick={handleColumnHeaderDoubleClick}
           onPlannerIntervalChange={handlePlannerIntervalChange}
           onSettingsClick={handleSettingsClick}
+          onNewPlannerClick={handleNewPlannerClick}
+          onPlannerRename={handleRenamePlannerClick}
           onImportClick={handleImportClick}
           onExportClick={handleExportClick}
           onAddEventClick={handleAddEventClick}

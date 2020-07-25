@@ -2,7 +2,6 @@
 import styled from '@emotion/styled'
 import { FC, MouseEvent, useEffect, useState } from 'react'
 import { jsx } from '@emotion/react'
-import { Text } from 'lib'
 import PlannerHeaderDay from './PlannerHeaderDay'
 import PlannerHeaderToolbar from './PlannerHeaderToolbar'
 import PlannerHeaderMonth from './PlannerHeaderMonth'
@@ -10,6 +9,7 @@ import { PlannerInterval } from './types'
 import { format } from 'date-fns'
 
 interface PlannerHeaderProps {
+  className?: string
   activeColumn?: number
   activeDate: Date
   range: Date[]
@@ -18,8 +18,9 @@ interface PlannerHeaderProps {
   onHeaderDoubleClick: (e: MouseEvent) => void
   onPlannerIntervalChange: (plannerInterval: PlannerInterval) => void
   onActiveDateChange: (date: Date) => void
-  className?: string
+  onPlannerRename: (title: string) => void
   onSettingsClick: () => void
+  onNewPlannerClick: () => void
   onImportClick: () => void
   onExportClick: () => void
   onAddEventClick: () => void
@@ -30,13 +31,15 @@ const PlannerHeader: FC<PlannerHeaderProps> = ({
   range,
   className,
   plannerInterval,
+  activeColumn,
+  activeDate,
   onHeaderClick,
   onHeaderDoubleClick,
   onPlannerIntervalChange,
   onActiveDateChange,
-  activeColumn,
-  activeDate,
   onSettingsClick,
+  onPlannerRename,
+  onNewPlannerClick,
   onImportClick,
   onExportClick,
   onAddEventClick,
@@ -66,10 +69,12 @@ const PlannerHeader: FC<PlannerHeaderProps> = ({
         month={month}
         year={year}
         activeDate={activeDate}
-        onActiveDateChange={onActiveDateChange}
         plannerInterval={plannerInterval}
+        onRenamePlannerConfirm={onPlannerRename}
+        onActiveDateChange={onActiveDateChange}
         onPlannerIntervalChange={onPlannerIntervalChange}
         onSettingsClick={onSettingsClick}
+        onNewPlannerClick={onNewPlannerClick}
         onImportClick={onImportClick}
         onExportClick={onExportClick}
         onAddEventClick={onAddEventClick}

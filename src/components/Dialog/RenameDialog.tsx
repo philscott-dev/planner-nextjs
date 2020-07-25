@@ -34,7 +34,7 @@ const RenameDialog: FC<DialogProps> = ({
   onCancel,
 }) => {
   const ref = createRef<HTMLDivElement>()
-  useOnClickOutside(ref, onClickOutside, true)
+  useOnClickOutside(ref, onClickOutside, isVisible)
 
   const handleSubmit = (entries: Entries) => {
     const row = entries.label as string
@@ -56,7 +56,7 @@ const RenameDialog: FC<DialogProps> = ({
     >
       <Dialog ref={ref} className={className} isVisible={isVisible}>
         <Flex>
-          <DialogLabel>Rename Row</DialogLabel>
+          <DialogLabel>Rename</DialogLabel>
           <IconButton onMouseDown={handleCancel}>
             <FiX />
           </IconButton>

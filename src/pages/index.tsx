@@ -27,6 +27,7 @@ import {
 } from 'date-fns'
 
 const IndexPage: NextPage = () => {
+  const [title, setTitle] = useState('PlannerJS')
   const [events, setEvents] = useState<PlannerEventGroup[]>([])
   const [editableDeleteIndex, setEditableDeleteIndex] = useState<number>()
   const [editableItems, setEditableItems] = useState<PlannerEvent[] | any[]>([])
@@ -45,11 +46,11 @@ const IndexPage: NextPage = () => {
   }, [])
 
   useEffect(() => {
-    function saveLocalStorage() {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(events))
-    }
-    window.addEventListener('beforeunload', saveLocalStorage)
-    return () => window.removeEventListener('beforeunload', saveLocalStorage)
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(events))
+    //function saveLocalStorage() {
+    //}
+    //window.addEventListener('beforeunload', saveLocalStorage)
+    //return () => window.removeEventListener('beforeunload', saveLocalStorage)
   }, [events])
 
   /**
@@ -196,6 +197,10 @@ const IndexPage: NextPage = () => {
    * Toolbar Interactions
    */
 
+  const handleNewPlannerClick = () => {}
+
+  const handlePlannerRename = (title: string) => {}
+
   const handleImportJSON = (json: string) => {
     const imported: PlannerEventGroup[] = JSON.parse(json, parseJsonDates)
     setEvents(imported)
@@ -267,6 +272,7 @@ const IndexPage: NextPage = () => {
         onDropEvent={handleDropEvent}
         onPlannerIntervalChange={handlePlannerIntervalChange}
         onSettingsClick={handleSettingsClick}
+        onNewPlannerClick={handleNewPlannerClick}
         onExportClick={handleExportClick}
         onAddEventClick={handleAddEventClick}
         onAddRowClick={handleAddRowClick}
@@ -275,6 +281,7 @@ const IndexPage: NextPage = () => {
         onRowDown={handleRowDown}
         onRowUp={handleRowUp}
         onRowRename={handleRowRename}
+        onPlannerRename={handlePlannerRename}
       />
       <EventEditor
         events={events}

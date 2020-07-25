@@ -5,7 +5,6 @@ const PlannerRowHeader = styled.div<{ range: number; isActive: boolean }>`
   width: 140px;
   box-sizing: border-box;
   display: flex;
-  box-sizing: border-box;
   padding: 8px;
   border-right: 2px solid black;
   background: ${({ theme, isActive }) =>

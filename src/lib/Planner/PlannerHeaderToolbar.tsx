@@ -13,21 +13,24 @@ import { FiPlus, FiMoreVertical, FiEdit } from 'react-icons/fi'
 import { GoCalendar } from 'react-icons/go'
 import { AiFillDatabase } from 'react-icons/ai'
 import { Dropdown, DropdownOption, IconButton } from 'lib'
+import { RenameDialog } from 'components'
 import { H1 } from '../H1'
 
 interface PlannerHeaderToolbarProps {
   month: string
   year: string
   activeDate: Date
-  onActiveDateChange: (date: Date) => void
   className?: string
   plannerInterval: PlannerInterval
+  onActiveDateChange: (date: Date) => void
   onPlannerIntervalChange: (plannerInterval: PlannerInterval) => void
   onSettingsClick: () => void
+  onNewPlannerClick: () => void
   onImportClick: () => void
   onExportClick: () => void
   onAddEventClick: () => void
   onAddRowClick: () => void
+  onRenamePlannerConfirm: (title: string) => void
 }
 
 const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
@@ -39,12 +42,15 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
   plannerInterval,
   onPlannerIntervalChange,
   onSettingsClick,
+  onRenamePlannerConfirm,
+  onNewPlannerClick,
   onImportClick,
   onExportClick,
   onAddEventClick,
   onAddRowClick,
 }) => {
   const pickerRef = createRef<HTMLDivElement>()
+  const [isRenameVisible, setRenameVisibility] = useState<boolean>(false)
   const [isPickerVisible, setPickerVisibility] = useState<boolean>(false)
   useOnClickOutside(
     pickerRef,
@@ -69,6 +75,15 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
     setPickerVisibility(!isPickerVisible)
   }
 
+  const handleRenamePlannerVisibility = () => {
+    setRenameVisibility(!isRenameVisible)
+  }
+
+  const handleRenamePlannerConfirm = (value: string) => {
+    onRenamePlannerConfirm(value)
+    setRenameVisibility(false)
+  }
+
   return (
     <div className={className}>
       <Flex>
@@ -84,7 +99,7 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
             </IconButton>
           )}
         >
-          <DropdownOption onMouseDown={onImportClick}>
+          <DropdownOption onMouseDown={onNewPlannerClick}>
             <GoCalendar css={iconCss} /> New
           </DropdownOption>
           <DropdownOption onMouseDown={onImportClick}>
@@ -93,12 +108,19 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
           <DropdownOption onMouseDown={onExportClick}>
             <FaFileExport css={iconCss} /> Export
           </DropdownOption>
-          <DropdownOption onMouseDown={onImportClick}>
+          <DropdownOption onMouseDown={handleRenamePlannerVisibility}>
             <FiEdit css={iconCss} /> Rename
           </DropdownOption>
         </Dropdown>
         <Heading>Planner</Heading>
       </Flex>
+      <RenameDialog
+        label="Title"
+        isVisible={isRenameVisible}
+        onCancel={handleRenamePlannerVisibility}
+        onConfirm={handleRenamePlannerConfirm}
+        onClickOutside={handleRenamePlannerVisibility}
+      />
       <Flex>
         <PickerWrapper>
           <PickerButton onMouseDown={handlePickerClick}>
@@ -147,6 +169,7 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
 }
 
 export default styled(PlannerHeaderToolbar)`
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -199,6 +222,8 @@ const PickerWrapper = styled.div`
 `
 
 const Flex = styled.div`
+  position: relative;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
 `
