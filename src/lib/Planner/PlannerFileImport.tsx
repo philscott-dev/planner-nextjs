@@ -31,17 +31,16 @@ const PlannerFileImport: FC<PlannerFileImportProps> = ({
 }) => {
   const ref = createRef<HTMLDivElement>()
   useOnClickOutside(ref, () => onClose(), isVisible)
-  const [shouldMount, setMount] = useState(false)
-  useEffect(() => {
-    if (isVisible) {
-      setMount(true)
-    } else {
-      const timeout = setTimeout(() => {
-        setMount(false)
-      }, 1000)
-      return () => clearTimeout(timeout)
-    }
-  }, [isVisible])
+  // useEffect(() => {
+  //   if (isVisible) {
+  //     setMount(true)
+  //   } else {
+  //     const timeout = setTimeout(() => {
+  //       setMount(false)
+  //     }, 1000)
+  //     return () => clearTimeout(timeout)
+  //   }
+  // }, [isVisible])
 
   useEffect(() => {
     function prevDef(e: Event) {
@@ -91,12 +90,7 @@ const PlannerFileImport: FC<PlannerFileImportProps> = ({
   }
 
   return (
-    <Modal
-      ref={ref}
-      isVisible={isVisible}
-      shouldMount={shouldMount}
-      className={className}
-    >
+    <Modal ref={ref} isVisible={isVisible} className={className}>
       <Flex>
         <H1>Import</H1>
         <IconButton onMouseDown={onClose}>
@@ -120,13 +114,7 @@ const PlannerFileImport: FC<PlannerFileImportProps> = ({
             onChange={handleSubmit}
           />
           <Label htmlFor="file__uploader">
-            <Text
-              css={css`
-                cursor: pointer;
-              `}
-            >
-              Choose a JSON file{' '}
-            </Text>
+            <Link>Choose a JSON file </Link>
             &nbsp;
             <Text.Light className="box__dragndrop">
               {' '}
@@ -149,22 +137,21 @@ const PlannerFileImport: FC<PlannerFileImportProps> = ({
 
 interface ModalProps {
   isVisible: boolean
-  shouldMount: boolean
 }
 const Modal = styled.div<ModalProps>`
-  display: ${({ isVisible }) => (!isVisible ? 'none' : 'visible')};
+  visibility: ${({ isVisible }) => (!isVisible ? 'hidden' : 'visible')};
   position: absolute;
-  top: ${({ isVisible }) => (isVisible ? '0' : '300px')};
+  top: ${({ isVisible }) => (isVisible ? '0' : '-450px')};
   width: 500px;
   left: 50%;
   margin-left: -250px;
   padding: 0 32px 24px 32px;
   align-items: center;
-  background: ${({ theme }) => theme.color.blue[700]};
   z-index: 150;
   box-sizing: border-box;
+  background: ${({ theme }) => theme.color.blue[700]};
   box-shadow: ${({ theme }) => theme.shadow.up.two};
-  transition: all 1s ease-in-out;
+  transition: all 0.3s ease-in-out;
 `
 
 const Form = styled.form`
@@ -174,7 +161,6 @@ const Form = styled.form`
   padding: 100px 20px;
   outline: 2px dashed ${({ theme }) => theme.color.white[100]};
   outline-offset: -10px;
-
   -webkit-transition: outline-offset 0.15s ease-in-out,
     background-color 0.15s linear;
   transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
@@ -219,6 +205,14 @@ const Icon = styled(FaDownload)`
 const Flex = styled.div`
   display: flex;
   justify-content: space-between;
+`
+
+const Link = styled(Text)`
+  cursor: pointer;
+  &:hover {
+    color: ${({ theme }) => theme.color.gray[200]};
+  }
+  transition: all 0.3s ease-in-out;
 `
 
 export default PlannerFileImport

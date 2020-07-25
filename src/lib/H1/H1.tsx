@@ -1,3 +1,4 @@
+/** @jsx jsx */
 import styled from '@emotion/styled'
 import { css, Theme } from '@emotion/react'
 import { Size } from 'types'

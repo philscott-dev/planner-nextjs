@@ -39,7 +39,6 @@ const RenameDialog: FC<DialogProps> = ({
   const handleSubmit = (entries: Entries) => {
     const row = entries.label as string
     if (row && row.length) {
-      console.log(row)
       onConfirm(row)
     }
   }

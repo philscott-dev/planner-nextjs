@@ -256,7 +256,7 @@ const IndexPage: NextPage = () => {
   return (
     <>
       <Planner
-        events={events}
+        eventGroups={events}
         plannerInterval={plannerInterval}
         onColumnHeaderDoubleClick={handleColumnHeaderDoubleClick}
         onEmptyClick={handleEmptyClick}

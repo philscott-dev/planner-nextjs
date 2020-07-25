@@ -5,16 +5,16 @@ import { startOfDay } from 'date-fns'
 import styled from '@emotion/styled'
 import PlannerHeader from './PlannerHeader'
 import PlannerRow from './PlannerRow'
-import useDateRange from './useDateRange'
+import useDateRange from './hooks/useDateRange'
+import useFilteredEvents from './hooks/useFilteredEvents'
 import { PlannerEventGroup, PlannerEvent, PlannerInterval } from './types'
 import PlannerColumn, { Column } from './PlannerColumn'
 import { getDataAttrForMouseEvent } from 'helpers/event'
-import Portal from 'lib/Portal/Portal'
 import PlannerFileImport from './PlannerFileImport'
 
 interface PlannerProps {
   className?: string
-  events?: PlannerEventGroup[]
+  eventGroups?: PlannerEventGroup[]
   plannerInterval: PlannerInterval
   onSettingsClick: () => void
   onImportJSON: (json: string) => void
@@ -42,7 +42,7 @@ interface PlannerProps {
 
 const Planner: FC<PlannerProps> = ({
   className,
-  events,
+  eventGroups,
   plannerInterval,
   onSettingsClick,
   onImportJSON,
@@ -71,6 +71,7 @@ const Planner: FC<PlannerProps> = ({
     string | number | undefined | null
   >()
   const range = useDateRange(activeDate, plannerInterval)
+  const events = useFilteredEvents(eventGroups, range)
 
   const handleColumnHeaderClick = (e: MouseEvent) => {
     e.preventDefault()
@@ -268,6 +269,7 @@ const Planner: FC<PlannerProps> = ({
                 activeRow={activeRow}
                 activeEvent={activeEvent}
                 range={range}
+                plannerInterval={plannerInterval}
                 onEmptyClick={handleEmptyClick}
                 onEventClick={handleEventClick}
                 onEmptyDoubleClick={handleEmptyDoubleClick}
@@ -284,13 +286,12 @@ const Planner: FC<PlannerProps> = ({
             ))
           : null}
       </Wrapper>
-      <Portal mountId="portal">
-        <PlannerFileImport
-          isVisible={isImportVisible}
-          onImport={handleImportJSON}
-          onClose={() => setImportVisibility(false)}
-        />
-      </Portal>
+
+      <PlannerFileImport
+        isVisible={isImportVisible}
+        onImport={handleImportJSON}
+        onClose={() => setImportVisibility(false)}
+      />
     </div>
   )
 }

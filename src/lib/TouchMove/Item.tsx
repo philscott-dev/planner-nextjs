@@ -13,7 +13,7 @@ const Item: FC<ItemProps> = ({ className, onClick, src, width }) => {
   const handleClick = () => {
     //onClick()
   }
-  console.log(width)
+
   return (
     <Image
       src={src}

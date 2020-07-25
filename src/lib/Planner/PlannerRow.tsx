@@ -5,8 +5,8 @@ import styled from '@emotion/styled'
 import PlannerEventRow from './PlannerEventRow'
 import PlannerRowHeader from './PlannerRowHeader'
 import PlannerRowWrapper from './PlannerRowWrapper'
-import usePlannerEventRow from './usePlannerEventRow'
-import { PlannerEvent, PlannerEventGroup } from './types'
+import usePlannerEventRow from './hooks/usePlannerEventRow'
+import { PlannerEvent, PlannerEventGroup, PlannerInterval } from './types'
 import { Text } from 'lib'
 import PlannerRowControls from './PlannerRowControls'
 
@@ -17,7 +17,8 @@ interface PlannerRowProps {
   activeRow: string | number | undefined | null
   range: Date[]
   label?: string
-  row?: PlannerEventGroup
+  row: PlannerEventGroup
+  plannerInterval: PlannerInterval
   index: number
   rowCount: number
   onEmptyClick: (e: MouseEvent) => void
@@ -42,6 +43,7 @@ const PlannerRow: FC<PlannerRowProps> = ({
   row,
   index,
   rowCount,
+  plannerInterval,
   onEmptyClick,
   onEventClick,
   onEmptyDoubleClick,
@@ -55,9 +57,7 @@ const PlannerRow: FC<PlannerRowProps> = ({
   onRowRename,
   onRowDelete,
 }) => {
-  const rows = usePlannerEventRow(row?.events)
-  //if all events fall outside of the row
-  //range then probably return an empty here first?
+  const rows = usePlannerEventRow(row?.events, plannerInterval)
   return (
     <div className={className} data-row-id={row ? row.id : ''}>
       <PlannerRowHeader

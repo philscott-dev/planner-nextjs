@@ -3,14 +3,17 @@ import styled from '@emotion/styled'
 import { FC, MouseEvent, useState, createRef } from 'react'
 import { jsx, css } from '@emotion/react'
 import { Button } from 'lib'
-import { FaCaretDown } from 'react-icons/fa'
 import { Picker, Controls, Calendar } from 'lib/Datepicker'
 import { PlannerInterval } from './types'
 import { useOnClickOutside } from 'hooks'
 import PlannerControl from './PlannerControl'
+import { FaCaretDown } from 'react-icons/fa'
 import { FaFileImport, FaFileExport } from 'react-icons/fa'
-import { FiPlus } from 'react-icons/fi'
+import { FiPlus, FiMoreVertical, FiEdit } from 'react-icons/fi'
+import { GoCalendar } from 'react-icons/go'
 import { AiFillDatabase } from 'react-icons/ai'
+import { Dropdown, DropdownOption, IconButton } from 'lib'
+import { H1 } from '../H1'
 
 interface PlannerHeaderToolbarProps {
   month: string
@@ -61,26 +64,46 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
     onActiveDateChange(date)
     setPickerVisibility(false)
   }
+
+  const handlePickerClick = () => {
+    setPickerVisibility(!isPickerVisible)
+  }
+
   return (
     <div className={className}>
       <Flex>
-        {/* <PlannerControl text="Settings" onMouseDown={onSettingsClick}>
-          <FaCog />
-        </PlannerControl> */}
-        <PlannerControl text="Import" onMouseDown={onImportClick}>
-          <FaFileImport />
-        </PlannerControl>
-        <PlannerControl text="Export" onMouseDown={onExportClick}>
-          <FaFileExport />
-        </PlannerControl>
+        <Dropdown
+          renderNode={(onClick) => (
+            <IconButton
+              onMouseDown={onClick}
+              css={css`
+                font-size: 32px;
+              `}
+            >
+              <FiMoreVertical />
+            </IconButton>
+          )}
+        >
+          <DropdownOption onMouseDown={onImportClick}>
+            <GoCalendar css={iconCss} /> New
+          </DropdownOption>
+          <DropdownOption onMouseDown={onImportClick}>
+            <FaFileImport css={iconCss} /> Import
+          </DropdownOption>
+          <DropdownOption onMouseDown={onExportClick}>
+            <FaFileExport css={iconCss} /> Export
+          </DropdownOption>
+          <DropdownOption onMouseDown={onImportClick}>
+            <FiEdit css={iconCss} /> Rename
+          </DropdownOption>
+        </Dropdown>
+        <Heading>Planner</Heading>
       </Flex>
       <Flex>
         <PickerWrapper>
-          <PickerButton
-            onMouseDown={() => setPickerVisibility(!isPickerVisible)}
-          >
-            <Heading>{month}</Heading>
-            <Heading css={subCss}>{year}</Heading>
+          <PickerButton onMouseDown={handlePickerClick}>
+            <DateHeading>{month}</DateHeading>
+            <DateHeading css={subCss}>{year}</DateHeading>
             <FaCaretDown css={arrowDown} />
           </PickerButton>
           <Picker ref={pickerRef} isVisible={isPickerVisible}>
@@ -115,7 +138,7 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
         <PlannerControl text="Row" onMouseDown={onAddRowClick}>
           <AiFillDatabase />
         </PlannerControl>
-        <PlannerControl text="Add" onMouseDown={onAddEventClick}>
+        <PlannerControl text="Event" onMouseDown={onAddEventClick}>
           <FiPlus />
         </PlannerControl>
       </Flex>
@@ -131,7 +154,12 @@ export default styled(PlannerHeaderToolbar)`
   padding: 24px;
 `
 
-const Heading = styled.h2`
+const Heading = styled(H1)`
+  margin: 0;
+  margin-right: 8px;
+`
+
+const DateHeading = styled.h2`
   text-align: inherit;
   font-size: 28px;
   line-height: 42px;
@@ -139,6 +167,7 @@ const Heading = styled.h2`
   font-weight: 300;
   font-family: ${({ theme }) => theme.font.family};
   color: ${({ theme }) => theme.color.white[100]};
+  transition: all 0.3s ease-in-out;
   @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
     font-size: 26px;
     line-height: 28px;
@@ -156,6 +185,13 @@ const PickerButton = styled.button`
   outline: 0;
   background: transparent;
   cursor: pointer;
+  &:hover {
+    > h2,
+    svg {
+      color: ${({ theme }) => theme.color.blue[300]};
+    }
+  }
+  transition: all 0.3s ease-in-out;
 `
 
 const PickerWrapper = styled.div`
@@ -169,6 +205,7 @@ const Flex = styled.div`
 
 const arrowDown = css`
   color: #fcfcfc;
+  transition: all 0.3s ease-in-out;
 `
 
 const subCss = css`
@@ -177,4 +214,8 @@ const subCss = css`
 `
 const IntButton = styled(Button.Alt)`
   margin-left: 16px;
+`
+
+const iconCss = css`
+  margin-right: 8px;
 `

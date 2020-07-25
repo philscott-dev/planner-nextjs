@@ -8,7 +8,7 @@ import {
   getDaysInMonth,
   startOfYear,
 } from 'date-fns'
-import { PlannerInterval } from './types'
+import { PlannerInterval } from '../types'
 import { addMonths } from 'date-fns'
 
 export default function useDateRange(
