@@ -269,7 +269,6 @@ const Planner: FC<PlannerProps> = ({
                 activeRow={activeRow}
                 activeEvent={activeEvent}
                 range={range}
-                plannerInterval={plannerInterval}
                 onEmptyClick={handleEmptyClick}
                 onEventClick={handleEventClick}
                 onEmptyDoubleClick={handleEmptyDoubleClick}

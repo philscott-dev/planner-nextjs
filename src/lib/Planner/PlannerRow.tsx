@@ -18,7 +18,6 @@ interface PlannerRowProps {
   range: Date[]
   label?: string
   row: PlannerEventGroup
-  plannerInterval: PlannerInterval
   index: number
   rowCount: number
   onEmptyClick: (e: MouseEvent) => void
@@ -43,7 +42,6 @@ const PlannerRow: FC<PlannerRowProps> = ({
   row,
   index,
   rowCount,
-  plannerInterval,
   onEmptyClick,
   onEventClick,
   onEmptyDoubleClick,
@@ -57,7 +55,7 @@ const PlannerRow: FC<PlannerRowProps> = ({
   onRowRename,
   onRowDelete,
 }) => {
-  const rows = usePlannerEventRow(row?.events, plannerInterval)
+  const rows = usePlannerEventRow(row?.events)
   return (
     <div className={className} data-row-id={row ? row.id : ''}>
       <PlannerRowHeader

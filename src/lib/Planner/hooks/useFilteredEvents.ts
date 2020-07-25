@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { areIntervalsOverlapping } from 'date-fns'
+import { areIntervalsOverlapping, endOfDay } from 'date-fns'
 import { PlannerEventGroup } from '../types'
 
 /**
@@ -13,7 +13,10 @@ export default function usePlannerEventRow(
 
   useEffect(() => {
     if (groups && range) {
-      const dateRange = { start: range[0], end: range[range.length - 1] }
+      const dateRange = {
+        start: range[0],
+        end: endOfDay(range[range.length - 1]),
+      }
       const filtered = groups.map((groups) => {
         const events = groups.events.filter((event) => {
           const eventRange = { start: event.startTime, end: event.endTime }

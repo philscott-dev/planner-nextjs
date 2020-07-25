@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { PlannerEvent, PlannerInterval } from '../types'
+import { PlannerEvent } from '../types'
 import {
   differenceInDays,
   isSameDay,
@@ -69,7 +69,6 @@ function addLastSpacer(arr: Block[], end: Date, prevEndTime?: Date): Block[] {
 export default function usePlannerEventBlock(
   range: Date[],
   events: PlannerEvent[],
-  plannerInterval: PlannerInterval,
 ) {
   const [blocks, setBlocks] = useState<Block[]>([])
   useEffect(() => {
