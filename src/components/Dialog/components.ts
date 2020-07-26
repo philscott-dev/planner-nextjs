@@ -3,7 +3,6 @@ import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 
 const Dialog = styled.div<{ isVisible: boolean }>`
-  display: flex;
   flex-direction: column;
   box-sizing: border-box;
   position: absolute;

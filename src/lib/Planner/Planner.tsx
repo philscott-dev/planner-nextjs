@@ -11,6 +11,7 @@ import { PlannerEventGroup, PlannerEvent, PlannerInterval } from './types'
 import PlannerColumn, { Column } from './PlannerColumn'
 import { getDataAttrForMouseEvent } from 'helpers/event'
 import PlannerFileImport from './PlannerFileImport'
+import { TrackingPixel } from 'components'
 
 interface PlannerProps {
   className?: string
@@ -307,6 +308,7 @@ const Planner: FC<PlannerProps> = ({
         onImport={handleImportJSON}
         onClose={() => setImportVisibility(false)}
       />
+      <TrackingPixel id="planner-border-bottom" />
     </div>
   )
 }

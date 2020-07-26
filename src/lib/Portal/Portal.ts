@@ -13,10 +13,10 @@ const Portal: FC<PortalProps> = ({ children, mountId }) => {
   }, [])
 
   useEffect(() => {
-    const portalRoot = document?.getElementById(mountId)
-    portalRoot!.appendChild(el)
+    const portalRoot = document.getElementById(mountId)
+    portalRoot?.appendChild(el)
     return () => {
-      portalRoot!.removeChild(el)
+      portalRoot?.removeChild(el)
     }
   })
 

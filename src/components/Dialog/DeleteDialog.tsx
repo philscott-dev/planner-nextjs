@@ -1,11 +1,10 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
-import { FC, createRef } from 'react'
+import { FC, createRef, useRef } from 'react'
 import { jsx } from '@emotion/react'
 import { IconButton, Button } from 'lib'
 import { FiTrash2, FiX } from 'react-icons/fi'
-import { useOnClickOutside } from 'hooks'
-import { Entries } from 'lib/FormElements/types'
+import { useOnClickOutside, useIntersectionObserver } from 'hooks'
 import {
   Dialog,
   DialogLabel,
@@ -16,6 +15,7 @@ import {
 } from './components'
 
 export interface DialogProps {
+  id?: string | number
   className?: string
   isVisible: boolean
   label: string
@@ -26,13 +26,14 @@ export interface DialogProps {
 
 const DeleteDialog: FC<DialogProps> = ({
   className,
+  id,
   isVisible,
   label,
   onClickOutside,
   onDelete,
   onCancel,
 }) => {
-  const ref = createRef<HTMLDivElement>()
+  const ref = useRef<HTMLDivElement>(null)
   useOnClickOutside(ref, onClickOutside, true)
 
   const handleDelete = () => {

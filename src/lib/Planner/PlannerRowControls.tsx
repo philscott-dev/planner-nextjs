@@ -93,6 +93,7 @@ const PlannerRowControls: FC<PlannerRowControlsProps> = ({
         </DropdownOption>
       </Dropdown>
       <DeleteDialog
+        id={id}
         isVisible={isDeleteVisible}
         label={label}
         onCancel={handleDeleteCancel}

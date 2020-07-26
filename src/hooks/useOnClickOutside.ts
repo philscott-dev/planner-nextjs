@@ -3,7 +3,7 @@ import { useEffect, useRef, RefObject, MutableRefObject } from 'react'
 const events = ['mousedown', 'touchstart']
 
 export default function useOnClickOutside(
-  ref: RefObject<HTMLElement> | MutableRefObject<HTMLElement>,
+  ref: RefObject<Element> | MutableRefObject<Element | undefined>,
   handler: (e: any) => void, //function to execute
   shouldListen: boolean, //escape hatch to clear the listeners
 ) {

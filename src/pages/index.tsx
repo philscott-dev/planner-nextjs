@@ -10,7 +10,7 @@ import { updateByNextId } from 'helpers/_planner'
 import { LOCAL_STORAGE_KEY } from 'constants/constants'
 import { Entries } from 'lib/FormElements/types'
 import { Planner } from 'lib'
-import { EventEditor } from 'components'
+import { EventEditor, TrackingPixel } from 'components'
 import {
   PlannerEvent,
   PlannerEventGroup,
@@ -47,10 +47,6 @@ const IndexPage: NextPage = () => {
 
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(events))
-    //function saveLocalStorage() {
-    //}
-    //window.addEventListener('beforeunload', saveLocalStorage)
-    //return () => window.removeEventListener('beforeunload', saveLocalStorage)
   }, [events])
 
   /**
