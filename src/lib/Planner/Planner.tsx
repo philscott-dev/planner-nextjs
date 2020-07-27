@@ -82,7 +82,6 @@ const Planner: FC<PlannerProps> = ({
 
   const handleColumnHeaderClick = (e: MouseEvent) => {
     e.preventDefault()
-    //e.stopPropagation()
     const col = getDataAttrForMouseEvent(e, 'data-planner-column')
     if (col) {
       setColumn(parseInt(col, 10))

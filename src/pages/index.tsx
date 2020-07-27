@@ -24,7 +24,11 @@ import {
   subDays,
   parseISO,
   isAfter,
+  getMonth,
+  setMonth,
+  addMonths,
 } from 'date-fns'
+import { mock } from 'constants/mock'
 
 const IndexPage: NextPage = () => {
   const [title, setTitle] = useState('PlannerJS')
@@ -39,15 +43,37 @@ const IndexPage: NextPage = () => {
     const json = localStorage.getItem(LOCAL_STORAGE_KEY)
     if (json) {
       const parse = JSON.parse(json, parseJsonDates)
-      if (parse.length) {
-        setEvents(parse)
+      console.log(parse)
+      if (parse) {
+        setTitle(parse.title)
+        setEvents(parse.events)
       }
+    } else {
+      // const mockEvents = mock.events.map((group: PlannerEventGroup) => {
+      //   const currentMonth = getMonth(new Date())
+      //   const events: PlannerEvent[] = group.events.map(
+      //     (event: PlannerEvent) => {
+      //       const startMonth = getMonth(event.startTime)
+      //       const endMonth = getMonth(event.endTime)
+      //       const startTime = addMonths(
+      //         event.startTime,
+      //         currentMonth - startMonth,
+      //       )
+      //       const endTime = addMonths(event.endTime, currentMonth - endMonth)
+      //       return { ...event, startTime, endTime }
+      //     },
+      //   )
+      //   return { ...group, events }
+      // })
+      setTitle(mock.title)
+      setEvents(mock.events)
     }
   }, [])
 
   useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(events))
-  }, [events])
+    const json = { title, events }
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(json))
+  }, [title, events])
 
   /**
    * Planner Grid Interactions
