@@ -24,7 +24,6 @@ export default function usePlannerEventRow(
             inclusive: true,
           })
         })
-        console.log(events)
         return { ...groups, events }
       })
       setGroups(filtered)
