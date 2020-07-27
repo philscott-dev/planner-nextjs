@@ -19,7 +19,8 @@ import {
 export interface DialogProps {
   className?: string
   isVisible: boolean
-  label: string
+  value?: string
+  placeholder: string
   onClickOutside: () => void
   onCancel: () => void
   onConfirm: (value: string) => void
@@ -28,7 +29,8 @@ export interface DialogProps {
 const RenameDialog: FC<DialogProps> = ({
   className,
   isVisible,
-  label,
+  value,
+  placeholder,
   onClickOutside,
   onConfirm,
   onCancel,
@@ -64,8 +66,8 @@ const RenameDialog: FC<DialogProps> = ({
         <Input
           type="text"
           name="label"
-          placeholder="Label"
-          defaultValue={label}
+          placeholder={placeholder}
+          defaultValue={value}
           css={inputCss}
         />
         <Flex>

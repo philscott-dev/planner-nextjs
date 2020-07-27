@@ -9,6 +9,7 @@ import { PlannerInterval } from './types'
 import { format } from 'date-fns'
 
 interface PlannerHeaderProps {
+  title?: string
   className?: string
   activeColumn?: number
   activeDate: Date
@@ -28,6 +29,7 @@ interface PlannerHeaderProps {
 }
 
 const PlannerHeader: FC<PlannerHeaderProps> = ({
+  title,
   range,
   className,
   plannerInterval,
@@ -66,6 +68,7 @@ const PlannerHeader: FC<PlannerHeaderProps> = ({
   return (
     <div className={className}>
       <PlannerHeaderToolbar
+        title={title}
         month={month}
         year={year}
         activeDate={activeDate}

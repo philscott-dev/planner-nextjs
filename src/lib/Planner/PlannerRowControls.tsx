@@ -102,7 +102,8 @@ const PlannerRowControls: FC<PlannerRowControlsProps> = ({
       />
       <RenameDialog
         isVisible={isRenameVisible}
-        label={label}
+        value={label}
+        placeholder="Label"
         onCancel={handleRenameCancel}
         onClickOutside={handleRenameCancel}
         onConfirm={handleRenameConfirm}

@@ -9,8 +9,8 @@ import { parseJsonDates } from 'helpers/date'
 import { updateByNextId } from 'helpers/_planner'
 import { LOCAL_STORAGE_KEY } from 'constants/constants'
 import { Entries } from 'lib/FormElements/types'
-import { Planner } from 'lib'
-import { EventEditor, TrackingPixel } from 'components'
+import { Planner, Overlay, Modal } from 'lib'
+import { EventEditor } from 'components'
 import {
   PlannerEvent,
   PlannerEventGroup,
@@ -193,16 +193,30 @@ const IndexPage: NextPage = () => {
    * Toolbar Interactions
    */
 
-  const handleNewPlannerClick = () => {}
+  const handleNewPlannerClick = () => {
+    console.log('new')
+  }
 
-  const handlePlannerRename = (title: string) => {}
+  const handlePlannerRename = (title: string) => {
+    setTitle(title)
+  }
 
   const handleImportJSON = (json: string) => {
-    const imported: PlannerEventGroup[] = JSON.parse(json, parseJsonDates)
-    setEvents(imported)
+    const imported: { title: string; events: PlannerEventGroup[] } = JSON.parse(
+      json,
+      parseJsonDates,
+    )
+    if (imported.title && imported.events) {
+      setTitle(imported.title)
+      setEvents(imported.events)
+    }
   }
   const handleExportClick = () => {
-    download(JSON.stringify(events), 'planner_events.json', 'application/json')
+    const json = {
+      title,
+      events,
+    }
+    download(JSON.stringify(json), 'planner_events.json', 'application/json')
   }
 
   const handleAddEventClick = () => {
@@ -257,6 +271,7 @@ const IndexPage: NextPage = () => {
   return (
     <>
       <Planner
+        title={title}
         eventGroups={events}
         plannerInterval={plannerInterval}
         onColumnHeaderDoubleClick={handleColumnHeaderDoubleClick}
@@ -286,17 +301,6 @@ const IndexPage: NextPage = () => {
         onDelete={handleEventEditorDelete}
         onConfirm={handleEventEditorConfirm}
       />
-      {/* <Portal mountId="portal">
-        <Overlay isVisible={isModalVisible} onMouseDown={handleModalClose} />
-        <Modal
-          isVisible={isModalVisible}
-          title={modalTitle}
-          onClose={handleModalClose}
-        >
-          {' '}
-          stuff{' '}
-        </Modal>
-      </Portal> */}
     </>
   )
 }

@@ -17,6 +17,7 @@ import { RenameDialog } from 'components'
 import { H1 } from '../H1'
 
 interface PlannerHeaderToolbarProps {
+  title?: string
   month: string
   year: string
   activeDate: Date
@@ -34,6 +35,7 @@ interface PlannerHeaderToolbarProps {
 }
 
 const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
+  title,
   month,
   year,
   className,
@@ -112,10 +114,11 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
             <FiEdit css={iconCss} /> Rename
           </DropdownOption>
         </Dropdown>
-        <Heading>Planner</Heading>
+        <Heading>{title || 'Planner'}</Heading>
       </Flex>
       <RenameDialog
-        label="Title"
+        value={title}
+        placeholder={'Title'}
         isVisible={isRenameVisible}
         onCancel={handleRenamePlannerVisibility}
         onConfirm={handleRenamePlannerConfirm}

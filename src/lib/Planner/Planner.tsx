@@ -46,6 +46,7 @@ interface PlannerProps {
 
 const Planner: FC<PlannerProps> = ({
   className,
+  title,
   eventGroups,
   plannerInterval,
   onSettingsClick,
@@ -241,7 +242,7 @@ const Planner: FC<PlannerProps> = ({
   }
 
   return (
-    <div className={className}>
+    <div id="planner__base" className={className}>
       {/* START: background grid */}
       <Grid>
         <Column range={range.length + 1} isActive={false} />
@@ -258,6 +259,7 @@ const Planner: FC<PlannerProps> = ({
       {/* END: background grid */}
       <Wrapper>
         <PlannerHeader
+          title={title}
           range={range}
           activeDate={activeDate}
           activeColumn={column}
@@ -308,7 +310,6 @@ const Planner: FC<PlannerProps> = ({
         onImport={handleImportJSON}
         onClose={() => setImportVisibility(false)}
       />
-      <TrackingPixel id="planner-border-bottom" />
     </div>
   )
 }
