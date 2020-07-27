@@ -6,7 +6,7 @@ import { removeByIndex, addByIndex, remove, replace } from 'helpers/array'
 import { download } from 'helpers/file'
 import { v4 as uuid } from 'uuid'
 import { parseJsonDates } from 'helpers/date'
-import { updateByNextId } from 'helpers/_planner'
+import { updateByNextId, keepMockUpdated } from 'helpers/_planner'
 import { LOCAL_STORAGE_KEY } from 'constants/constants'
 import { Entries } from 'lib/FormElements/types'
 import { Planner, Overlay, Modal } from 'lib'
@@ -24,11 +24,8 @@ import {
   subDays,
   parseISO,
   isAfter,
-  getMonth,
-  setMonth,
-  addMonths,
 } from 'date-fns'
-import { mock } from 'constants/mock'
+import mock from '../constants/mock.json'
 
 const IndexPage: NextPage = () => {
   const [title, setTitle] = useState('PlannerJS')
@@ -43,30 +40,16 @@ const IndexPage: NextPage = () => {
     const json = localStorage.getItem(LOCAL_STORAGE_KEY)
     if (json) {
       const parse = JSON.parse(json, parseJsonDates)
-      console.log(parse)
       if (parse) {
         setTitle(parse.title)
         setEvents(parse.events)
       }
     } else {
-      // const mockEvents = mock.events.map((group: PlannerEventGroup) => {
-      //   const currentMonth = getMonth(new Date())
-      //   const events: PlannerEvent[] = group.events.map(
-      //     (event: PlannerEvent) => {
-      //       const startMonth = getMonth(event.startTime)
-      //       const endMonth = getMonth(event.endTime)
-      //       const startTime = addMonths(
-      //         event.startTime,
-      //         currentMonth - startMonth,
-      //       )
-      //       const endTime = addMonths(event.endTime, currentMonth - endMonth)
-      //       return { ...event, startTime, endTime }
-      //     },
-      //   )
-      //   return { ...group, events }
-      // })
-      setTitle(mock.title)
-      setEvents(mock.events)
+      const parse = JSON.parse(JSON.stringify(mock), parseJsonDates)
+      if (parse) {
+        setTitle(parse.title)
+        setEvents(keepMockUpdated(parse.events))
+      }
     }
   }, [])
 

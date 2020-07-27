@@ -1,6 +1,13 @@
 import { PlannerEventGroup, PlannerEvent } from 'lib/Planner/types'
 
 import { remove, add } from './array'
+import {
+  addMonths,
+  set as setDate,
+  differenceInMonths,
+  differenceInYears,
+  addYears,
+} from 'date-fns'
 
 export function updateByNextId(
   groups: PlannerEventGroup[],
@@ -31,4 +38,25 @@ export function updateByNextId(
     return group
   })
   return next
+}
+
+export function keepMockUpdated(events: PlannerEventGroup[]) {
+  const today = new Date()
+  const originalDate = new Date(2020, 6, 1)
+  const diffMonth = differenceInMonths(today, originalDate)
+  const diffYear = differenceInYears(today, originalDate)
+  return events.map((group) => {
+    const events = group.events.map((event) => {
+      let startTime = addMonths(event.startTime, diffMonth)
+      let endTime = addMonths(event.endTime, diffMonth)
+      startTime = addYears(startTime, diffYear)
+      endTime = addYears(endTime, diffYear)
+      return {
+        ...event,
+        startTime,
+        endTime,
+      }
+    })
+    return { ...group, events }
+  })
 }
