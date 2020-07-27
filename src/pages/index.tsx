@@ -203,7 +203,9 @@ const IndexPage: NextPage = () => {
    */
 
   const handleNewPlannerClick = () => {
-    console.log('new')
+    localStorage.clear()
+    setTitle('PlannerJS')
+    setEvents([])
   }
 
   const handlePlannerRename = (title: string) => {
