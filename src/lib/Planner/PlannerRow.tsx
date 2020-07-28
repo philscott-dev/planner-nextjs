@@ -20,6 +20,7 @@ interface PlannerRowProps {
   row: PlannerEventGroup
   index: number
   rowCount: number
+  plannerInterval: PlannerInterval
   onEmptyClick: (e: MouseEvent) => void
   onEventClick: (e: MouseEvent, plannerEvent: PlannerEvent) => void
   onEmptyDoubleClick: (e: MouseEvent) => void
@@ -42,6 +43,7 @@ const PlannerRow: FC<PlannerRowProps> = ({
   row,
   index,
   rowCount,
+  plannerInterval,
   onEmptyClick,
   onEventClick,
   onEmptyDoubleClick,
@@ -55,7 +57,7 @@ const PlannerRow: FC<PlannerRowProps> = ({
   onRowRename,
   onRowDelete,
 }) => {
-  const rows = usePlannerEventRow(row?.events)
+  const rows = usePlannerEventRow(plannerInterval, row?.events)
   return (
     <div className={className} data-row-id={row ? row.id : ''}>
       <PlannerRowHeader
@@ -90,6 +92,7 @@ const PlannerRow: FC<PlannerRowProps> = ({
             events={rowEvents}
             activeEvent={activeEvent}
             range={range}
+            plannerInterval={plannerInterval}
             onEmptyClick={onEmptyClick}
             onEventClick={onEventClick}
             onEmptyDoubleClick={onEmptyDoubleClick}

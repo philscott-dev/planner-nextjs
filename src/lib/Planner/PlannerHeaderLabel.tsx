@@ -4,24 +4,37 @@ import { FC } from 'react'
 import { jsx } from '@emotion/react'
 import { Text } from 'lib'
 import { format } from 'date-fns'
+import { PlannerInterval } from './types'
 
-interface PlannerHeaderMonthProps {
+interface PlannerHeaderLabelProps {
   date?: Date
   className?: string
+  interval: PlannerInterval
 }
 
-const PlannerHeaderMonth: FC<PlannerHeaderMonthProps> = ({
+const PlannerHeaderLabel: FC<PlannerHeaderLabelProps> = ({
   date,
   className,
+  interval,
 }) => {
+  const displayFormat =
+    interval === 'year'
+      ? 'yyyy'
+      : interval === 'month'
+      ? 'MMM'
+      : interval === 'week'
+      ? 'MMM'
+      : interval === 'day'
+      ? 'MMM dd'
+      : ''
   return (
     <div className={className}>
-      <Text align="center">{date ? format(date, 'MMM') : null}</Text>
+      <Text align="center">{date ? format(date, displayFormat) : null}</Text>
     </div>
   )
 }
 
-export default styled(PlannerHeaderMonth)`
+export default styled(PlannerHeaderLabel)`
   box-sizing: border-box;
   display: flex;
   align-items: center;

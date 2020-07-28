@@ -1,3 +1,5 @@
+export type PlannerInterval = 'day' | 'week' | 'month' | 'year'
+
 export interface PlannerEvent {
   id: number | string
   assigneeId?: number | string
@@ -8,7 +10,7 @@ export interface PlannerEvent {
   isRepeat?: boolean
   label?: string
   color?: string
-  repeateFrequency?: 'day' | 'week' | 'month' | 'year'
+  repeateFrequency?: PlannerInterval
   repeateInterval?: number
 }
 
@@ -19,4 +21,7 @@ export interface PlannerEventGroup {
   events: PlannerEvent[]
 }
 
-export type PlannerInterval = 'week' | 'month' | 'year'
+export interface Block {
+  size: number
+  event?: PlannerEvent
+}

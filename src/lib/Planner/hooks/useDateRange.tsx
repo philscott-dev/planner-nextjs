@@ -7,9 +7,11 @@ import {
   startOfMonth,
   getDaysInMonth,
   startOfYear,
+  addMinutes,
+  addMonths,
+  startOfDay,
 } from 'date-fns'
 import { PlannerInterval } from '../types'
-import { addMonths } from 'date-fns'
 
 export default function useDateRange(
   date: Date,
@@ -21,6 +23,13 @@ export default function useDateRange(
     let start = new Date()
     let length = 0
     let arr: Date[] = []
+
+    if (plannerInterval === 'day') {
+      start = startOfDay(date)
+      arr = Array.from({ length: 48 }, (_, index) =>
+        addMinutes(start, index * 30),
+      )
+    }
     if (plannerInterval === 'week') {
       const end = endOfWeek(date)
       start = startOfWeek(date)

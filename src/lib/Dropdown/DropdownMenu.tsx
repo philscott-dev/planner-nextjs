@@ -11,6 +11,7 @@ export default styled.div<{ isVisible: boolean }>`
   background: ${({ theme }) => theme.color.blue[500]};
   box-shadow: ${({ theme }) => theme.shadow.up.two};
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
+  /* display: ${({ isVisible }) => (isVisible ? 'inherit' : 'none')}; */
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   transition: all 0.3s ease-in-out;
 `

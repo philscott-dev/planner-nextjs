@@ -12,6 +12,9 @@ I really want to be able to ingest existing calendars, and add support for major
 ## "Year" View
 My custom hook was pretty flexible when adding Month view, and when showing 365 days in the Year view, but a 365 day view is pretty worthless and super laggy. I've got the view created and intervals set, but need to rework my hook a little bit.
 
+## "Day" View
+Same situation as the Year View
+
 ## Filters
 You need to be able to filter by label/color
 
@@ -27,3 +30,5 @@ Showing a corresponding dot of the same color, in the picker dropdown, if there 
 ## Month Separator
 The Week and Month views should show a vertical line on the grid, between dates of different months. Ex: Jun 30th to Jul 1st
 
+## "Now" Indicator
+Display the current time of day as a vertical line

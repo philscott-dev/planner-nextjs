@@ -11,7 +11,6 @@ import { PlannerEventGroup, PlannerEvent, PlannerInterval } from './types'
 import PlannerColumn, { Column } from './PlannerColumn'
 import { getDataAttrForMouseEvent } from 'helpers/event'
 import PlannerFileImport from './PlannerFileImport'
-import { TrackingPixel } from 'components'
 
 interface PlannerProps {
   className?: string
@@ -283,6 +282,7 @@ const Planner: FC<PlannerProps> = ({
                 label={row.label}
                 events={row.events}
                 row={row}
+                plannerInterval={plannerInterval}
                 rowCount={events.length}
                 activeRow={activeRow}
                 activeEvent={activeEvent}

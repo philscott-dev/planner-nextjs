@@ -5,12 +5,14 @@ import styled from '@emotion/styled'
 import PlannerEventBlock from './PlannerEventBlock'
 import { PlannerEvent, PlannerInterval } from './types'
 import usePlannerEventBlock from './hooks/usePlannerEventBlock'
+import useNewPlannerEventBlock from './hooks/_useNewPlannerEventBlock'
 
 interface PlannerEventRowProps {
   className?: string
   events: PlannerEvent[]
   activeEvent?: PlannerEvent
   range: Date[]
+  plannerInterval: PlannerInterval
   onEmptyClick: (e: MouseEvent) => void
   onEventClick: (e: MouseEvent, plannerEvent: PlannerEvent) => void
   onEmptyDoubleClick: (e: MouseEvent) => void
@@ -22,12 +24,14 @@ const PlannerEventRow: FC<PlannerEventRowProps> = ({
   events,
   activeEvent,
   range,
+  plannerInterval,
   onEmptyClick,
   onEventClick,
   onEmptyDoubleClick,
   onEventDoubleClick,
 }) => {
-  const blocks = usePlannerEventBlock(range, events)
+  //const blocks = usePlannerEventBlock(range, events)
+  const blocks = useNewPlannerEventBlock(range, events, plannerInterval)
 
   if (!blocks.length) return null
   return (

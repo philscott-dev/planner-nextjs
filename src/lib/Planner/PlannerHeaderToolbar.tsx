@@ -136,6 +136,13 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
             <Calendar date={activeDate} onSelectedDate={handleDateChange} />
           </Picker>
         </PickerWrapper>
+        {/* <IntButton
+          value="day"
+          isActive={plannerInterval === 'day'}
+          onMouseDown={handleIntervalChange}
+        >
+          Day
+        </IntButton> */}
         <IntButton
           value="week"
           isActive={plannerInterval === 'week'}
@@ -151,7 +158,6 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
           Month
         </IntButton>
         <IntButton
-          disabled
           value="year"
           isActive={plannerInterval === 'year'}
           onMouseDown={handleIntervalChange}

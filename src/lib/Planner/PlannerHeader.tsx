@@ -4,7 +4,7 @@ import { FC, MouseEvent, useEffect, useState } from 'react'
 import { jsx } from '@emotion/react'
 import PlannerHeaderDay from './PlannerHeaderDay'
 import PlannerHeaderToolbar from './PlannerHeaderToolbar'
-import PlannerHeaderMonth from './PlannerHeaderMonth'
+import PlannerHeaderLabel from './PlannerHeaderLabel'
 import { PlannerInterval } from './types'
 import { format } from 'date-fns'
 
@@ -85,7 +85,7 @@ const PlannerHeader: FC<PlannerHeaderProps> = ({
       />
       <DateRowWrapper>
         <CalWrapper range={range.length + 1}>
-          <PlannerHeaderMonth date={activeDate} />
+          <PlannerHeaderLabel interval={plannerInterval} date={activeDate} />
         </CalWrapper>
         {range.map((date, index) => (
           <PlannerHeaderDay

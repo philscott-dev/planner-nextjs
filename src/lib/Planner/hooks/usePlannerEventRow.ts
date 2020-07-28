@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react'
-import { areIntervalsOverlapping } from 'date-fns'
 import { PlannerEvent, PlannerInterval } from '../types'
 import reduceDays from './helpers/reduceDays'
 
 /**
  * sets and checks the multirow layout, per user
  */
-export default function usePlannerEventRow(events?: PlannerEvent[]) {
+export default function usePlannerEventRow(
+  interval: PlannerInterval,
+  events?: PlannerEvent[],
+) {
   const [rows, setRows] = useState<PlannerEvent[][]>([[]])
 
   useEffect(() => {
@@ -14,8 +16,11 @@ export default function usePlannerEventRow(events?: PlannerEvent[]) {
       ? []
       : events
           .sort((a, b) => a.startTime?.getTime() - b.startTime?.getTime())
-          .reduce<PlannerEvent[][]>(reduceDays, [[]])
+          .reduce<PlannerEvent[][]>(
+            (acc, event, index) => reduceDays(acc, event, index, interval),
+            [[]],
+          )
     setRows(arr)
-  }, [events])
+  }, [events, interval])
   return rows
 }

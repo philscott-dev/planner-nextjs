@@ -3,7 +3,7 @@ import { areIntervalsOverlapping, endOfDay, startOfDay } from 'date-fns'
 import { PlannerEventGroup } from '../types'
 
 /**
- * sets and checks the multirow layout, per user
+ * Filter out dates that don't overlap with the PlannerInterval
  */
 export default function usePlannerEventRow(
   groups?: PlannerEventGroup[],

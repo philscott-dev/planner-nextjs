@@ -14,6 +14,7 @@ const Dialog = styled.div<{ isVisible: boolean }>`
   max-width: 350px;
   background: ${({ theme }) => theme.color.blue[600]};
   box-shadow: ${({ theme }) => theme.shadow.up.two};
+  /* display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')}; */
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   transition: all 0.3s ease-in-out;
