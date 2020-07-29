@@ -1,4 +1,9 @@
-export type PlannerInterval = 'day' | 'week' | 'month' | 'year'
+export interface PlannerEventGroup {
+  id: number | string
+  icon?: string
+  label: string
+  events: PlannerEvent[]
+}
 
 export interface PlannerEvent {
   id: number | string
@@ -14,12 +19,7 @@ export interface PlannerEvent {
   repeateInterval?: number
 }
 
-export interface PlannerEventGroup {
-  id: number | string
-  icon?: string
-  label: string
-  events: PlannerEvent[]
-}
+export type PlannerInterval = 'day' | 'week' | 'month' | 'year'
 
 export interface Block {
   size: number

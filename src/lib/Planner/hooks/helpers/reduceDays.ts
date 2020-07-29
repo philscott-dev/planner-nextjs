@@ -5,6 +5,8 @@ import {
   isSameMonth,
   startOfMonth,
   endOfMonth,
+  startOfDay,
+  endOfDay,
 } from 'date-fns'
 
 export default function reduceDays(
@@ -62,7 +64,6 @@ function areOverlapping(
     return false
   }
   if (interval === 'year') {
-    console.log('year')
     return areIntervalsOverlapping(
       {
         start: startOfMonth(range.start),
@@ -71,6 +72,19 @@ function areOverlapping(
       {
         start: endOfMonth(prevRange.start),
         end: endOfMonth(prevRange.end),
+      },
+      { inclusive: true },
+    )
+  }
+  if (interval === 'month' || interval === 'week') {
+    return areIntervalsOverlapping(
+      {
+        start: startOfDay(range.start),
+        end: startOfDay(range.end),
+      },
+      {
+        start: endOfDay(prevRange.start),
+        end: endOfDay(prevRange.end),
       },
       { inclusive: true },
     )

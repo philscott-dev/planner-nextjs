@@ -42,6 +42,7 @@ const PlannerEventRow: FC<PlannerEventRowProps> = ({
           size={block.size}
           range={range.length}
           event={block.event}
+          plannerInterval={plannerInterval}
           activeEvent={activeEvent}
           onEmptyClick={onEmptyClick}
           onEventClick={onEventClick}

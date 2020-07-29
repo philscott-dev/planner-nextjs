@@ -17,6 +17,7 @@ interface InputProps {
 }
 
 export default styled.input<InputProps>`
+  -webkit-appearance: none;
   ::-webkit-calendar-picker-indicator {
     display: none;
   }
@@ -36,11 +37,6 @@ export default styled.input<InputProps>`
       !error ? theme.color.blue[400] : theme.color.red[300]};
   color: ${({ theme }) => theme.color.white[100]};
   background: ${({ theme }) => theme.color.blue[500]};
-  &:focus {
-    border: 2px solid
-      ${({ theme, error }) =>
-        !error ? theme.color.blue[300] : theme.color.red[300]};
-  }
   &::placeholder {
     color: ${({ theme, error }) =>
       !error ? theme.color.gray[200] : theme.color.red[300]};
@@ -53,6 +49,11 @@ export default styled.input<InputProps>`
     -webkit-text-fill-color: ${({ theme }) => theme.color.white[100]};
     -webkit-box-shadow: 0 0 0px 1000px transparent inset;
     transition: background-color 5000s ease-in-out 0s;
+  }
+  &:focus {
+    border: 2px solid
+      ${({ theme, error }) =>
+        !error ? theme.color.blue[300] : theme.color.red[300]};
   }
   @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
     border-right: 1px solid ${({ theme }) => theme.color.white[100]};

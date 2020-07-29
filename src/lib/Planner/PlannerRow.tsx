@@ -113,6 +113,6 @@ export default styled(PlannerRow)`
   min-height: 72px;
 
   &:last-child {
-    border-bottom: none;
+    /* border-bottom: none; */
   }
 `

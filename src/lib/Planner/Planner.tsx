@@ -317,6 +317,7 @@ export default styled(Planner)`
   box-sizing: border-box;
   position: relative;
   border-radius: 2px;
+  height: 100%;
   background: ${({ theme }) => theme.color.blue[500]};
 `
 

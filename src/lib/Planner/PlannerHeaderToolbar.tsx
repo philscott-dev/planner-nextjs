@@ -116,14 +116,17 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
         </Dropdown>
         <Heading>{title || 'Planner'}</Heading>
       </Flex>
-      <RenameDialog
-        value={title}
-        placeholder={'Title'}
-        isVisible={isRenameVisible}
-        onCancel={handleRenamePlannerVisibility}
-        onConfirm={handleRenamePlannerConfirm}
-        onClickOutside={handleRenamePlannerVisibility}
-      />
+      <div>
+        <RenameDialog
+          value={title}
+          placeholder={'Title'}
+          isVisible={isRenameVisible}
+          onCancel={handleRenamePlannerVisibility}
+          onConfirm={handleRenamePlannerConfirm}
+          onClickOutside={handleRenamePlannerVisibility}
+        />
+      </div>
+
       <Flex>
         <PickerWrapper>
           <PickerButton onMouseDown={handlePickerClick}>

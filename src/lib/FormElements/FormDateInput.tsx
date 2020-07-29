@@ -18,6 +18,7 @@ import { Picker, Controls, Calendar } from 'lib/Datepicker'
 import FormLabel from './FormLabel'
 import Input from './Input'
 import { GoCalendar } from 'react-icons/go'
+import useMobileDetect from 'hooks/useMobileDetect'
 
 export interface FormDateInputProps {
   name: string
@@ -43,6 +44,7 @@ const FormDateInput: FC<FormDateInputProps> = ({
   defaultValue,
   ...props
 }) => {
+  const isMobile = useMobileDetect()
   const { value, error, onBlur, onChange, ...fns } = useInputValidation(
     name,
     defaultValue,
@@ -64,13 +66,17 @@ const FormDateInput: FC<FormDateInputProps> = ({
     isPickerVisible,
   )
 
-  // NEW: if defaultValue changes, update things
   useEffect(() => {
     if (defaultValue != undefined) {
       setLabelVisibility(true)
       setType('date')
     }
   }, [defaultValue])
+
+  // fix race condition when swapping from text to date on mobile
+  const handleOnTouchStart = () => {
+    setType('date')
+  }
 
   const handleOnFocus = () => {
     setLabelVisibility(true)
@@ -108,24 +114,27 @@ const FormDateInput: FC<FormDateInputProps> = ({
         value={value ? format(value, 'yyyy-MM-dd') : ''}
         error={!!error}
         placeholder={isLabelVisible ? '' : placeholder}
+        inputSize={inputSize}
+        onTouchStart={handleOnTouchStart}
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
-        inputSize={inputSize}
         onChange={handleInputChange}
         {...props}
         {...fns}
       />
       <CalendarIcon />
-      <Picker isVisible={isPickerVisible}>
-        <Controls
-          date={value instanceof Date ? value : new Date()}
-          onChange={handleMonthChange}
-        />
-        <Calendar
-          date={value instanceof Date ? value : new Date()}
-          onSelectedDate={handleDateChange}
-        />
-      </Picker>
+      {!isMobile ? (
+        <Picker isVisible={isPickerVisible}>
+          <Controls
+            date={value instanceof Date ? value : new Date()}
+            onChange={handleMonthChange}
+          />
+          <Calendar
+            date={value instanceof Date ? value : new Date()}
+            onSelectedDate={handleDateChange}
+          />
+        </Picker>
+      ) : null}
     </Container>
   )
 }

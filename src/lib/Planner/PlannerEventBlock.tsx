@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { FC, MouseEvent } from 'react'
 import { jsx, css } from '@emotion/react'
 import { Text } from 'lib'
-import { PlannerEvent } from './types'
+import { PlannerEvent, PlannerInterval } from './types'
 import { format } from 'date-fns'
 import { lightenColor } from 'helpers/color'
 
@@ -11,6 +11,7 @@ interface PlannerEventBlockProps {
   className?: string
   event?: PlannerEvent
   activeEvent?: PlannerEvent
+  plannerInterval: PlannerInterval
   size: number
   range: number
   onEmptyClick: (e: MouseEvent) => void
@@ -27,6 +28,7 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
   activeEvent,
   size,
   range,
+  plannerInterval,
   onEmptyClick,
   onEventClick,
   onEmptyDoubleClick,

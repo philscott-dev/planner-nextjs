@@ -82,11 +82,12 @@ const EventEditor: FC<EventEditorProps> = ({
                 defaultValue={item.assigneeId}
               >
                 <SelectPlaceholder text="Assign a User" />
-                {events.map((event) => (
-                  <option key={event.id} value={event.id}>
-                    {event.label}
-                  </option>
-                ))}
+                {events &&
+                  events.map((event) => (
+                    <option key={event.id} value={event.id}>
+                      {event.label}
+                    </option>
+                  ))}
               </Select>
             </Flex>
             <Flex>
