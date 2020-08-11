@@ -46,10 +46,10 @@ function sizes({ size, theme }: { size?: Sizes; theme: Theme }) {
   switch (size) {
     case 'small':
       return css`
-        font-size: 14px;
+        font-size: 12px;
         line-height: 18px;
         @media screen and (max-width: ${theme.breakpoint.small}) {
-          font-size: 14px;
+          font-size: 12px;
           line-height: 18px;
         }
       `

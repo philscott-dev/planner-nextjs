@@ -1,5 +1,5 @@
 import { addDays, subDays } from 'date-fns'
-import { PlannerEventGroup } from 'lib/Planner/types'
+import { PlannerEventGroup } from 'components/Planner/types'
 import { theme } from 'theme'
 import { v4 as uuid } from 'uuid'
 

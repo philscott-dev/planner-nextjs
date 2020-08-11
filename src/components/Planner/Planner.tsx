@@ -243,7 +243,11 @@ const Planner: FC<PlannerProps> = ({
     <div id="planner__base" className={className}>
       {/* START: background grid */}
       <Grid>
-        <Column range={range.length + 1} isActive={false} />
+        <Column
+          plannerInterval={plannerInterval}
+          range={range.length + 1}
+          isActive={false}
+        />
         {range.map((date, index) => (
           <PlannerColumn
             key={index}
@@ -251,6 +255,7 @@ const Planner: FC<PlannerProps> = ({
             date={date}
             col={column}
             index={index}
+            plannerInterval={plannerInterval}
           />
         ))}
       </Grid>

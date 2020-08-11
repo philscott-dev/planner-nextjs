@@ -14,7 +14,7 @@ import { GoCalendar } from 'react-icons/go'
 import { AiFillDatabase } from 'react-icons/ai'
 import { Dropdown, DropdownOption, IconButton } from 'lib'
 import { RenameDialog } from 'components'
-import { H1 } from '../H1'
+import { H1 } from '../../lib/H1'
 
 interface PlannerHeaderToolbarProps {
   title?: string

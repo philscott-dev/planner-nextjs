@@ -5,7 +5,7 @@ import { jsx, css } from '@emotion/react'
 import { EventColors } from 'constants/colors'
 import { capitalize } from 'helpers/string'
 import { Entries } from 'lib/FormElements/types'
-import { PlannerEvent, PlannerEventGroup } from 'lib/Planner/types'
+import { PlannerEvent, PlannerEventGroup } from 'components/Planner/types'
 import {
   ViewportModalContainer,
   ViewportModal,

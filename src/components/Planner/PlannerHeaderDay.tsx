@@ -4,7 +4,8 @@ import { FC, MouseEvent } from 'react'
 import { jsx } from '@emotion/react'
 import { Text } from 'lib'
 import { PlannerInterval } from './types'
-import { format, isWeekend } from 'date-fns'
+import { format } from 'date-fns'
+import useHighlightWeekend from './hooks/useHighlightWeekend'
 
 interface PlannerHeaderDayProps {
   isActive?: boolean
@@ -27,6 +28,7 @@ const PlannerHeaderDay: FC<PlannerHeaderDayProps> = ({
   onMouseDown,
   onDoubleClick,
 }) => {
+  const isWeekend = useHighlightWeekend(date, plannerInterval)
   const dateString = format(date, headerFormat).split(' ')
   return (
     <Wrapper
@@ -34,7 +36,7 @@ const PlannerHeaderDay: FC<PlannerHeaderDayProps> = ({
       isActive={isActive}
       range={range}
       plannerInterval={plannerInterval}
-      isWeekend={isWeekend(date)}
+      isWeekend={isWeekend}
       onMouseDown={onMouseDown}
       onDoubleClick={onDoubleClick}
     >
@@ -78,6 +80,12 @@ export const Wrapper = styled.div<WrapperProps>`
       color: ${({ plannerInterval }) =>
         plannerInterval === 'month' ? 'transparent' : null};
     }
+  }
+  &:nth-of-type(odd) {
+    background: ${({ plannerInterval, theme }) =>
+      plannerInterval === 'year' || plannerInterval === 'day'
+        ? theme.color.blue[600]
+        : null};
   }
 `
 

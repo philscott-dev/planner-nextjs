@@ -2,7 +2,8 @@
 import styled from '@emotion/styled'
 import { jsx } from '@emotion/react'
 import { FC } from 'react'
-import { isWeekend } from 'date-fns'
+import { PlannerInterval } from './types'
+import useHighlightWeekend from './hooks/useHighlightWeekend'
 
 interface PlannerColumnProps {
   className?: string
@@ -10,6 +11,7 @@ interface PlannerColumnProps {
   index: number
   date: Date
   col?: number
+  plannerInterval: PlannerInterval
 }
 
 const PlannerColumn: FC<PlannerColumnProps> = ({
@@ -18,14 +20,17 @@ const PlannerColumn: FC<PlannerColumnProps> = ({
   index,
   date,
   col,
+  plannerInterval,
 }) => {
+  const isWeekend = useHighlightWeekend(date, plannerInterval)
   return (
     <Column
       index={index}
       className={className}
       isActive={col === index}
       range={range}
-      isWeekend={isWeekend(date)}
+      plannerInterval={plannerInterval}
+      isWeekend={isWeekend}
       data-planner-column={index}
       data-planner-date={date}
     />
@@ -37,6 +42,7 @@ interface ColumnProps {
   isActive: boolean
   index?: number
   isWeekend?: boolean
+  plannerInterval: PlannerInterval
 }
 
 export const Column = styled.div<ColumnProps>`
@@ -52,6 +58,12 @@ export const Column = styled.div<ColumnProps>`
       : isWeekend
       ? theme.color.blue[600]
       : null};
+  &:nth-of-type(odd) {
+    background: ${({ plannerInterval, theme }) =>
+      plannerInterval === 'year' || plannerInterval === 'day'
+        ? theme.color.blue[600]
+        : null};
+  }
 `
 
 export default PlannerColumn

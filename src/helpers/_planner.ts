@@ -1,4 +1,4 @@
-import { PlannerEventGroup, PlannerEvent } from 'lib/Planner/types'
+import { PlannerEventGroup, PlannerEvent } from 'components/Planner/types'
 
 import { remove, add } from './array'
 import {

@@ -15,7 +15,7 @@ import {
   PlannerEvent,
   PlannerEventGroup,
   PlannerInterval,
-} from 'lib/Planner/types'
+} from 'components/Planner/types'
 import {
   parse as parseDate,
   isSameDay,
