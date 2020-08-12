@@ -56,7 +56,10 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
   const [isPickerVisible, setPickerVisibility] = useState<boolean>(false)
   useOnClickOutside(
     pickerRef,
-    () => setPickerVisibility(false),
+    () => {
+      console.log('yo')
+      setPickerVisibility(false)
+    },
     isPickerVisible,
   )
 
@@ -74,6 +77,7 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
   }
 
   const handlePickerClick = () => {
+    console.log(isPickerVisible)
     setPickerVisibility(!isPickerVisible)
   }
 
@@ -128,13 +132,13 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
       </div>
 
       <IntervalWrapper>
-        <PickerWrapper>
+        <PickerWrapper ref={pickerRef}>
           <PickerButton onMouseDown={handlePickerClick}>
             <DateHeading>{month}</DateHeading>
             <DateHeading css={subCss}>{year}</DateHeading>
             <FaCaretDown css={arrowDown} />
           </PickerButton>
-          <Picker ref={pickerRef} isVisible={isPickerVisible}>
+          <Picker isVisible={isPickerVisible}>
             <Controls date={activeDate} onChange={handleRangeChange} />
             <Calendar date={activeDate} onSelectedDate={handleDateChange} />
           </Picker>
