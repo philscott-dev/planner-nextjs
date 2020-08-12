@@ -59,5 +59,5 @@ export default styled(PlannerEventRow)`
   display: flex;
   position: relative;
   width: 100%;
-  height: 72px;
+  height: 60px;
 `

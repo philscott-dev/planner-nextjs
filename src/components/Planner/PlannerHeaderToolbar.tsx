@@ -11,7 +11,7 @@ import { FaCaretDown } from 'react-icons/fa'
 import { FaFileImport, FaFileExport } from 'react-icons/fa'
 import { FiPlus, FiMoreVertical, FiEdit } from 'react-icons/fi'
 import { GoCalendar } from 'react-icons/go'
-import { AiFillDatabase } from 'react-icons/ai'
+import { MdPlaylistAdd } from 'react-icons/md'
 import { Dropdown, DropdownOption, IconButton } from 'lib'
 import { RenameDialog } from 'components'
 import { H2 } from 'lib'
@@ -164,7 +164,7 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
 
       <ControlWrapper>
         <PlannerControl text="Event" onMouseDown={onAddEventClick}>
-          <FiPlus />
+          <MdPlaylistAdd />
         </PlannerControl>
       </ControlWrapper>
     </div>

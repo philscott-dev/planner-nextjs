@@ -31,7 +31,6 @@ export default styled(PlannerControl)`
   justify-content: center;
   align-items: center;
   background: ${({ theme }) => theme.color.blue[700]};
-  background: blue;
   &:hover {
     > p {
       opacity: 1;

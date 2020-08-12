@@ -11,7 +11,6 @@ const Dialog = styled.div<{ isVisible: boolean }>`
   overflow: hidden;
   border-radius: 8px;
   padding: 24px;
-  max-width: 350px;
   background: ${({ theme }) => theme.color.blue[600]};
   box-shadow: ${({ theme }) => theme.shadow.up.two};
   /* display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')}; */
@@ -74,6 +73,7 @@ const submitCss = css`
 const inputCss = css`
   margin-bottom: 24px;
   width: 350px;
+  box-sizing: border-box;
 `
 
 const iconCss = css`

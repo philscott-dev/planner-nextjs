@@ -110,7 +110,7 @@ export default styled(PlannerRow)`
   display: flex;
   justify-content: flex-start;
   border-bottom: 2px solid black;
-  min-height: 72px;
+  min-height: 60px;
 
   &:last-child {
     /* border-bottom: none; */
