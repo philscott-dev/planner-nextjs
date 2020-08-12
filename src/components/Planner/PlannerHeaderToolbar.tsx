@@ -56,10 +56,7 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
   const [isPickerVisible, setPickerVisibility] = useState<boolean>(false)
   useOnClickOutside(
     pickerRef,
-    () => {
-      console.log('yo')
-      setPickerVisibility(false)
-    },
+    () => setPickerVisibility(false),
     isPickerVisible,
   )
 
@@ -77,7 +74,6 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
   }
 
   const handlePickerClick = () => {
-    console.log(isPickerVisible)
     setPickerVisibility(!isPickerVisible)
   }
 

@@ -14,8 +14,8 @@ export default styled.button<{ isDelete?: boolean; disabled?: boolean }>`
   border: none;
   margin: 0;
   cursor: pointer;
-  font-size: 16px;
-  padding: 16px 16px;
+  font-size: 14px;
+  padding: 12px 16px;
   transition: ${({ theme }) => theme.transition.all};
   color: ${({ theme }) => theme.color.white[100]};
   background: ${({ theme }) => theme.color.blue[500]};
