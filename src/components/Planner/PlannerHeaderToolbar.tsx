@@ -163,9 +163,6 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
       </IntervalWrapper>
 
       <ControlWrapper>
-        <PlannerControl text="Row" onMouseDown={onAddRowClick}>
-          <AiFillDatabase />
-        </PlannerControl>
         <PlannerControl text="Event" onMouseDown={onAddEventClick}>
           <FiPlus />
         </PlannerControl>
