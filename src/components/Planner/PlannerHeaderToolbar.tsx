@@ -14,7 +14,7 @@ import { GoCalendar } from 'react-icons/go'
 import { AiFillDatabase } from 'react-icons/ai'
 import { Dropdown, DropdownOption, IconButton } from 'lib'
 import { RenameDialog } from 'components'
-import { H1 } from '../../lib/H1'
+import { H2 } from 'lib'
 
 interface PlannerHeaderToolbarProps {
   title?: string
@@ -94,7 +94,7 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
             <IconButton
               onMouseDown={onClick}
               css={css`
-                font-size: 32px;
+                font-size: 24px;
               `}
             >
               <FiMoreVertical />
@@ -127,7 +127,7 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
         />
       </div>
 
-      <Flex>
+      <IntervalWrapper>
         <PickerWrapper>
           <PickerButton onMouseDown={handlePickerClick}>
             <DateHeading>{month}</DateHeading>
@@ -139,13 +139,6 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
             <Calendar date={activeDate} onSelectedDate={handleDateChange} />
           </Picker>
         </PickerWrapper>
-        {/* <IntButton
-          value="day"
-          isActive={plannerInterval === 'day'}
-          onMouseDown={handleIntervalChange}
-        >
-          Day
-        </IntButton> */}
         <IntButton
           value="week"
           isActive={plannerInterval === 'week'}
@@ -167,15 +160,16 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
         >
           Year
         </IntButton>
-      </Flex>
-      <Flex>
+      </IntervalWrapper>
+
+      <ControlWrapper>
         <PlannerControl text="Row" onMouseDown={onAddRowClick}>
           <AiFillDatabase />
         </PlannerControl>
         <PlannerControl text="Event" onMouseDown={onAddEventClick}>
           <FiPlus />
         </PlannerControl>
-      </Flex>
+      </ControlWrapper>
     </div>
   )
 }
@@ -189,7 +183,7 @@ export default styled(PlannerHeaderToolbar)`
   padding: 24px;
 `
 
-const Heading = styled(H1)`
+const Heading = styled(H2)`
   margin: 0;
   margin-right: 8px;
 `
@@ -234,10 +228,19 @@ const PickerWrapper = styled.div`
 `
 
 const Flex = styled.div`
+  flex: 1;
   position: relative;
   box-sizing: border-box;
   display: flex;
   align-items: center;
+`
+
+const ControlWrapper = styled(Flex)`
+  justify-content: flex-end;
+`
+
+const IntervalWrapper = styled(Flex)`
+  justify-content: center;
 `
 
 const arrowDown = css`
@@ -251,6 +254,8 @@ const subCss = css`
 `
 const IntButton = styled(Button.Alt)`
   margin-left: 16px;
+  padding: 12px 24px;
+  font-size: 14px;
 `
 
 const iconCss = css`

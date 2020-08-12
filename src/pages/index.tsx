@@ -9,8 +9,8 @@ import { parseJsonDates } from 'helpers/date'
 import { updateByNextId, keepMockUpdated } from 'helpers/_planner'
 import { LOCAL_STORAGE_KEY } from 'constants/constants'
 import { Entries } from 'lib/FormElements/types'
-import { Planner, Overlay, Modal } from 'lib'
-import { EventEditor } from 'components'
+import { Overlay, Modal } from 'lib'
+import { EventEditor, Planner } from 'components'
 import {
   PlannerEvent,
   PlannerEventGroup,
