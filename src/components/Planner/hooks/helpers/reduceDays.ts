@@ -80,10 +80,10 @@ function areOverlapping(
     return areIntervalsOverlapping(
       {
         start: startOfDay(range.start),
-        end: startOfDay(range.end),
+        end: endOfDay(range.end),
       },
       {
-        start: endOfDay(prevRange.start),
+        start: startOfDay(prevRange.start),
         end: endOfDay(prevRange.end),
       },
       { inclusive: true },

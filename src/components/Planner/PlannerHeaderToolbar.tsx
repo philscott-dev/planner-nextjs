@@ -163,8 +163,11 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
       </IntervalWrapper>
 
       <ControlWrapper>
-        <PlannerControl text="Event" onMouseDown={onAddEventClick}>
+        <PlannerControl text="Add Row" onMouseDown={onAddRowClick}>
           <MdPlaylistAdd />
+        </PlannerControl>
+        <PlannerControl text="Add Event" onMouseDown={onAddEventClick}>
+          <FiPlus />
         </PlannerControl>
       </ControlWrapper>
     </div>

@@ -8,7 +8,6 @@ export default function useIntersectionObserver(
   useEffect(() => {
     function observe(entries: IntersectionObserverEntry[]) {
       const entry = entries[0]
-      console.log(entries)
       const rect = entry.boundingClientRect as DOMRectReadOnly
       setHasIntersected(rect.y < 0)
     }

@@ -51,6 +51,7 @@ const CtrlButton = styled(IconButton)`
 
 const CtrlText = styled.p`
   position: absolute;
+  white-space: nowrap;
   margin: 0;
   margin-top: 4px;
   top: calc(100% - 1px);

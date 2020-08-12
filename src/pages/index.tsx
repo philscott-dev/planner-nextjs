@@ -64,7 +64,7 @@ const IndexPage: NextPage = () => {
 
   const handleColumnHeaderDoubleClick = (date: Date) => {
     console.log('handleColumnHeaderDoubleClick')
-    //console.log(date)
+    console.log(date)
   }
 
   const handleEmptyClick = (row: string | number, date: Date) => {
@@ -75,7 +75,7 @@ const IndexPage: NextPage = () => {
   const handleEmptyDoubleClick = (row: string | number, date: Date) => {
     console.log('handleEmptyDoubleClick')
     const newEvent: PlannerEvent = {
-      id: row,
+      id: uuid(),
       assigneeId: row,
       startTime: date,
       endTime: date,
@@ -184,7 +184,7 @@ const IndexPage: NextPage = () => {
     const newEvent: PlannerEvent = {
       ...event,
       title: entries.title as string,
-      id: event.id || uuid(),
+      id: event.id,
       startTime: parseISO(entries.startTime as string),
       endTime: parseISO(entries.endTime as string),
       color: entries.color as string,
@@ -194,6 +194,7 @@ const IndexPage: NextPage = () => {
       newEvent,
       entries.assigneeId as string,
     )
+
     setEvents(updatedPlanner)
     setEditableItems(removeByIndex(editableItems, index))
   }
