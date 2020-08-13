@@ -3,7 +3,7 @@ import { FC, MouseEvent } from 'react'
 import { jsx } from '@emotion/react'
 import styled from '@emotion/styled'
 import PlannerEventBlock from './PlannerEventBlock'
-import { PlannerEvent, PlannerInterval } from './types'
+import { PlannerEvent, PlannerInterval, PlannerLayout } from './types'
 import usePlannerEventBlock from './hooks/usePlannerEventBlock'
 import useNewPlannerEventBlock from './hooks/_useNewPlannerEventBlock'
 
@@ -13,6 +13,7 @@ interface PlannerEventRowProps {
   activeEvent?: PlannerEvent
   range: Date[]
   plannerInterval: PlannerInterval
+  plannerLayout: PlannerLayout
   onEmptyClick: (e: MouseEvent) => void
   onEventClick: (e: MouseEvent, plannerEvent: PlannerEvent) => void
   onEmptyDoubleClick: (e: MouseEvent) => void
@@ -25,6 +26,7 @@ const PlannerEventRow: FC<PlannerEventRowProps> = ({
   activeEvent,
   range,
   plannerInterval,
+  plannerLayout,
   onEmptyClick,
   onEventClick,
   onEmptyDoubleClick,
@@ -35,7 +37,7 @@ const PlannerEventRow: FC<PlannerEventRowProps> = ({
 
   if (!blocks.length) return null
   return (
-    <div className={className}>
+    <EventRow className={className} plannerLayout={plannerLayout}>
       {blocks.map((block, index) => (
         <PlannerEventBlock
           key={index}
@@ -43,6 +45,7 @@ const PlannerEventRow: FC<PlannerEventRowProps> = ({
           range={range.length}
           event={block.event}
           plannerInterval={plannerInterval}
+          plannerLayout={plannerLayout}
           activeEvent={activeEvent}
           onEmptyClick={onEmptyClick}
           onEventClick={onEventClick}
@@ -50,14 +53,18 @@ const PlannerEventRow: FC<PlannerEventRowProps> = ({
           onEventDoubleClick={onEventDoubleClick}
         />
       ))}
-    </div>
+    </EventRow>
   )
 }
 
-export default styled(PlannerEventRow)`
+export default PlannerEventRow
+
+const EventRow = styled.div<{ plannerLayout: PlannerLayout }>`
+  position: ${({ plannerLayout }) =>
+    plannerLayout === 'stacked' ? 'absolute' : 'relative'};
   box-sizing: border-box;
   display: flex;
-  position: relative;
   width: 100%;
-  height: 60px;
+  height: ${({ plannerLayout }) =>
+    plannerLayout === 'standard' ? '60px' : '40px'};
 `

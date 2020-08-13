@@ -6,9 +6,14 @@ import PlannerEventRow from './PlannerEventRow'
 import PlannerRowHeader from './PlannerRowHeader'
 import PlannerRowWrapper from './PlannerRowWrapper'
 import usePlannerEventRow from './hooks/usePlannerEventRow'
-import { PlannerEvent, PlannerEventGroup, PlannerInterval } from './types'
 import { Text } from 'lib'
 import PlannerRowControls from './PlannerRowControls'
+import {
+  PlannerEvent,
+  PlannerEventGroup,
+  PlannerInterval,
+  PlannerLayout,
+} from './types'
 
 interface PlannerRowProps {
   className?: string
@@ -21,6 +26,7 @@ interface PlannerRowProps {
   index: number
   rowCount: number
   plannerInterval: PlannerInterval
+  plannerLayout: PlannerLayout
   onEmptyClick: (e: MouseEvent) => void
   onEventClick: (e: MouseEvent, plannerEvent: PlannerEvent) => void
   onEmptyDoubleClick: (e: MouseEvent) => void
@@ -44,6 +50,7 @@ const PlannerRow: FC<PlannerRowProps> = ({
   index,
   rowCount,
   plannerInterval,
+  plannerLayout,
   onEmptyClick,
   onEventClick,
   onEmptyDoubleClick,
@@ -59,7 +66,11 @@ const PlannerRow: FC<PlannerRowProps> = ({
 }) => {
   const rows = usePlannerEventRow(plannerInterval, row?.events)
   return (
-    <div className={className} data-row-id={row ? row.id : ''}>
+    <Row
+      className={className}
+      data-row-id={row ? row.id : ''}
+      plannerLayout={plannerLayout}
+    >
       <PlannerRowHeader
         isActive={row ? row.id == activeRow : false}
         range={range.length + 1}
@@ -93,6 +104,7 @@ const PlannerRow: FC<PlannerRowProps> = ({
             activeEvent={activeEvent}
             range={range}
             plannerInterval={plannerInterval}
+            plannerLayout={plannerLayout}
             onEmptyClick={onEmptyClick}
             onEventClick={onEventClick}
             onEmptyDoubleClick={onEmptyDoubleClick}
@@ -100,17 +112,20 @@ const PlannerRow: FC<PlannerRowProps> = ({
           />
         ))}
       </PlannerRowWrapper>
-    </div>
+    </Row>
   )
 }
 
-export default styled(PlannerRow)`
+export default PlannerRow
+
+const Row = styled.div<{ plannerLayout: PlannerLayout }>`
   box-sizing: content-box;
   z-index: 0;
   display: flex;
   justify-content: flex-start;
   border-bottom: 2px solid black;
-  min-height: 60px;
+  min-height: ${({ plannerLayout }) =>
+    plannerLayout === 'standard' ? '60px' : '40px'};
 
   &:last-child {
     /* border-bottom: none; */

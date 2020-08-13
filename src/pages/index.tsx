@@ -15,6 +15,7 @@ import {
   PlannerEvent,
   PlannerEventGroup,
   PlannerInterval,
+  PlannerLayout,
 } from 'components/Planner/types'
 import {
   parse as parseDate,
@@ -35,6 +36,7 @@ const IndexPage: NextPage = () => {
   const [plannerInterval, setPlannerInterval] = useState<PlannerInterval>(
     'month',
   )
+  const [plannerLayout, setPlannerLayout] = useState<PlannerLayout>('standard')
 
   useEffect(() => {
     const json = localStorage.getItem(LOCAL_STORAGE_KEY)
@@ -130,6 +132,9 @@ const IndexPage: NextPage = () => {
     setPlannerInterval(interval)
   }
 
+  const handlePlannerLayoutChange = (layout: PlannerLayout) => {
+    setPlannerLayout(layout)
+  }
   /**
    * Event Editor Bar Interactions
    */
@@ -286,6 +291,7 @@ const IndexPage: NextPage = () => {
         title={title}
         eventGroups={events}
         plannerInterval={plannerInterval}
+        plannerLayout={plannerLayout}
         onColumnHeaderDoubleClick={handleColumnHeaderDoubleClick}
         onEmptyClick={handleEmptyClick}
         onEmptyDoubleClick={handleEmptyDoubleClick}
@@ -294,6 +300,7 @@ const IndexPage: NextPage = () => {
         onRowHeaderDoubleClick={handleRowHeaderDoubleClick}
         onDropEvent={handleDropEvent}
         onPlannerIntervalChange={handlePlannerIntervalChange}
+        onPlannerLayoutChange={handlePlannerLayoutChange}
         onSettingsClick={handleSettingsClick}
         onNewPlannerClick={handleNewPlannerClick}
         onExportClick={handleExportClick}

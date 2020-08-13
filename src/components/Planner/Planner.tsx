@@ -7,23 +7,30 @@ import PlannerHeader from './PlannerHeader'
 import PlannerRow from './PlannerRow'
 import useDateRange from './hooks/useDateRange'
 import useFilteredEvents from './hooks/useFilteredEvents'
-import { PlannerEventGroup, PlannerEvent, PlannerInterval } from './types'
 import PlannerColumn, { Column } from './PlannerColumn'
 import { getDataAttrForMouseEvent } from 'helpers/event'
 import PlannerFileImport from './PlannerFileImport'
+import {
+  PlannerEventGroup,
+  PlannerEvent,
+  PlannerInterval,
+  PlannerLayout,
+} from './types'
 
 interface PlannerProps {
   className?: string
   title?: string
   eventGroups?: PlannerEventGroup[]
   plannerInterval: PlannerInterval
+  plannerLayout: PlannerLayout
   onNewPlannerClick: () => void
   onSettingsClick: () => void
   onImportJSON: (json: string) => void
   onExportClick: () => void
   onAddEventClick: () => void
   onAddRowClick: () => void
-  onPlannerIntervalChange: (PlannerInterval: PlannerInterval) => void
+  onPlannerIntervalChange: (plannerInterval: PlannerInterval) => void
+  onPlannerLayoutChange: (plannerLayout: PlannerLayout) => void
   onEmptyClick: (row: string | number, date: Date) => void
   onEmptyDoubleClick: (row: string | number, date: Date) => void
   onEventClick: (plannerEvent: PlannerEvent) => void
@@ -48,6 +55,7 @@ const Planner: FC<PlannerProps> = ({
   title,
   eventGroups,
   plannerInterval,
+  plannerLayout,
   onSettingsClick,
   onNewPlannerClick,
   onImportJSON,
@@ -62,6 +70,7 @@ const Planner: FC<PlannerProps> = ({
   onColumnHeaderDoubleClick,
   onDropEvent,
   onPlannerIntervalChange,
+  onPlannerLayoutChange,
   onRowRename,
   onRowDelete,
   onRowUp,
@@ -187,6 +196,10 @@ const Planner: FC<PlannerProps> = ({
     onPlannerIntervalChange(interval)
   }
 
+  const handlePlannerLayoutChange = (layout: PlannerLayout) => {
+    onPlannerLayoutChange(layout)
+  }
+
   const handleActiveDateChange = (date: Date) => {
     setActiveDate(date)
   }
@@ -267,6 +280,7 @@ const Planner: FC<PlannerProps> = ({
           activeDate={activeDate}
           activeColumn={column}
           plannerInterval={plannerInterval}
+          plannerLayout={plannerLayout}
           onActiveDateChange={handleActiveDateChange}
           onHeaderClick={handleColumnHeaderClick}
           onHeaderDoubleClick={handleColumnHeaderDoubleClick}
@@ -278,6 +292,7 @@ const Planner: FC<PlannerProps> = ({
           onExportClick={handleExportClick}
           onAddEventClick={handleAddEventClick}
           onAddRowClick={handleAddRowClick}
+          onPlannerLayoutChange={handlePlannerLayoutChange}
         />
         {events
           ? events.map((row, index) => (
@@ -288,6 +303,7 @@ const Planner: FC<PlannerProps> = ({
                 events={row.events}
                 row={row}
                 plannerInterval={plannerInterval}
+                plannerLayout={plannerLayout}
                 rowCount={events.length}
                 activeRow={activeRow}
                 activeEvent={activeEvent}

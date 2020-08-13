@@ -2,9 +2,8 @@
 import styled from '@emotion/styled'
 import { FC, MouseEvent, useState, createRef } from 'react'
 import { jsx, css } from '@emotion/react'
-import { Button } from 'lib'
 import { Picker, Controls, Calendar } from 'lib/Datepicker'
-import { PlannerInterval } from './types'
+import { PlannerInterval, PlannerLayout } from './types'
 import { useOnClickOutside } from 'hooks'
 import PlannerControl from './PlannerControl'
 import { FaCaretDown } from 'react-icons/fa'
@@ -12,7 +11,8 @@ import { FaFileImport, FaFileExport } from 'react-icons/fa'
 import { FiPlus, FiMoreVertical, FiEdit } from 'react-icons/fi'
 import { GoCalendar } from 'react-icons/go'
 import { MdPlaylistAdd } from 'react-icons/md'
-import { Dropdown, DropdownOption, IconButton } from 'lib'
+import { Dropdown, DropdownOption, IconButton, Button } from 'lib'
+import Input from 'lib/FormElements/Input'
 import { RenameDialog } from 'components'
 import { H2 } from 'lib'
 
@@ -23,6 +23,7 @@ interface PlannerHeaderToolbarProps {
   activeDate: Date
   className?: string
   plannerInterval: PlannerInterval
+  plannerLayout: PlannerLayout
   onActiveDateChange: (date: Date) => void
   onPlannerIntervalChange: (plannerInterval: PlannerInterval) => void
   onSettingsClick: () => void
@@ -32,6 +33,7 @@ interface PlannerHeaderToolbarProps {
   onAddEventClick: () => void
   onAddRowClick: () => void
   onRenamePlannerConfirm: (title: string) => void
+  onPlannerLayoutChange: (plannerLayout: PlannerLayout) => void
 }
 
 const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
@@ -40,16 +42,17 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
   year,
   className,
   activeDate,
-  onActiveDateChange,
   plannerInterval,
+  plannerLayout,
+  onActiveDateChange,
   onPlannerIntervalChange,
-  onSettingsClick,
   onRenamePlannerConfirm,
   onNewPlannerClick,
   onImportClick,
   onExportClick,
   onAddEventClick,
   onAddRowClick,
+  onPlannerLayoutChange,
 }) => {
   const pickerRef = createRef<HTMLDivElement>()
   const [isRenameVisible, setRenameVisibility] = useState<boolean>(false)
@@ -86,6 +89,10 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
     setRenameVisibility(false)
   }
 
+  const handlePlannerLayoutChange = (e: MouseEvent<HTMLButtonElement>) => {
+    onPlannerLayoutChange(e.currentTarget.value as PlannerLayout)
+  }
+
   return (
     <div className={className}>
       <Flex>
@@ -114,7 +121,28 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
             <FiEdit css={iconCss} /> Rename
           </DropdownOption>
         </Dropdown>
-        <Heading>{title || 'Planner'}</Heading>
+        <Heading>{title || 'PlannerJS'}</Heading>
+        <IntButton
+          value="standard"
+          isActive={plannerLayout === 'standard'}
+          onMouseDown={handlePlannerLayoutChange}
+        >
+          Standard
+        </IntButton>
+        <IntButton
+          value="condensed"
+          isActive={plannerLayout === 'condensed'}
+          onMouseDown={handlePlannerLayoutChange}
+        >
+          Condensed
+        </IntButton>
+        <IntButton
+          value="stacked"
+          isActive={plannerLayout === 'stacked'}
+          onMouseDown={handlePlannerLayoutChange}
+        >
+          Stacked
+        </IntButton>
       </Flex>
       <div>
         <RenameDialog
@@ -260,4 +288,8 @@ const IntButton = styled(Button.Alt)`
 
 const iconCss = css`
   margin-right: 8px;
+`
+
+const Search = styled(Input)`
+  height: 48px;
 `

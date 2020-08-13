@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { FC, MouseEvent } from 'react'
 import { jsx, css } from '@emotion/react'
 import { Text } from 'lib'
-import { PlannerEvent, PlannerInterval } from './types'
+import { PlannerEvent, PlannerInterval, PlannerLayout } from './types'
 import { format } from 'date-fns'
 import { lightenColor } from 'helpers/color'
 
@@ -12,6 +12,7 @@ interface PlannerEventBlockProps {
   event?: PlannerEvent
   activeEvent?: PlannerEvent
   plannerInterval: PlannerInterval
+  plannerLayout: PlannerLayout
   size: number
   range: number
   onEmptyClick: (e: MouseEvent) => void
@@ -29,6 +30,7 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
   size,
   range,
   plannerInterval,
+  plannerLayout,
   onEmptyClick,
   onEventClick,
   onEmptyDoubleClick,
@@ -60,14 +62,16 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
         <Text ellipsis size="small" css={textCss}>
           {event.title}
         </Text>
-        <Text.Light ellipsis size="small" css={textCss}>
-          {event.startTime && event.endTime
-            ? `${format(event.startTime, formatString)} - ${format(
-                event.endTime,
-                formatString,
-              )}`
-            : null}
-        </Text.Light>
+        {plannerLayout === 'standard' ? (
+          <Text.Light ellipsis size="small" css={textCss}>
+            {event.startTime && event.endTime
+              ? `${format(event.startTime, formatString)} - ${format(
+                  event.endTime,
+                  formatString,
+                )}`
+              : null}
+          </Text.Light>
+        ) : null}
       </Block>
     </BlockWrapper>
   ) : (

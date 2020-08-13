@@ -20,6 +20,7 @@ export interface PlannerEvent {
 }
 
 export type PlannerInterval = 'day' | 'week' | 'month' | 'year'
+export type PlannerLayout = 'standard' | 'condensed' | 'stacked'
 
 export interface Block {
   size: number
