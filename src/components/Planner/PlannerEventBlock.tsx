@@ -98,7 +98,6 @@ const Empty = styled.div<BlockProps>`
 const BlockWrapper = styled.div<BlockProps>`
   box-sizing: border-box;
   min-width: ${({ size, range }) => `calc(${size / range} * 100%)`};
-  height: 100%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 4px;
