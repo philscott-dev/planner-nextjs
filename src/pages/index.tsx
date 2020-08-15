@@ -11,6 +11,8 @@ import { LOCAL_STORAGE_KEY } from 'constants/constants'
 import { Entries } from 'lib/FormElements/types'
 import { Overlay, Modal } from 'lib'
 import { EventEditor, Planner } from 'components'
+import usePlannerQuery from 'components/Planner/hooks/usePlannerQuery'
+import useSWR from 'swr'
 import {
   PlannerEvent,
   PlannerEventGroup,
@@ -33,10 +35,13 @@ const IndexPage: NextPage = () => {
   const [events, setEvents] = useState<PlannerEventGroup[]>([])
   const [editableDeleteIndex, setEditableDeleteIndex] = useState<number>()
   const [editableItems, setEditableItems] = useState<PlannerEvent[] | any[]>([])
+  const [activeDate, setActiveDate] = useState(startOfDay(new Date()))
   const [plannerInterval, setPlannerInterval] = useState<PlannerInterval>(
     'month',
   )
   const [plannerLayout, setPlannerLayout] = useState<PlannerLayout>('standard')
+  const query = usePlannerQuery()
+  const { data, error } = useSWR('/facts/random?animal_type=cat&amount=3')
 
   useEffect(() => {
     const json = localStorage.getItem(LOCAL_STORAGE_KEY)
@@ -127,6 +132,10 @@ const IndexPage: NextPage = () => {
   /**
    * Planner Toolbar Interactions
    */
+
+  const handleActiveDateChange = (date: Date) => {
+    setActiveDate(date)
+  }
 
   const handlePlannerIntervalChange = (interval: PlannerInterval) => {
     setPlannerInterval(interval)
@@ -292,6 +301,8 @@ const IndexPage: NextPage = () => {
         eventGroups={events}
         plannerInterval={plannerInterval}
         plannerLayout={plannerLayout}
+        activeDate={activeDate}
+        onActiveDateChange={handleActiveDateChange}
         onColumnHeaderDoubleClick={handleColumnHeaderDoubleClick}
         onEmptyClick={handleEmptyClick}
         onEmptyDoubleClick={handleEmptyDoubleClick}

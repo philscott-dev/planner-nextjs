@@ -23,6 +23,8 @@ interface PlannerProps {
   eventGroups?: PlannerEventGroup[]
   plannerInterval: PlannerInterval
   plannerLayout: PlannerLayout
+  activeDate: Date
+  onActiveDateChange: (date: Date) => void
   onNewPlannerClick: () => void
   onSettingsClick: () => void
   onImportJSON: (json: string) => void
@@ -56,6 +58,8 @@ const Planner: FC<PlannerProps> = ({
   eventGroups,
   plannerInterval,
   plannerLayout,
+  activeDate,
+  onActiveDateChange,
   onSettingsClick,
   onNewPlannerClick,
   onImportJSON,
@@ -77,9 +81,7 @@ const Planner: FC<PlannerProps> = ({
   onRowDown,
   onPlannerRename,
 }) => {
-  const today = new Date()
   const [isImportVisible, setImportVisibility] = useState(false)
-  const [activeDate, setActiveDate] = useState(startOfDay(today))
   const [activeEvent, setActiveEvent] = useState<PlannerEvent | undefined>()
   const [column, setColumn] = useState<number>()
   const [activeRow, setActiveRow] = useState<
@@ -201,7 +203,7 @@ const Planner: FC<PlannerProps> = ({
   }
 
   const handleActiveDateChange = (date: Date) => {
-    setActiveDate(date)
+    onActiveDateChange(date)
   }
 
   const handleSettingsClick = () => {

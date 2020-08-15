@@ -122,27 +122,6 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
           </DropdownOption>
         </Dropdown>
         <Heading>{title || 'PlannerJS'}</Heading>
-        <IntButton
-          value="standard"
-          isActive={plannerLayout === 'standard'}
-          onMouseDown={handlePlannerLayoutChange}
-        >
-          Standard
-        </IntButton>
-        <IntButton
-          value="condensed"
-          isActive={plannerLayout === 'condensed'}
-          onMouseDown={handlePlannerLayoutChange}
-        >
-          Condensed
-        </IntButton>
-        <IntButton
-          value="stacked"
-          isActive={plannerLayout === 'stacked'}
-          onMouseDown={handlePlannerLayoutChange}
-        >
-          Stacked
-        </IntButton>
       </Flex>
       <div>
         <RenameDialog
@@ -191,6 +170,27 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
       </IntervalWrapper>
 
       <ControlWrapper>
+        <IntButton
+          value="standard"
+          isActive={plannerLayout === 'standard'}
+          onMouseDown={handlePlannerLayoutChange}
+        >
+          Standard
+        </IntButton>
+        <IntButton
+          value="condensed"
+          isActive={plannerLayout === 'condensed'}
+          onMouseDown={handlePlannerLayoutChange}
+        >
+          Condensed
+        </IntButton>
+        <IntButton
+          value="stacked"
+          isActive={plannerLayout === 'stacked'}
+          onMouseDown={handlePlannerLayoutChange}
+        >
+          Stacked
+        </IntButton>
         <PlannerControl text="Add Row" onMouseDown={onAddRowClick}>
           <MdPlaylistAdd />
         </PlannerControl>

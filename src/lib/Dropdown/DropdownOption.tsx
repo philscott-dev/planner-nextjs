@@ -6,14 +6,12 @@ export default styled.button<{ isDelete?: boolean; disabled?: boolean }>`
   white-space: nowrap;
   align-items: center;
   outline: none;
-  pointer-events: all;
   border-style: solid;
   cursor: pointer;
   width: 100%;
   outline: none;
   border: none;
   margin: 0;
-  cursor: pointer;
   font-size: 14px;
   padding: 12px 16px;
   transition: ${({ theme }) => theme.transition.all};

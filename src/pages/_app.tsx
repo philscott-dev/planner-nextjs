@@ -4,6 +4,8 @@ import { getYear } from 'date-fns'
 import { ThemeProvider } from '@emotion/react'
 import { theme } from 'theme'
 import { AppProps } from 'next/app'
+import { SWRConfig } from 'swr'
+import swrConfig from 'config/swrConfig'
 import 'styles/fonts.css'
 import 'styles/default.css'
 
@@ -25,8 +27,10 @@ const App = ({ Component, pageProps }: AppProps) => {
         <meta name="mobile-web-app-capable" content="yes" />
       </Head>
       <ThemeProvider theme={theme}>
-        <PortalMount id="portal" />
-        <Component {...pageProps} />
+        <SWRConfig value={swrConfig}>
+          <PortalMount id="portal" />
+          <Component {...pageProps} />
+        </SWRConfig>
       </ThemeProvider>
     </>
   )

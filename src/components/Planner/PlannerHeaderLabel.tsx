@@ -41,6 +41,4 @@ export default styled(PlannerHeaderLabel)`
   justify-content: center;
   height: 100%;
   width: 100%;
-  /* background: ${({ theme }) => theme.color.blue[600]};
-  border-right: 2px solid black; */
 `
