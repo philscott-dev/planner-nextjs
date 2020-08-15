@@ -63,7 +63,7 @@ export const Wrapper = styled.div<WrapperProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: ${({ range }) => `calc((100% - 140px) / ${range - 1})`};
+  min-width: ${({ range }) => `calc((100%) / ${range - 1})`};
   box-sizing: border-box;
   background: ${({ isActive, isWeekend, theme }) =>
     isActive

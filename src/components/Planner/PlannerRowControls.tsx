@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import styled from '@emotion/styled'
 import { FC, useState, MouseEvent } from 'react'
 import { jsx, css } from '@emotion/react'
 import { IconButton, Dropdown, DropdownOption } from 'lib'
@@ -112,7 +113,7 @@ const PlannerRowControls: FC<PlannerRowControlsProps> = ({
   )
 }
 
-export default PlannerRowControls
+export default styled(PlannerRowControls)``
 
 const iconCss = css`
   margin-right: 8px;

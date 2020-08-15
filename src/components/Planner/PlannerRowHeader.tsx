@@ -1,14 +1,53 @@
+/** @jsx jsx */
 import styled from '@emotion/styled'
+import { FC, useRef, MouseEvent } from 'react'
+import { jsx } from '@emotion/react'
+import { useIntersectionObserver } from 'hooks'
 
-const PlannerRowHeader = styled.div<{ range: number; isActive: boolean }>`
-  min-width: 140px;
-  width: 140px;
-  box-sizing: border-box;
-  display: flex;
-  padding: 8px;
-  border-right: 2px solid black;
-  background: ${({ theme, isActive }) =>
-    isActive ? theme.color.blue[500] + 50 : theme.color.blue[600]};
-`
+interface PlannerRowHeaderProps {
+  className?: string
+  isActive: boolean
+  onMouseDown: (e: MouseEvent) => void
+  onDoubleClick: (e: MouseEvent) => void
+}
+const PlannerRowHeader: FC<PlannerRowHeaderProps> = ({
+  className,
+  children,
+  onMouseDown,
+  onDoubleClick,
+}) => {
+  const ref = useRef<HTMLDivElement>(null)
+  const isSticky = useIntersectionObserver(ref.current, null, 174)
+
+  return (
+    <Wrapper
+      className={className}
+      ref={ref}
+      isSticky={isSticky}
+      onMouseDown={onMouseDown}
+      onDoubleClick={onDoubleClick}
+    >
+      <Container>{children}</Container>
+    </Wrapper>
+  )
+}
 
 export default PlannerRowHeader
+
+const Wrapper = styled.div<{ isSticky: boolean }>`
+  position: sticky;
+  top: 174px;
+  box-sizing: border-box;
+  display: flex;
+  /* background: ${({ theme, isSticky }) =>
+    isSticky ? theme.color.blue[700] : `${theme.color.blue[600]}4c`}; */
+`
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  border-radius: 2px;
+  padding: 2px 4px 2px 0;
+  margin: 2px 4px 2px 4px;
+`

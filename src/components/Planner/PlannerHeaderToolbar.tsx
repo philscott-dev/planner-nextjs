@@ -170,7 +170,7 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
       </IntervalWrapper>
 
       <ControlWrapper>
-        <IntButton
+        {/* <IntButton
           value="standard"
           isActive={plannerLayout === 'standard'}
           onMouseDown={handlePlannerLayoutChange}
@@ -190,7 +190,7 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
           onMouseDown={handlePlannerLayoutChange}
         >
           Stacked
-        </IntButton>
+        </IntButton> */}
         <PlannerControl text="Add Row" onMouseDown={onAddRowClick}>
           <MdPlaylistAdd />
         </PlannerControl>

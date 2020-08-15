@@ -71,24 +71,6 @@ const PlannerRow: FC<PlannerRowProps> = ({
       data-row-id={row ? row.id : ''}
       plannerLayout={plannerLayout}
     >
-      <PlannerRowHeader
-        isActive={row ? row.id == activeRow : false}
-        range={range.length + 1}
-        onMouseDown={onRowHeaderClick}
-        onDoubleClick={onRowHeaderDoubleClick}
-      >
-        <PlannerRowControls
-          label={row ? row.label : ''}
-          id={row ? row.id : ''}
-          index={index}
-          rowCount={rowCount}
-          onRowUp={onRowUp}
-          onRowDown={onRowDown}
-          onRowRename={onRowRename}
-          onRowDelete={onRowDelete}
-        />
-        <Text size="small">{row ? row.label : null}</Text>
-      </PlannerRowHeader>
       <PlannerRowWrapper
         isActive={row ? row.id == activeRow : false}
         range={range.length + 1}
@@ -97,6 +79,24 @@ const PlannerRow: FC<PlannerRowProps> = ({
         onDragOver={onDragOver}
         onDrop={onDrop}
       >
+        <PlannerRowHeader
+          isActive={row ? row.id == activeRow : false}
+          onMouseDown={onRowHeaderClick}
+          onDoubleClick={onRowHeaderDoubleClick}
+        >
+          <PlannerRowControls
+            label={row ? row.label : ''}
+            id={row ? row.id : ''}
+            index={index}
+            rowCount={rowCount}
+            onRowUp={onRowUp}
+            onRowDown={onRowDown}
+            onRowRename={onRowRename}
+            onRowDelete={onRowDelete}
+          />
+          <Text size="small">{row ? row.label : null}</Text>
+        </PlannerRowHeader>
+
         {rows.map((rowEvents, index) => (
           <PlannerEventRow
             key={index}
@@ -119,15 +119,12 @@ const PlannerRow: FC<PlannerRowProps> = ({
 export default PlannerRow
 
 const Row = styled.div<{ plannerLayout: PlannerLayout }>`
+  position: relative;
+  display: flex;
   box-sizing: content-box;
   z-index: 0;
-  display: flex;
   justify-content: flex-start;
   border-bottom: 2px solid black;
   min-height: ${({ plannerLayout }) =>
     plannerLayout === 'standard' ? '60px' : '40px'};
-
-  &:last-child {
-    /* border-bottom: none; */
-  }
 `

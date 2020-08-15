@@ -90,9 +90,6 @@ const PlannerHeader: FC<PlannerHeaderProps> = ({
         onAddRowClick={onAddRowClick}
       />
       <DateRowWrapper>
-        <CalWrapper range={range.length + 1}>
-          <PlannerHeaderLabel interval={plannerInterval} date={activeDate} />
-        </CalWrapper>
         {range.map((date, index) => (
           <PlannerHeaderDay
             key={index}
@@ -125,11 +122,4 @@ const DateRowWrapper = styled.div`
       color: ${({ theme }) => theme.color.blue[500]};
     }
   }
-`
-
-export const CalWrapper = styled.div<{ range: number }>`
-  min-width: 140px;
-  width: 140px;
-  box-sizing: border-box;
-  background: ${({ theme }) => theme.color.blue[500]};
 `

@@ -46,9 +46,7 @@ interface ColumnProps {
 }
 
 export const Column = styled.div<ColumnProps>`
-  min-width: ${({ index }) => (index === undefined ? '140px' : null)};
-  width: ${({ range, index }) =>
-    index === undefined ? '140px' : `calc((100% - 140px) / ${range - 1})`};
+  width: ${({ range }) => `calc((100%) / ${range - 1})`};
   box-sizing: border-box;
   border: ${({ isActive, theme }) =>
     isActive ? `1px solid ${theme.color.blue[300]}` : null};
