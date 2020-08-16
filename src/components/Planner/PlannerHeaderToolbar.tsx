@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
-import { FC, MouseEvent, useState, createRef } from 'react'
+import { FC, MouseEvent, useState, useEffect, createRef } from 'react'
 import { jsx, css } from '@emotion/react'
 import { Picker, Controls, Calendar } from 'lib/Datepicker'
 import { PlannerInterval, PlannerLayout } from './types'
@@ -15,11 +15,11 @@ import { Dropdown, DropdownOption, IconButton, Button } from 'lib'
 import Input from 'lib/FormElements/Input'
 import { RenameDialog } from 'components'
 import { H2 } from 'lib'
+import { format } from 'date-fns'
 
 interface PlannerHeaderToolbarProps {
   title?: string
-  month: string
-  year: string
+  range: Date[]
   activeDate: Date
   className?: string
   plannerInterval: PlannerInterval
@@ -32,21 +32,20 @@ interface PlannerHeaderToolbarProps {
   onExportClick: () => void
   onAddEventClick: () => void
   onAddRowClick: () => void
-  onRenamePlannerConfirm: (title: string) => void
+  onRenamePlanner: (title: string) => void
   onPlannerLayoutChange: (plannerLayout: PlannerLayout) => void
 }
 
 const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
   title,
-  month,
-  year,
+  range,
   className,
   activeDate,
   plannerInterval,
   plannerLayout,
   onActiveDateChange,
   onPlannerIntervalChange,
-  onRenamePlannerConfirm,
+  onRenamePlanner,
   onNewPlannerClick,
   onImportClick,
   onExportClick,
@@ -57,6 +56,14 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
   const pickerRef = createRef<HTMLDivElement>()
   const [isRenameVisible, setRenameVisibility] = useState<boolean>(false)
   const [isPickerVisible, setPickerVisibility] = useState<boolean>(false)
+  const [month, setMonth] = useState('')
+  const [year, setYear] = useState('')
+  useEffect(() => {
+    if (activeDate) {
+      setMonth(format(activeDate, 'MMM'))
+      setYear(format(activeDate, 'yyyy'))
+    }
+  }, [range, plannerInterval, activeDate])
   useOnClickOutside(
     pickerRef,
     () => setPickerVisibility(false),
@@ -85,7 +92,7 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
   }
 
   const handleRenamePlannerConfirm = (value: string) => {
-    onRenamePlannerConfirm(value)
+    onRenamePlanner(value)
     setRenameVisibility(false)
   }
 
@@ -121,20 +128,6 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
             <FiEdit css={iconCss} /> Rename
           </DropdownOption>
         </Dropdown>
-        <Heading>{title || 'PlannerJS'}</Heading>
-      </Flex>
-      <div>
-        <RenameDialog
-          value={title}
-          placeholder={'Title'}
-          isVisible={isRenameVisible}
-          onCancel={handleRenamePlannerVisibility}
-          onConfirm={handleRenamePlannerConfirm}
-          onClickOutside={handleRenamePlannerVisibility}
-        />
-      </div>
-
-      <IntervalWrapper>
         <PickerWrapper ref={pickerRef}>
           <PickerButton onMouseDown={handlePickerClick}>
             <DateHeading>{month}</DateHeading>
@@ -146,27 +139,20 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
             <Calendar date={activeDate} onSelectedDate={handleDateChange} />
           </Picker>
         </PickerWrapper>
-        <IntButton
-          value="week"
-          isActive={plannerInterval === 'week'}
-          onMouseDown={handleIntervalChange}
-        >
-          Week
-        </IntButton>
-        <IntButton
-          value="month"
-          isActive={plannerInterval === 'month'}
-          onMouseDown={handleIntervalChange}
-        >
-          Month
-        </IntButton>
-        <IntButton
-          value="year"
-          isActive={plannerInterval === 'year'}
-          onMouseDown={handleIntervalChange}
-        >
-          Year
-        </IntButton>
+      </Flex>
+      <div>
+        {/* <RenameDialog
+          value={title}
+          placeholder={'Title'}
+          isVisible={isRenameVisible}
+          onCancel={handleRenamePlannerVisibility}
+          onConfirm={handleRenamePlannerConfirm}
+          onClickOutside={handleRenamePlannerVisibility}
+        /> */}
+      </div>
+
+      <IntervalWrapper>
+        <Heading>{title || 'PlannerJS'}</Heading>
       </IntervalWrapper>
 
       <ControlWrapper>
@@ -191,24 +177,50 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
         >
           Stacked
         </IntButton> */}
-        <PlannerControl text="Add Row" onMouseDown={onAddRowClick}>
+        {/* <PlannerControl text="Add Row" onMouseDown={onAddRowClick}>
           <MdPlaylistAdd />
         </PlannerControl>
         <PlannerControl text="Add Event" onMouseDown={onAddEventClick}>
           <FiPlus />
-        </PlannerControl>
+        </PlannerControl> */}
+        <IntButton
+          value="week"
+          isActive={plannerInterval === 'week'}
+          onMouseDown={handleIntervalChange}
+        >
+          Week
+        </IntButton>
+        <IntButton
+          value="month"
+          isActive={plannerInterval === 'month'}
+          onMouseDown={handleIntervalChange}
+        >
+          Month
+        </IntButton>
+        <IntButton
+          value="year"
+          isActive={plannerInterval === 'year'}
+          onMouseDown={handleIntervalChange}
+        >
+          Year
+        </IntButton>
       </ControlWrapper>
     </div>
   )
 }
 
 export default styled(PlannerHeaderToolbar)`
-  box-sizing: border-box;
   display: flex;
+  position: sticky;
+  box-sizing: border-box;
   align-items: center;
   justify-content: space-between;
   background: ${({ theme }) => theme.color.blue[700]};
-  padding: 24px;
+  padding: 8px;
+  z-index: 1;
+  top: 0;
+  min-height: 60px;
+  max-height: 60px;
 `
 
 const Heading = styled(H2)`
@@ -232,6 +244,7 @@ const DateHeading = styled.h2`
 `
 
 const PickerButton = styled.button`
+  box-sizing: border-box;
   position: relative;
   display: flex;
   align-items: center;
@@ -239,6 +252,7 @@ const PickerButton = styled.button`
   padding: 0;
   margin: 0;
   margin-right: 16px;
+  min-height: 60px;
   outline: 0;
   background: transparent;
   cursor: pointer;
@@ -252,6 +266,7 @@ const PickerButton = styled.button`
 `
 
 const PickerWrapper = styled.div`
+  box-sizing: border-box;
   position: relative;
 `
 
@@ -265,10 +280,16 @@ const Flex = styled.div`
 
 const ControlWrapper = styled(Flex)`
   justify-content: flex-end;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
+    display: none;
+  }
 `
 
 const IntervalWrapper = styled(Flex)`
   justify-content: center;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
+    display: none;
+  }
 `
 
 const arrowDown = css`

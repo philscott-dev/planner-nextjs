@@ -37,7 +37,7 @@ const IndexPage: NextPage = () => {
   const [editableItems, setEditableItems] = useState<PlannerEvent[] | any[]>([])
   const [activeDate, setActiveDate] = useState(startOfDay(new Date()))
   const [plannerInterval, setPlannerInterval] = useState<PlannerInterval>(
-    'month',
+    'week',
   )
   const [plannerLayout, setPlannerLayout] = useState<PlannerLayout>('standard')
   const query = usePlannerQuery()

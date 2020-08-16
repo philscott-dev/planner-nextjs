@@ -61,16 +61,16 @@ const theme: Theme = {
     },
   },
   breakpoint: {
-    xsmall: '320px',
+    xsmall: '375px',
     small: '768px',
     medium: '992px',
     large: '1440px',
     xlarge: '1680px',
   },
   transition: {
-    color: 'color 0.3s ease-in-out',
-    background: 'background 0.3s ease-in-out',
-    all: 'all 0.3s ease-in-out',
+    color: 'color 0.25s ease-in-out',
+    background: 'background 0.25s ease-in-out',
+    all: 'all 0.25s ease-in-out',
   },
   index: {
     100: 100,

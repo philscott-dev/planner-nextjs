@@ -36,11 +36,13 @@ export default PlannerRowHeader
 
 const Wrapper = styled.div<{ isSticky: boolean }>`
   position: sticky;
-  top: 174px;
+  z-index: 150;
+  top: 140px;
   box-sizing: border-box;
   display: flex;
-  /* background: ${({ theme, isSticky }) =>
-    isSticky ? theme.color.blue[700] : `${theme.color.blue[600]}4c`}; */
+  pointer-events: none;
+  background: ${({ theme, isSticky }) =>
+    isSticky ? theme.color.blue[700] : `${theme.color.blue[700]}4c`};
 `
 
 const Container = styled.div`

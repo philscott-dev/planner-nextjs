@@ -56,7 +56,7 @@ export const Column = styled.div<ColumnProps>`
       : isWeekend
       ? theme.color.blue[600]
       : null};
-  &:nth-of-type(odd) {
+  &:nth-of-type(even) {
     background: ${({ plannerInterval, theme }) =>
       plannerInterval === 'year' || plannerInterval === 'day'
         ? theme.color.blue[600]

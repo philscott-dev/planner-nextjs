@@ -11,7 +11,7 @@ interface PlannerHeaderDayProps {
   isActive?: boolean
   date: Date
   range: number
-  headerFormat: string
+  dayFormat: string
   plannerInterval: PlannerInterval
   onMouseDown: (e: MouseEvent) => void
   onDoubleClick: (e: MouseEvent) => void
@@ -22,14 +22,14 @@ const PlannerHeaderDay: FC<PlannerHeaderDayProps> = ({
   isActive,
   date,
   range,
-  headerFormat,
+  dayFormat,
   plannerInterval,
   className,
   onMouseDown,
   onDoubleClick,
 }) => {
   const isWeekend = useHighlightWeekend(date, plannerInterval)
-  const dateString = format(date, headerFormat).split(' ')
+  const dateString = format(date, dayFormat).split(' ')
   return (
     <Wrapper
       className={className}
@@ -75,13 +75,13 @@ export const Wrapper = styled.div<WrapperProps>`
     isActive ? `1px solid ${theme.color.blue[300]}` : null};
   border-bottom: none;
 
-  &:nth-of-type(odd) {
+  &:nth-of-type(even) {
     > div > p {
       color: ${({ plannerInterval }) =>
         plannerInterval === 'month' ? 'transparent' : null};
     }
   }
-  &:nth-of-type(odd) {
+  &:nth-of-type(even) {
     background: ${({ plannerInterval, theme }) =>
       plannerInterval === 'year' || plannerInterval === 'day'
         ? theme.color.blue[600]

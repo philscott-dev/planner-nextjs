@@ -84,7 +84,7 @@ const PlannerRow: FC<PlannerRowProps> = ({
           onMouseDown={onRowHeaderClick}
           onDoubleClick={onRowHeaderDoubleClick}
         >
-          <PlannerRowControls
+          {/* <PlannerRowControls
             label={row ? row.label : ''}
             id={row ? row.id : ''}
             index={index}
@@ -93,7 +93,7 @@ const PlannerRow: FC<PlannerRowProps> = ({
             onRowDown={onRowDown}
             onRowRename={onRowRename}
             onRowDelete={onRowDelete}
-          />
+          /> */}
           <Text size="small">{row ? row.label : null}</Text>
         </PlannerRowHeader>
 

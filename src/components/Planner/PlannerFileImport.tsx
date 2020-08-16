@@ -139,6 +139,7 @@ interface ModalProps {
   isVisible: boolean
 }
 const Modal = styled.div<ModalProps>`
+  display: none;
   visibility: ${({ isVisible }) => (!isVisible ? 'hidden' : 'visible')};
   position: absolute;
   top: ${({ isVisible }) => (isVisible ? '0' : '-450px')};

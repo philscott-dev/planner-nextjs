@@ -1,15 +1,17 @@
 /** @jsx jsx */
 import { FC, useState, MouseEvent, DragEvent } from 'react'
 import { jsx } from '@emotion/react'
-import { startOfDay } from 'date-fns'
 import styled from '@emotion/styled'
-import PlannerHeader from './PlannerHeader'
 import PlannerRow from './PlannerRow'
 import useDateRange from './hooks/useDateRange'
 import useFilteredEvents from './hooks/useFilteredEvents'
 import PlannerColumn, { Column } from './PlannerColumn'
 import { getDataAttrForMouseEvent } from 'helpers/event'
 import PlannerFileImport from './PlannerFileImport'
+import PlannerHeaderDayRow from './PlannerHeaderDayRow'
+import PlannerHeaderDay from './PlannerHeaderDay'
+import usePlannerDayFormat from './hooks/usePlannerDayFormat'
+import PlannerHeaderToolbar from './PlannerHeaderToolbar'
 import {
   PlannerEventGroup,
   PlannerEvent,
@@ -89,6 +91,7 @@ const Planner: FC<PlannerProps> = ({
   >()
   const range = useDateRange(activeDate, plannerInterval)
   const events = useFilteredEvents(eventGroups, range)
+  const dayFormat = usePlannerDayFormat(activeDate, plannerInterval)
 
   const handleColumnHeaderClick = (e: MouseEvent) => {
     e.preventDefault()
@@ -271,25 +274,30 @@ const Planner: FC<PlannerProps> = ({
       </Grid>
       {/* END: background grid */}
       <Wrapper>
-        <PlannerHeader
+        <PlannerHeaderToolbar
           title={title}
           range={range}
           activeDate={activeDate}
-          activeColumn={column}
           plannerInterval={plannerInterval}
           plannerLayout={plannerLayout}
           onActiveDateChange={handleActiveDateChange}
-          onHeaderClick={handleColumnHeaderClick}
-          onHeaderDoubleClick={handleColumnHeaderDoubleClick}
           onPlannerIntervalChange={handlePlannerIntervalChange}
           onSettingsClick={handleSettingsClick}
           onNewPlannerClick={handleNewPlannerClick}
-          onPlannerRename={handleRenamePlannerClick}
+          onRenamePlanner={handleRenamePlannerClick}
           onImportClick={handleImportClick}
           onExportClick={handleExportClick}
           onAddEventClick={handleAddEventClick}
           onAddRowClick={handleAddRowClick}
           onPlannerLayoutChange={handlePlannerLayoutChange}
+        />
+        <PlannerHeaderDayRow
+          plannerInterval={plannerInterval}
+          dayFormat={dayFormat}
+          activeColumn={column}
+          range={range}
+          onDayClick={handleColumnHeaderClick}
+          onDayDoubleClick={handleColumnHeaderDoubleClick}
         />
         {events
           ? events.map((row, index) => (

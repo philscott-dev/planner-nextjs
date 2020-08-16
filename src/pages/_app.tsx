@@ -8,6 +8,7 @@ import { SWRConfig } from 'swr'
 import swrConfig from 'config/swrConfig'
 import 'styles/fonts.css'
 import 'styles/default.css'
+import 'swiper/swiper.scss'
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
