@@ -93,7 +93,7 @@ const Planner: FC<PlannerProps> = ({
   const events = useFilteredEvents(eventGroups, range)
   const dayFormat = usePlannerDayFormat(activeDate, plannerInterval)
 
-  const handleColumnHeaderClick = (e: MouseEvent) => {
+  const handleDayClick = (e: MouseEvent) => {
     e.preventDefault()
     const col = getDataAttrForMouseEvent(e, 'data-planner-column')
     if (col) {
@@ -102,22 +102,22 @@ const Planner: FC<PlannerProps> = ({
     setActiveEvent(undefined)
   }
 
-  const handleRowHeaderDoubleClick = (e: MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    const col = getDataAttrForMouseEvent(e, 'data-row-id')
-    if (col) {
-      onRowHeaderDoubleClick(col)
-    }
-  }
-
-  const handleColumnHeaderDoubleClick = (e: MouseEvent) => {
+  const handleDayDoubleClick = (e: MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
     const d = getDataAttrForMouseEvent(e, 'data-planner-date')
     if (d) {
       const date = new Date(d)
       onColumnHeaderDoubleClick(date)
+    }
+  }
+
+  const handleRowHeaderDoubleClick = (e: MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const col = getDataAttrForMouseEvent(e, 'data-row-id')
+    if (col) {
+      onRowHeaderDoubleClick(col)
     }
   }
 
@@ -291,14 +291,18 @@ const Planner: FC<PlannerProps> = ({
           onAddRowClick={handleAddRowClick}
           onPlannerLayoutChange={handlePlannerLayoutChange}
         />
-        <PlannerHeaderDayRow
-          plannerInterval={plannerInterval}
-          dayFormat={dayFormat}
-          activeColumn={column}
-          range={range}
-          onDayClick={handleColumnHeaderClick}
-          onDayDoubleClick={handleColumnHeaderDoubleClick}
-        />
+        {range && range.length ? (
+          <PlannerHeaderDayRow
+            plannerInterval={plannerInterval}
+            dayFormat={dayFormat}
+            activeDate={activeDate}
+            activeColumn={column}
+            range={range}
+            onDayClick={handleDayClick}
+            onDayDoubleClick={handleDayDoubleClick}
+            onRangeChange={onActiveDateChange}
+          />
+        ) : null}
         {events
           ? events.map((row, index) => (
               <PlannerRow

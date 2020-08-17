@@ -1,5 +1,18 @@
 body {
   margin: 0;
-  background: #0F1337;
+  background: #0f1337;
+}
 
+.swiper-container {
+  width: 100%;
+}
+
+.swiper-slide {
+  box-sizing: border-box;
+  display: flex;
+  min-height: 80px;
+}
+
+#__next-prerender-indicator {
+  display: none !important;
 }

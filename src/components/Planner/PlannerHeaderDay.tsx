@@ -10,7 +10,7 @@ import useHighlightWeekend from './hooks/useHighlightWeekend'
 interface PlannerHeaderDayProps {
   isActive?: boolean
   date: Date
-  range: number
+  range: Date[]
   dayFormat: string
   plannerInterval: PlannerInterval
   onMouseDown: (e: MouseEvent) => void
@@ -53,7 +53,7 @@ const PlannerHeaderDay: FC<PlannerHeaderDayProps> = ({
 }
 
 interface WrapperProps {
-  range: number
+  range: Date[]
   isActive?: boolean
   plannerInterval: PlannerInterval
   isWeekend?: boolean
@@ -63,7 +63,7 @@ export const Wrapper = styled.div<WrapperProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: ${({ range }) => `calc((100%) / ${range - 1})`};
+  min-width: ${({ range }) => `calc((100%) / ${range.length})`};
   box-sizing: border-box;
   background: ${({ isActive, isWeekend, theme }) =>
     isActive
