@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { renderToString } from 'react-dom/server'
 import React, { FC, MouseEvent, useEffect, useState, useRef } from 'react'
 import { Swiper } from 'swiper/bundle'
 import PlannerHeaderDay from './PlannerHeaderDay'
@@ -35,11 +34,11 @@ const PlannerHeaderDayRow: FC<PlannerHeaderDayRowProps> = ({
   const [didReachBeginning, setReachBeginning] = useState(false)
   const [didReachEnd, setReachEnd] = useState(false)
   const [virtualData, setVirtualData] = useState<VirtualData>()
-  const [slides, setSlides] = useState([
-    range.map((date) => subDays(date, 7)),
-    range,
-    range.map((date) => addDays(date, 7)),
-  ])
+  // const [slides, setSlides] = useState([
+  //   range.map((date) => subDays(date, 7)),
+  //   range,
+  //   range.map((date) => addDays(date, 7)),
+  // ])
 
   useEffect(() => {
     console.log('init')
@@ -55,6 +54,15 @@ const PlannerHeaderDayRow: FC<PlannerHeaderDayRowProps> = ({
     }
   }, [didReachBeginning, hasSlidePrevTransitionEnd])
 
+  useEffect(() => {
+    const end = didReachEnd && hasSlideNextTransitionEnd
+    if (end) {
+      swiperRef.current?.destroy(true, true)
+      initSwiper()
+      setReachBeginning(false)
+    }
+  }, [didReachEnd, hasSlideNextTransitionEnd])
+
   /* Swiper Methods */
   const initSwiper = () => {
     const swiper = new Swiper('.swiper-container', {
@@ -64,7 +72,11 @@ const PlannerHeaderDayRow: FC<PlannerHeaderDayRowProps> = ({
       initialSlide: 1,
       runCallbacksOnInit: false,
       virtual: {
-        slides,
+        slides: [
+          range.map((date) => subDays(date, 7)),
+          range,
+          range.map((date) => addDays(date, 7)),
+        ],
         renderExternal(data) {
           setVirtualData(data)
         },
@@ -82,32 +94,30 @@ const PlannerHeaderDayRow: FC<PlannerHeaderDayRowProps> = ({
   }
 
   const reachEnd = (swiper: Swiper) => {
+    console.log(activeDate)
     console.log('reachEnd')
+    onRangeChange(addDays(activeDate, range.length))
     setSlideNextTransitionEnd(false)
     setReachEnd(true)
-    const endRange = swiper.virtual.slides[swiper.virtual.slides.length - 1]
-    swiper.virtual.slides = [
-      ...swiper.virtual.slides,
-      endRange.map((date: Date) => addDays(date, range.length)),
-    ]
+    // const endRange = swiper.virtual.slides[swiper.virtual.slides.length - 1]
+    // swiper.virtual.slides = [
+    //   ...swiper.virtual.slides,
+    //   endRange.map((date: Date) => addDays(date, range.length)),
+    // ]
   }
 
   const slideNextTransitionStart = () => {
     console.log('slideNextTransitionStart')
-    //setSlideNextTransitionEnd(false)
+    setSlideNextTransitionEnd(false)
   }
   const slideNextTransitionEnd = () => {
     console.log('slideNextTransitionEnd')
-    //setSlideNextTransitionEnd(true)
-  }
-
-  const slidePrevTransitionStart = () => {
-    console.log('slidePrevTransitionStart')
-    setSlidePrevTransitionEnd(false)
+    setSlideNextTransitionEnd(true)
   }
 
   const reachBeginning = (swiper: Swiper) => {
     console.log('reachBeginning')
+    onRangeChange(subDays(activeDate, range.length))
     setSlidePrevTransitionEnd(false)
     setReachBeginning(true)
     // const startRange = swiper.virtual.slides[0]
@@ -117,9 +127,17 @@ const PlannerHeaderDayRow: FC<PlannerHeaderDayRowProps> = ({
     // ]
   }
 
+  const slidePrevTransitionStart = () => {
+    console.log('slidePrevTransitionStart')
+    setSlidePrevTransitionEnd(false)
+    //onRangeChange(subDays(activeDate, range.length))
+  }
+
   const slidePrevTransitionEnd = (swiper: Swiper) => {
     console.log('slidePrevTransitionEnd')
     setSlidePrevTransitionEnd(true)
+    // const date = subDays(activeDate, range.length)
+    // onRangeChange(date)
   }
 
   /* Day Methods */
