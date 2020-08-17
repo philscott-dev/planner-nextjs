@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { subDays, addDays } from 'date-fns'
+import { subDays, addDays, subYears, addYears } from 'date-fns'
 import { Swiper } from 'swiper/bundle'
 import { VirtualData } from 'swiper/types/components/virtual'
 import { PlannerInterval } from '../types'
@@ -11,17 +11,18 @@ export default function useSwiper(
   onRangeChange: (date: Date) => void,
 ) {
   const swiperRef = useRef<Swiper>()
-  const [isInitialRender, setInitialRender] = useState(false)
+  const [shouldInitSwiper, setShouldInitSwiper] = useState(true)
+  const [currentRange, setCurrentRange] = useState(range)
   const [currentInterval, setCurrentInterval] = useState(plannerInterval)
-  const [hasSlideNextTransitionEnd, setSlideNextTransitionEnd] = useState(false)
-  const [hasSlidePrevTransitionEnd, setSlidePrevTransitionEnd] = useState(false)
-  const [didReachBeginning, setReachBeginning] = useState(false)
-  const [didReachEnd, setReachEnd] = useState(false)
+  const [hasSlideTransitionEnd, setSlideTransitionEnd] = useState(false)
   const [virtualData, setVirtualData] = useState<VirtualData>()
 
   useEffect(() => {
     function initSwiper() {
+      swiperRef.current?.destroy(true, true)
       const swiper = new Swiper('.swiper-container', {
+        direction: 'horizontal',
+        slidesPerColumnFill: 'row',
         speed: 250,
         mousewheel: {
           sensitivity: 0.5,
@@ -39,68 +40,50 @@ export default function useSwiper(
           },
         },
         on: {
-          slideNextTransitionStart: () => {
-            setSlideNextTransitionEnd(false)
+          slideChangeTransitionStart: (swiper: Swiper) => {
+            const { from, to } = swiper.virtual
+            if (from === 1 && to === 2) {
+              const add = plannerInterval === 'year' ? addYears : addDays
+              const length = plannerInterval === 'year' ? 1 : range.length
+              onRangeChange(add(activeDate, length))
+            } else {
+              const sub = plannerInterval === 'year' ? subYears : subDays
+              const length = plannerInterval === 'year' ? 1 : range.length
+              onRangeChange(sub(activeDate, length))
+            }
+            setSlideTransitionEnd(false)
           },
-          slideNextTransitionEnd: () => {
-            setSlideNextTransitionEnd(true)
-          },
-          reachBeginning: (swiper: Swiper) => {
-            onRangeChange(subDays(activeDate, range.length))
-            setSlidePrevTransitionEnd(false)
-            setReachBeginning(true)
-          },
-          slidePrevTransitionStart: () => {
-            setSlidePrevTransitionEnd(false)
-          },
-          slidePrevTransitionEnd: (swiper: Swiper) => {
-            setSlidePrevTransitionEnd(true)
-          },
-          reachEnd: (swiper: Swiper) => {
-            onRangeChange(addDays(activeDate, range.length))
-            setSlideNextTransitionEnd(false)
-            setReachEnd(true)
+          slideChangeTransitionEnd: () => {
+            setSlideTransitionEnd(true)
           },
         },
       })
       swiperRef.current = swiper
     }
 
-    if (!isInitialRender) {
-      swiperRef.current?.destroy(true, true)
+    if (shouldInitSwiper) {
       initSwiper()
-      setInitialRender(true)
+      setShouldInitSwiper(false)
     }
 
-    if (currentInterval !== plannerInterval) {
-      // rather than calling initSwiper directly,
-      // deplay by one state change and setInitialRender
+    if (currentRange !== range && hasSlideTransitionEnd) {
+      setCurrentRange(range)
+      setShouldInitSwiper(true)
+    }
+
+    if (currentInterval !== plannerInterval && hasSlideTransitionEnd) {
       setCurrentInterval(plannerInterval)
-      setInitialRender(false)
-    }
-
-    if (didReachBeginning && hasSlidePrevTransitionEnd) {
-      swiperRef.current?.destroy(true, true)
-      initSwiper()
-      setReachBeginning(false)
-    }
-
-    if (didReachEnd && hasSlideNextTransitionEnd) {
-      swiperRef.current?.destroy(true, true)
-      initSwiper()
-      setReachEnd(false)
+      setShouldInitSwiper(true)
     }
   }, [
     activeDate,
     range,
     plannerInterval,
+    currentRange,
     currentInterval,
+    shouldInitSwiper,
+    hasSlideTransitionEnd,
     onRangeChange,
-    isInitialRender,
-    didReachBeginning,
-    didReachEnd,
-    hasSlideNextTransitionEnd,
-    hasSlidePrevTransitionEnd,
   ])
   return [virtualData]
 }
