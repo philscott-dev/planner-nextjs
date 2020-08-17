@@ -66,9 +66,8 @@ const PlannerHeaderDayRow: FC<PlannerHeaderDayRowProps> = ({
   /* Swiper Methods */
   const initSwiper = () => {
     const swiper = new Swiper('.swiper-container', {
-      mousewheel: {
-        sensitivity: 0.5,
-      },
+      speed: 250,
+      mousewheel: true,
       initialSlide: 1,
       runCallbacksOnInit: false,
       virtual: {
