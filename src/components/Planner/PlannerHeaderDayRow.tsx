@@ -1,17 +1,7 @@
 import styled from '@emotion/styled'
-import React, {
-  FC,
-  MouseEvent,
-  useEffect,
-  useState,
-  useRef,
-  useCallback,
-} from 'react'
-import { Swiper } from 'swiper/bundle'
+import React, { FC, MouseEvent } from 'react'
 import PlannerHeaderDay from './PlannerHeaderDay'
 import { PlannerInterval } from './types'
-import { subDays, addDays } from 'date-fns'
-import { VirtualData } from 'swiper/types/components/virtual'
 import useSwiper from './hooks/useSwiper'
 
 interface PlannerHeaderDayRowProps {
@@ -36,7 +26,12 @@ const PlannerHeaderDayRow: FC<PlannerHeaderDayRowProps> = ({
   onDayDoubleClick,
   onRangeChange,
 }) => {
-  const [virtualData] = useSwiper(activeDate, range, onRangeChange)
+  const [virtualData] = useSwiper(
+    activeDate,
+    range,
+    plannerInterval,
+    onRangeChange,
+  )
 
   const handleDayClick = (e: MouseEvent) => {
     onDayClick(e)
@@ -49,7 +44,7 @@ const PlannerHeaderDayRow: FC<PlannerHeaderDayRowProps> = ({
   return (
     <div className={className}>
       <div className="swiper-container">
-        <SwiperWrapper className="swiper-wrapper">
+        <div className="swiper-wrapper">
           {virtualData
             ? virtualData.slides.map((content: Date[], i) => (
                 <div
@@ -72,7 +67,7 @@ const PlannerHeaderDayRow: FC<PlannerHeaderDayRowProps> = ({
                 </div>
               ))
             : null}
-        </SwiperWrapper>
+        </div>
       </div>
     </div>
   )
@@ -92,5 +87,3 @@ export default styled(PlannerHeaderDayRow)`
     }
   }
 `
-
-const SwiperWrapper = styled.div``

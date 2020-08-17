@@ -2,22 +2,25 @@ import { useEffect, useState, useRef } from 'react'
 import { subDays, addDays } from 'date-fns'
 import { Swiper } from 'swiper/bundle'
 import { VirtualData } from 'swiper/types/components/virtual'
+import { PlannerInterval } from '../types'
 
 export default function useSwiper(
   activeDate: Date,
   range: Date[],
+  plannerInterval: PlannerInterval,
   onRangeChange: (date: Date) => void,
 ) {
   const swiperRef = useRef<Swiper>()
   const [isInitialRender, setInitialRender] = useState(false)
+  const [currentInterval, setCurrentInterval] = useState(plannerInterval)
   const [hasSlideNextTransitionEnd, setSlideNextTransitionEnd] = useState(false)
   const [hasSlidePrevTransitionEnd, setSlidePrevTransitionEnd] = useState(false)
   const [didReachBeginning, setReachBeginning] = useState(false)
   const [didReachEnd, setReachEnd] = useState(false)
   const [virtualData, setVirtualData] = useState<VirtualData>()
+
   useEffect(() => {
     function initSwiper() {
-      console.log('triggered')
       const swiper = new Swiper('.swiper-container', {
         speed: 250,
         mousewheel: {
@@ -64,8 +67,16 @@ export default function useSwiper(
     }
 
     if (!isInitialRender) {
+      swiperRef.current?.destroy(true, true)
       initSwiper()
       setInitialRender(true)
+    }
+
+    if (currentInterval !== plannerInterval) {
+      // rather than calling initSwiper directly,
+      // deplay by one state change and setInitialRender
+      setCurrentInterval(plannerInterval)
+      setInitialRender(false)
     }
 
     if (didReachBeginning && hasSlidePrevTransitionEnd) {
@@ -82,6 +93,8 @@ export default function useSwiper(
   }, [
     activeDate,
     range,
+    plannerInterval,
+    currentInterval,
     onRangeChange,
     isInitialRender,
     didReachBeginning,
