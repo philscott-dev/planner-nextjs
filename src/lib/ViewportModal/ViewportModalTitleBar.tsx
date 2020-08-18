@@ -4,11 +4,13 @@ import { jsx, css } from '@emotion/react'
 import { FC, MouseEvent } from 'react'
 import { IconButton, Text } from 'lib'
 import { FiMinimize2, FiMaximize2, FiX } from 'react-icons/fi'
+import { FaTrashAlt } from 'react-icons/fa'
 
 interface ViewportModalTitleBarProps {
   className?: string
   title?: string
   isMinimized: boolean
+  onDelete?: () => void
   onClose: () => void
   onMinimize: () => void
   onMaximize: () => void
@@ -18,6 +20,7 @@ const ViewportModalTitleBar: FC<ViewportModalTitleBarProps> = ({
   className,
   title,
   isMinimized,
+  onDelete,
   onClose,
   onMinimize,
   onMaximize,
@@ -28,7 +31,10 @@ const ViewportModalTitleBar: FC<ViewportModalTitleBarProps> = ({
   return (
     <div className={className} onDoubleClick={handleBarDoubleClick}>
       <Flex>
-        <Text>{title ? title : 'New Item'}</Text>
+        <Title>{title ? title : 'New Item'}</Title>
+        <IconButton onMouseDown={onMaximize} css={iconCss}>
+          <FaTrashAlt />
+        </IconButton>
       </Flex>
       <Flex>
         {isMinimized ? (
@@ -55,6 +61,13 @@ export default styled(ViewportModalTitleBar)`
   height: 64px;
   padding: 0 24px;
   background: ${({ theme }) => theme.color.blue[700]};
+  @media screen and (max-width: ${({ theme }) => theme.breakpoint.xsmall}) {
+    padding: 0 16px;
+  }
+`
+
+const Title = styled(Text)`
+  margin-right: 16px;
 `
 
 const iconCss = css`

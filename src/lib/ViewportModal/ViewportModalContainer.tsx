@@ -23,7 +23,7 @@ export default styled(ViewportModalContainer)`
   position: fixed;
   bottom: 0;
   max-height: 0;
-  z-index: 150;
+  z-index: 153;
   overflow: visible;
 `
 

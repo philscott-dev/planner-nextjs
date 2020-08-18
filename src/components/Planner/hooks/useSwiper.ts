@@ -42,6 +42,9 @@ export default function useSwiper(
         },
         on: {
           slideChangeTransitionStart: (swiper: Swiper) => {
+            setSlideTransitionEnd(false)
+          },
+          slideChangeTransitionEnd: (swiper: Swiper) => {
             const { from, to } = swiper.virtual
             if (from === 1 && to === 2) {
               const add = plannerInterval === 'year' ? addYears : addDays
@@ -52,9 +55,6 @@ export default function useSwiper(
               const length = plannerInterval === 'year' ? 1 : range.length
               onRangeChange(sub(activeDate, length))
             }
-            setSlideTransitionEnd(false)
-          },
-          slideChangeTransitionEnd: () => {
             setSlideTransitionEnd(true)
           },
         },

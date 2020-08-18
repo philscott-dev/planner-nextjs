@@ -42,74 +42,64 @@ const EventEditor: FC<EventEditorProps> = ({
           onConfirm={onConfirm}
           onDelete={onDelete}
         >
-          <H3
-            css={css`
-              margin-left: 24px;
-              margin-bottom: 32px;
-            `}
-          >
-            Event Details
-          </H3>
-          <ModalWrapper>
-            <Flex>
-              <Input
-                type="text"
-                name="title"
-                tabIndex={1}
-                placeholder="Event Title"
-                defaultValue={item.title}
-              />
-            </Flex>
-            <Flex>
-              <DateInput
-                name="startTime"
-                placeholder="Start Date"
-                tabIndex={2}
-                defaultValue={item.startTime}
-              />
-            </Flex>
-            <Flex>
-              <DateInput
-                name="endTime"
-                placeholder="End Date"
-                tabIndex={3}
-                defaultValue={item.endTime}
-              />
-            </Flex>
-            <Flex>
-              <Select
-                placeholder="User"
-                name="assigneeId"
-                tabIndex={4}
-                defaultValue={item.assigneeId}
-              >
-                <SelectPlaceholder text="Assign a User" />
-                {events &&
-                  events.map((event) => (
-                    <option key={event.id} value={event.id}>
-                      {event.label}
-                    </option>
-                  ))}
-              </Select>
-            </Flex>
-            <Flex>
-              <Select
-                placeholder="Color"
-                name="color"
-                tabIndex={5}
-                defaultValue={item.color}
-              >
-                <SelectPlaceholder text="Pick a Color" />
-                {Object.entries(EventColors).map((value, index) => {
-                  return (
-                    <option key={index} value={value[1]}>
-                      {capitalize(value[0])}
-                    </option>
-                  )
-                })}
-              </Select>
-            </Flex>
-          </ModalWrapper>
+          <Flex>
+            <Input
+              type="text"
+              name="title"
+              tabIndex={1}
+              placeholder="Event Title"
+              defaultValue={item.title}
+            />
+          </Flex>
+          <Flex>
+            <DateInput
+              name="startTime"
+              placeholder="Start Date"
+              tabIndex={2}
+              defaultValue={item.startTime}
+            />
+          </Flex>
+          <Flex>
+            <DateInput
+              name="endTime"
+              placeholder="End Date"
+              tabIndex={3}
+              defaultValue={item.endTime}
+            />
+          </Flex>
+          <Flex>
+            <Select
+              placeholder="User"
+              name="assigneeId"
+              tabIndex={4}
+              defaultValue={item.assigneeId}
+            >
+              <SelectPlaceholder text="Assign a User" />
+              {events &&
+                events.map((event) => (
+                  <option key={event.id} value={event.id}>
+                    {event.label}
+                  </option>
+                ))}
+            </Select>
+          </Flex>
+          <Flex>
+            <Select
+              placeholder="Color"
+              name="color"
+              tabIndex={5}
+              defaultValue={item.color}
+            >
+              <SelectPlaceholder text="Pick a Color" />
+              {Object.entries(EventColors).map((value, index) => {
+                return (
+                  <option key={index} value={value[1]}>
+                    {capitalize(value[0])}
+                  </option>
+                )
+              })}
+            </Select>
+          </Flex>
         </ViewportModal>
       ))}
     </ViewportModalContainer>
@@ -120,10 +110,18 @@ const Flex = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 32px;
+  box-sizing: border-box;
 `
 
 const ModalWrapper = styled.div`
-  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 24px 24px 0 24px;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoint.xsmall}) {
+    padding: 24px 16px 0 16px;
+  }
 `
 
 export default EventEditor

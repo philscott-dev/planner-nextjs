@@ -9,8 +9,8 @@ import { parseJsonDates } from 'helpers/date'
 import { updateByNextId, keepMockUpdated } from 'helpers/_planner'
 import { LOCAL_STORAGE_KEY } from 'constants/constants'
 import { Entries } from 'lib/FormElements/types'
-import { Overlay, Modal } from 'lib'
 import { EventEditor, Planner } from 'components'
+import { AddEventButton } from 'components'
 import usePlannerQuery from 'components/Planner/hooks/usePlannerQuery'
 import useSWR from 'swr'
 import {
@@ -333,6 +333,7 @@ const IndexPage: NextPage = () => {
         onDelete={handleEventEditorDelete}
         onConfirm={handleEventEditorConfirm}
       />
+      <AddEventButton onMouseDown={handleAddEventClick} />
     </>
   )
 }

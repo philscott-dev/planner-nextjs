@@ -88,13 +88,17 @@ const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: ${({ isMinimized }) => (!isMinimized ? '768px' : 0)};
-  height: ${({ isMinimized }) => (!isMinimized ? '600px' : 0)};
   margin: 0 16px;
   z-index: 1;
+  box-sizing: border-box;
+  width: ${({ isMinimized }) => (!isMinimized ? '768px' : 0)};
+  /* height: ${({ isMinimized }) => (!isMinimized ? '600px' : 0)}; */
   box-shadow: ${({ theme }) => theme.shadow.up.two};
   background: ${({ theme }) => theme.color.blue[500]};
   transition: all 0.3s ease-in-out;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoint.xsmall}) {
+    margin: 0;
+  }
 `
 
 export default ViewportModal
