@@ -217,7 +217,7 @@ export default styled(PlannerHeaderToolbar)`
   justify-content: space-between;
   background: ${({ theme }) => theme.color.blue[700]};
   padding: 8px;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   min-height: 60px;
   max-height: 60px;
