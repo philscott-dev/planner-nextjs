@@ -88,8 +88,8 @@ const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-width: ${({ isMinimized }) => (!isMinimized ? '768px' : 0)};
-  min-height: ${({ isMinimized }) => (!isMinimized ? '600px' : 0)};
+  width: ${({ isMinimized }) => (!isMinimized ? '768px' : 0)};
+  height: ${({ isMinimized }) => (!isMinimized ? '600px' : 0)};
   margin: 0 16px;
   z-index: 1;
   box-shadow: ${({ theme }) => theme.shadow.up.two};

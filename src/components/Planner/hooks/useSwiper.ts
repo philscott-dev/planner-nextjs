@@ -23,6 +23,7 @@ export default function useSwiper(
       const swiper = new Swiper('.swiper-container', {
         direction: 'horizontal',
         slidesPerColumnFill: 'row',
+        touchStartPreventDefault: false,
         speed: 250,
         mousewheel: {
           sensitivity: 0.5,

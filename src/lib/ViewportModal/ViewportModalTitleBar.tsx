@@ -52,7 +52,6 @@ export default styled(ViewportModalTitleBar)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-width: 300px;
   height: 64px;
   padding: 0 24px;
   background: ${({ theme }) => theme.color.blue[700]};

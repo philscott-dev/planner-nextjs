@@ -17,4 +17,5 @@ const ViewportModalBody: FC<ViewportModalBodyProps> = ({
 export default styled(ViewportModalBody)`
   flex: 1;
   background-color: 'blue';
+  overflow-y: auto;
 `

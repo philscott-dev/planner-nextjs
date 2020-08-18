@@ -67,6 +67,8 @@ const EventEditor: FC<EventEditorProps> = ({
                 tabIndex={2}
                 defaultValue={item.startTime}
               />
+            </Flex>
+            <Flex>
               <DateInput
                 name="endTime"
                 placeholder="End Date"
@@ -116,10 +118,8 @@ const EventEditor: FC<EventEditorProps> = ({
 
 const Flex = styled.div`
   display: flex;
+  flex-wrap: wrap;
   margin-bottom: 32px;
-  div:nth-of-type(2) {
-    margin-left: 32px;
-  }
 `
 
 const ModalWrapper = styled.div`

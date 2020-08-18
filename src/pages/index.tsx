@@ -87,7 +87,8 @@ const IndexPage: NextPage = () => {
       startTime: date,
       endTime: date,
     }
-    setEditableItems([...editableItems.slice(0, 1), newEvent])
+    setEditableItems([newEvent])
+    //setEditableItems([...editableItems.slice(0, 1), newEvent])
   }
 
   const handleEventClick = (plannerEvent: PlannerEvent) => {
@@ -97,7 +98,8 @@ const IndexPage: NextPage = () => {
 
   const handleEventDoubleClick = (plannerEvent: PlannerEvent) => {
     console.log('handleEventDoubleClick')
-    setEditableItems([...editableItems.slice(0, 1), plannerEvent])
+    setEditableItems([plannerEvent])
+    //setEditableItems([...editableItems.slice(0, 1), plannerEvent])
   }
 
   const handleRowHeaderDoubleClick = (id: string | number) => {
@@ -247,7 +249,7 @@ const IndexPage: NextPage = () => {
 
   const handleAddEventClick = () => {
     setEditableItems([
-      ...editableItems.slice(0, 1),
+      //...editableItems.slice(0, 1),
       {
         id: uuid(),
       },
