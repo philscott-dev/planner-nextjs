@@ -14,7 +14,7 @@ export default function useSwiper(
   const [shouldInitSwiper, setShouldInitSwiper] = useState(true)
   const [currentRange, setCurrentRange] = useState(range)
   const [currentInterval, setCurrentInterval] = useState(plannerInterval)
-  const [hasSlideTransitionEnd, setSlideTransitionEnd] = useState(false)
+  const [hasSlideTransitionEnd, setSlideTransitionEnd] = useState(true)
   const [virtualData, setVirtualData] = useState<VirtualData>()
 
   useEffect(() => {
