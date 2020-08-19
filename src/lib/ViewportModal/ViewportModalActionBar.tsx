@@ -29,23 +29,14 @@ export default styled(ViewportModalActionBar)`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  height: 64px;
+  box-sizing: border-box;
+  min-height: 64px;
   padding: 0 24px;
   background: ${({ theme }) => theme.color.blue[700]};
   @media screen and (max-width: ${({ theme }) => theme.breakpoint.xsmall}) {
     padding: 0 16px;
   }
 `
-
-// const CtrlButton = styled(IconButton)`
-//   padding: 12px 16px;
-//   /* background: ${({ theme }) => theme.color.blue[600]}; */
-//   border-right: 1px solid ${({ theme }) => theme.color.blue[700]};
-//   &:hover {
-//     background: ${({ theme }) => theme.color.blue[500]};
-//   }
-//   transition: all 0.3s ease-in-out;
-// `
 
 const buttonCss = css`
   box-shadow: none;

@@ -16,8 +16,9 @@ const ViewportModalBody: FC<ViewportModalBodyProps> = ({
 
 export default styled(ViewportModalBody)`
   overflow-y: auto;
-  box-sizing: content-box;
+  box-sizing: border-box;
   padding: 24px 24px 0 24px;
+  height: 100%;
   @media screen and (max-width: ${({ theme }) => theme.breakpoint.xsmall}) {
     padding: 24px 16px 0 16px;
   }

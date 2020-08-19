@@ -5,17 +5,24 @@ import { jsx, css } from '@emotion/react'
 import { Picker, Controls, Calendar } from 'lib/Datepicker'
 import { PlannerInterval, PlannerLayout } from './types'
 import { useOnClickOutside } from 'hooks'
-import PlannerControl from './PlannerControl'
-import { FaCaretDown } from 'react-icons/fa'
-import { FaFileImport, FaFileExport } from 'react-icons/fa'
-import { FiPlus, FiMoreVertical, FiEdit } from 'react-icons/fi'
+import { FiMoreVertical, FiEdit, FiMenu } from 'react-icons/fi'
+import { AiOutlineMenu } from 'react-icons/ai'
+import { IoMdOptions } from 'react-icons/io'
 import { GoCalendar } from 'react-icons/go'
-import { MdPlaylistAdd } from 'react-icons/md'
-import { Dropdown, DropdownOption, IconButton, Button } from 'lib'
-import Input from 'lib/FormElements/Input'
 import { RenameDialog } from 'components'
-import { H2 } from 'lib'
 import { format } from 'date-fns'
+import { Dropdown, DropdownOption, IconButton, Button, H2 } from 'lib'
+import { DropdownHeading, DropdownDivider } from 'lib/Dropdown'
+import Input from 'lib/FormElements/Input'
+import { MdViewDay } from 'react-icons/md'
+import {
+  FaFileImport,
+  FaFileExport,
+  FaCaretDown,
+  FaCalendar,
+  FaCalendarAlt,
+  FaCalendarWeek,
+} from 'react-icons/fa'
 
 interface PlannerHeaderToolbarProps {
   title?: string
@@ -183,7 +190,45 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
         <PlannerControl text="Add Event" onMouseDown={onAddEventClick}>
           <FiPlus />
         </PlannerControl> */}
-        <IntButton
+
+        {/* <Form
+          loading={false}
+          error={undefined}
+          onSubmit={(vals) => {
+            console.log(vals)
+          }}
+          autoComplete={'off'}
+          rules={{}}
+        >
+          <ToolbarSelect
+            name="view"
+            placeholder="View"
+            defaultValue={plannerInterval}
+          >
+            <option hidden disabled>
+              View
+            </option>
+            <option value="week">Week</option>
+            <option value="month">Month</option>
+            <option value="year">Year</option>
+          </ToolbarSelect>
+        </Form> */}
+
+        {/* <Form
+          loading={false}
+          error={undefined}
+          onSubmit={() => {}}
+          autoComplete={'off'}
+          rules={{}}
+        >
+          <ToolbarSelect name="interval" placeholder="Interval">
+            <SelectPlaceholder text="Interval" />
+            <option value="week">Week</option>
+            <option value="week">Month</option>
+            <option value="week">Year</option>
+          </ToolbarSelect>
+        </Form> */}
+        {/* <IntButton
           value="week"
           isActive={plannerInterval === 'week'}
           onMouseDown={handleIntervalChange}
@@ -203,7 +248,48 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
           onMouseDown={handleIntervalChange}
         >
           Year
-        </IntButton>
+        </IntButton> */}
+        {/* <MdViewDay
+          style={{ color: '#fcfcfc', fontSize: 24, marginRight: 24 }}
+        /> */}
+
+        <Dropdown
+          direction="left"
+          renderNode={(onClick) => (
+            <IconButton
+              onMouseDown={onClick}
+              css={css`
+                font-size: 24px;
+              `}
+            >
+              <IoMdOptions
+                style={{ color: '#fcfcfc', fontSize: 24, marginRight: 8 }}
+              />
+            </IconButton>
+          )}
+        >
+          <DropdownHeading>Time</DropdownHeading>
+          <DropdownOption onMouseDown={handleIntervalChange}>
+            <FaCalendarWeek css={iconCss} /> Week
+          </DropdownOption>
+          <DropdownOption onMouseDown={handleIntervalChange}>
+            <FaCalendarAlt css={iconCss} /> Month
+          </DropdownOption>
+          <DropdownOption onMouseDown={handleIntervalChange}>
+            <FaCalendar css={iconCss} /> Year
+          </DropdownOption>
+          <DropdownDivider />
+          <DropdownHeading>View</DropdownHeading>
+          <DropdownOption onMouseDown={handleRenamePlannerVisibility}>
+            <MdViewDay css={iconCss} /> Standard
+          </DropdownOption>
+          <DropdownOption onMouseDown={handleRenamePlannerVisibility}>
+            <AiOutlineMenu css={iconCss} /> Condensed
+          </DropdownOption>
+          <DropdownOption onMouseDown={handleRenamePlannerVisibility}>
+            <FiMenu css={iconCss} /> Stacked
+          </DropdownOption>
+        </Dropdown>
       </ControlWrapper>
     </div>
   )
@@ -280,8 +366,9 @@ const Flex = styled.div`
 
 const ControlWrapper = styled(Flex)`
   justify-content: flex-end;
+  align-items: center;
   @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
-    display: none;
+    /* display: none; */
   }
 `
 

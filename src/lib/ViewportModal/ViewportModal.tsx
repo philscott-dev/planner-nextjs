@@ -96,8 +96,15 @@ const Container = styled.div<ContainerProps>`
   box-shadow: ${({ theme }) => theme.shadow.up.two};
   background: ${({ theme }) => theme.color.blue[500]};
   transition: all 0.3s ease-in-out;
-  @media screen and (max-width: ${({ theme }) => theme.breakpoint.xsmall}) {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
     margin: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
 `
 

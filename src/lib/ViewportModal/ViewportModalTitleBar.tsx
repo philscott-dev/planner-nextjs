@@ -31,13 +31,13 @@ const ViewportModalTitleBar: FC<ViewportModalTitleBarProps> = ({
   return (
     <div className={className} onDoubleClick={handleBarDoubleClick}>
       <Flex>
-        <Title>{title ? title : 'New Item'}</Title>
         <IconButton onMouseDown={onMaximize} css={iconCss}>
           <FaTrashAlt />
         </IconButton>
+        <Title>{title ? title : 'New Item'}</Title>
       </Flex>
       <Flex>
-        {isMinimized ? (
+        {/* {isMinimized ? (
           <IconButton onMouseDown={onMaximize} css={iconCss}>
             <FiMaximize2 />
           </IconButton>
@@ -45,8 +45,8 @@ const ViewportModalTitleBar: FC<ViewportModalTitleBarProps> = ({
           <IconButton onMouseDown={onMinimize} css={iconCss}>
             <FiMinimize2 />
           </IconButton>
-        )}
-        <IconButton onMouseDown={onClose} css={iconCss}>
+        )} */}
+        <IconButton onMouseDown={onClose}>
           <FiX />
         </IconButton>
       </Flex>
@@ -58,6 +58,7 @@ export default styled(ViewportModalTitleBar)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
   height: 64px;
   padding: 0 24px;
   background: ${({ theme }) => theme.color.blue[700]};
@@ -67,11 +68,11 @@ export default styled(ViewportModalTitleBar)`
 `
 
 const Title = styled(Text)`
-  margin-right: 16px;
+  margin-right: 8px;
 `
 
 const iconCss = css`
-  margin-left: 8px;
+  margin-right: 16px;
 `
 
 const Flex = styled.div`

@@ -2,31 +2,29 @@
 import styled from '@emotion/styled'
 import { FC } from 'react'
 import { jsx } from '@emotion/react'
-import { FiPlus } from 'react-icons/fi'
+import { FiPlus, FiX } from 'react-icons/fi'
 
 interface AddEventButtonProps {
   className?: string
+  isVisible: boolean
   onMouseDown: () => void
 }
 const AddEventButton: FC<AddEventButtonProps> = ({
   className,
+  isVisible,
   onMouseDown,
 }) => {
   return (
     <button className={className} onMouseDown={onMouseDown}>
-      <FiPlus />
+      {isVisible ? <FiX /> : <FiPlus />}
     </button>
   )
 }
 
 export default styled(AddEventButton)`
-  z-index: 152;
-  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
-  bottom: 32px;
-  right: 32px;
   padding: 0;
   font-size: 24px;
   height: 56px;

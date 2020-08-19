@@ -21,6 +21,7 @@ const ViewportModalContainer: FC<ViewportModalContainerProps> = ({
 
 export default styled(ViewportModalContainer)`
   position: fixed;
+  box-sizing: border-box;
   bottom: 0;
   max-height: 0;
   z-index: 153;
@@ -28,6 +29,7 @@ export default styled(ViewportModalContainer)`
 `
 
 const Relative = styled.div`
+  box-sizing: border-box;
   position: relative;
   display: flex;
   justify-content: flex-end;
