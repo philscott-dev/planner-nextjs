@@ -80,7 +80,7 @@ export default styled(PlannerHeaderDayRow)`
   min-height: 80px;
   border-bottom: 2px solid black;
   width: 100%;
-  z-index: 1;
+  z-index: 1000;
   &:nth-of-type(1) {
     > p {
       color: ${({ theme }) => theme.color.blue[500]};
