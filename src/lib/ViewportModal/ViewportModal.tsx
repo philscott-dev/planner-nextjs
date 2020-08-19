@@ -65,6 +65,7 @@ const ViewportModal: FC<ViewportModalProps> = ({
           onMinimize={handleMinimize}
           onMaximize={handleMaximize}
           onClose={handleCancel}
+          onDelete={handleDelete}
         />
         {!isMinimized ? (
           <>

@@ -26,15 +26,15 @@ const ViewportModalTitleBar: FC<ViewportModalTitleBarProps> = ({
   onMaximize,
 }) => {
   const handleBarDoubleClick = (_e: MouseEvent) => {
-    isMinimized ? onMaximize() : onMinimize()
+    //isMinimized ? onMaximize() : onMinimize()
   }
   return (
     <div className={className} onDoubleClick={handleBarDoubleClick}>
       <Flex>
-        <IconButton onMouseDown={onMaximize} css={iconCss}>
+        <IconButton onMouseDown={onDelete} css={iconCss}>
           <FaTrashAlt />
         </IconButton>
-        <Title>{title ? title : 'New Item'}</Title>
+        <Title>{title ? title : 'New Event'}</Title>
       </Flex>
       <Flex>
         {/* {isMinimized ? (
