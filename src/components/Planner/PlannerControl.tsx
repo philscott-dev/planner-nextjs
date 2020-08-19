@@ -46,7 +46,7 @@ const CtrlButton = styled(IconButton)`
   &:hover {
     background: ${({ theme }) => theme.color.blue[500]};
   }
-  transition: all 0.3s ease-in-out;
+  transition: ${({ theme }) => theme.transition.all};
 `
 
 const CtrlText = styled.p`
@@ -60,5 +60,5 @@ const CtrlText = styled.p`
   color: ${({ theme }) => theme.color.white[100]};
   font-family: ${({ theme }) => theme.font.family};
   opacity: 0;
-  transition: all 0.3s ease-in-out;
+  transition: ${({ theme }) => theme.transition.all};
 `

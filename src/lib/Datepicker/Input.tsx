@@ -40,7 +40,7 @@ const Input = styled.input<{ error?: boolean }>`
   @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
     border-right: 1px solid ${({ theme }) => theme.color.white[100]};
   }
-  transition: all 0.3s ease-in-out;
+  transition: ${({ theme }) => theme.transition.all};
 `
 
 export default Input

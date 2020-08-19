@@ -96,7 +96,7 @@ const Container = styled.div<ContainerProps>`
   /* height: ${({ isMinimized }) => (!isMinimized ? '600px' : 0)}; */
   box-shadow: ${({ theme }) => theme.shadow.up.two};
   background: ${({ theme }) => theme.color.blue[500]};
-  transition: all 0.3s ease-in-out;
+  transition: ${({ theme }) => theme.transition.all};
   @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
     margin: 0;
     position: fixed;

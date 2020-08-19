@@ -16,7 +16,7 @@ const Dialog = styled.div<{ isVisible: boolean }>`
   /* display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')}; */
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
-  transition: all 0.3s ease-in-out;
+  transition: ${({ theme }) => theme.transition.all};
 `
 
 const DialogLabel = styled(Text)`

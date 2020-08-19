@@ -113,7 +113,9 @@ const PlannerRowControls: FC<PlannerRowControlsProps> = ({
   )
 }
 
-export default styled(PlannerRowControls)``
+export default styled(PlannerRowControls)`
+  pointer-events: all;
+`
 
 const iconCss = css`
   margin-right: 8px;

@@ -55,5 +55,5 @@ export default styled.input<InputProps>`
       ${({ theme, error }) =>
         !error ? theme.color.blue[300] : theme.color.red[300]};
   }
-  transition: all 0.3s ease-in-out;
+  transition: ${({ theme }) => theme.transition.all};
 `

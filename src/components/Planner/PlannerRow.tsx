@@ -65,11 +65,16 @@ const PlannerRow: FC<PlannerRowProps> = ({
   onRowDelete,
 }) => {
   const rows = usePlannerEventRow(plannerInterval, row?.events)
+  const handleZIndex = (): number => {
+    //gross fix for dropdown issues
+    return Math.abs(rowCount - index)
+  }
   return (
     <Row
       className={className}
       data-row-id={row ? row.id : ''}
       plannerLayout={plannerLayout}
+      style={{ zIndex: handleZIndex() }}
     >
       <PlannerRowWrapper
         isActive={row ? row.id == activeRow : false}
@@ -84,7 +89,7 @@ const PlannerRow: FC<PlannerRowProps> = ({
           onMouseDown={onRowHeaderClick}
           onDoubleClick={onRowHeaderDoubleClick}
         >
-          {/* <PlannerRowControls
+          <PlannerRowControls
             label={row ? row.label : ''}
             id={row ? row.id : ''}
             index={index}
@@ -93,7 +98,7 @@ const PlannerRow: FC<PlannerRowProps> = ({
             onRowDown={onRowDown}
             onRowRename={onRowRename}
             onRowDelete={onRowDelete}
-          /> */}
+          />
           <Text size="small">{row ? row.label : null}</Text>
         </PlannerRowHeader>
         <EventWrapper plannerLayout={plannerLayout}>

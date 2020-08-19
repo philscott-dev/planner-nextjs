@@ -51,7 +51,7 @@ export default styled.select<SelectProps>`
     -webkit-box-shadow: 0 0 0px 1000px transparent inset;
     transition: background-color 5000s ease-in-out 0s;
   }
-  transition: border 0.3s ease-in-out;
+  transition: ${({ theme }) => theme.transition.all};
   > option {
     :nth-of-type(1) {
       color: ${({ theme }) => theme.color.gray[200]};

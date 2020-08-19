@@ -28,5 +28,5 @@ export default styled.div<{
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   /* display: ${({ isVisible }) => (isVisible ? 'inherit' : 'none')}; */
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
-  transition: all 0.3s ease-in-out;
+  transition: ${({ theme }) => theme.transition.all};
 `

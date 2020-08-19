@@ -162,96 +162,6 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
       </IntervalWrapper>
 
       <ControlWrapper>
-        {/* <IntButton
-          value="standard"
-          isActive={plannerLayout === 'standard'}
-          onMouseDown={handlePlannerLayoutChange}
-        >
-          Standard
-        </IntButton>
-        <IntButton
-          value="condensed"
-          isActive={plannerLayout === 'condensed'}
-          onMouseDown={handlePlannerLayoutChange}
-        >
-          Condensed
-        </IntButton>
-        <IntButton
-          value="stacked"
-          isActive={plannerLayout === 'stacked'}
-          onMouseDown={handlePlannerLayoutChange}
-        >
-          Stacked
-        </IntButton> */}
-        {/* <PlannerControl text="Add Row" onMouseDown={onAddRowClick}>
-          <MdPlaylistAdd />
-        </PlannerControl>
-        <PlannerControl text="Add Event" onMouseDown={onAddEventClick}>
-          <FiPlus />
-        </PlannerControl> */}
-
-        {/* <Form
-          loading={false}
-          error={undefined}
-          onSubmit={(vals) => {
-            console.log(vals)
-          }}
-          autoComplete={'off'}
-          rules={{}}
-        >
-          <ToolbarSelect
-            name="view"
-            placeholder="View"
-            defaultValue={plannerInterval}
-          >
-            <option hidden disabled>
-              View
-            </option>
-            <option value="week">Week</option>
-            <option value="month">Month</option>
-            <option value="year">Year</option>
-          </ToolbarSelect>
-        </Form> */}
-
-        {/* <Form
-          loading={false}
-          error={undefined}
-          onSubmit={() => {}}
-          autoComplete={'off'}
-          rules={{}}
-        >
-          <ToolbarSelect name="interval" placeholder="Interval">
-            <SelectPlaceholder text="Interval" />
-            <option value="week">Week</option>
-            <option value="week">Month</option>
-            <option value="week">Year</option>
-          </ToolbarSelect>
-        </Form> */}
-        {/* <IntButton
-          value="week"
-          isActive={plannerInterval === 'week'}
-          onMouseDown={handleIntervalChange}
-        >
-          Week
-        </IntButton>
-        <IntButton
-          value="month"
-          isActive={plannerInterval === 'month'}
-          onMouseDown={handleIntervalChange}
-        >
-          Month
-        </IntButton>
-        <IntButton
-          value="year"
-          isActive={plannerInterval === 'year'}
-          onMouseDown={handleIntervalChange}
-        >
-          Year
-        </IntButton> */}
-        {/* <MdViewDay
-          style={{ color: '#fcfcfc', fontSize: 24, marginRight: 24 }}
-        /> */}
-
         <Dropdown
           direction="left"
           renderNode={(onClick) => (
@@ -338,7 +248,7 @@ export default styled(PlannerHeaderToolbar)`
   justify-content: space-between;
   background: ${({ theme }) => theme.color.blue[700]};
   padding: 8px;
-  z-index: 2;
+  z-index: 1000;
   top: 0;
   min-height: 60px;
   max-height: 60px;
@@ -357,7 +267,7 @@ const DateHeading = styled.h2`
   font-weight: 300;
   font-family: ${({ theme }) => theme.font.family};
   color: ${({ theme }) => theme.color.white[100]};
-  transition: all 0.3s ease-in-out;
+  transition: ${({ theme }) => theme.transition.all};
   @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
     font-size: 26px;
     line-height: 28px;
@@ -383,7 +293,7 @@ const PickerButton = styled.button`
       color: ${({ theme }) => theme.color.blue[300]};
     }
   }
-  transition: all 0.3s ease-in-out;
+  transition: ${({ theme }) => theme.transition.all};
 `
 
 const PickerWrapper = styled.div`
@@ -416,7 +326,7 @@ const IntervalWrapper = styled(Flex)`
 
 const arrowDown = css`
   color: #fcfcfc;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.25s ease-in-out;
 `
 
 const subCss = css`

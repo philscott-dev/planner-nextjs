@@ -152,7 +152,7 @@ const Modal = styled.div<ModalProps>`
   box-sizing: border-box;
   background: ${({ theme }) => theme.color.blue[700]};
   box-shadow: ${({ theme }) => theme.shadow.up.two};
-  transition: all 0.3s ease-in-out;
+  transition: ${({ theme }) => theme.transition.all};
 `
 
 const Form = styled.form`
@@ -213,7 +213,7 @@ const Link = styled(Text)`
   &:hover {
     color: ${({ theme }) => theme.color.gray[200]};
   }
-  transition: all 0.3s ease-in-out;
+  transition: ${({ theme }) => theme.transition.all};
 `
 
 export default PlannerFileImport

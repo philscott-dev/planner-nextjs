@@ -12,7 +12,7 @@ const Picker = styled.div<{ isVisible: boolean }>`
   background: ${({ theme }) => theme.color.blue[600]};
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-  transition: all 0.3s ease-in-out;
+  transition: ${({ theme }) => theme.transition.all};
 `
 
 export default Picker
