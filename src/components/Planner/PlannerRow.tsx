@@ -96,21 +96,22 @@ const PlannerRow: FC<PlannerRowProps> = ({
           /> */}
           <Text size="small">{row ? row.label : null}</Text>
         </PlannerRowHeader>
-
-        {rows.map((rowEvents, index) => (
-          <PlannerEventRow
-            key={index}
-            events={rowEvents}
-            activeEvent={activeEvent}
-            range={range}
-            plannerInterval={plannerInterval}
-            plannerLayout={plannerLayout}
-            onEmptyClick={onEmptyClick}
-            onEventClick={onEventClick}
-            onEmptyDoubleClick={onEmptyDoubleClick}
-            onEventDoubleClick={onEventDoubleClick}
-          />
-        ))}
+        <EventWrapper plannerLayout={plannerLayout}>
+          {rows.map((rowEvents, index) => (
+            <PlannerEventRow
+              key={index}
+              events={rowEvents}
+              activeEvent={activeEvent}
+              range={range}
+              plannerInterval={plannerInterval}
+              plannerLayout={plannerLayout}
+              onEmptyClick={onEmptyClick}
+              onEventClick={onEventClick}
+              onEmptyDoubleClick={onEmptyDoubleClick}
+              onEventDoubleClick={onEventDoubleClick}
+            />
+          ))}
+        </EventWrapper>
       </PlannerRowWrapper>
     </Row>
   )
@@ -127,4 +128,9 @@ const Row = styled.div<{ plannerLayout: PlannerLayout }>`
   border-bottom: 2px solid black;
   min-height: ${({ plannerLayout }) =>
     plannerLayout === 'standard' ? '60px' : '40px'};
+`
+
+const EventWrapper = styled.div<{ plannerLayout: PlannerLayout }>`
+  height: ${({ plannerLayout }) =>
+    plannerLayout === 'stacked' ? '40px' : null};
 `

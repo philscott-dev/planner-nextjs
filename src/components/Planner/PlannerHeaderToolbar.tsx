@@ -5,7 +5,7 @@ import { jsx, css } from '@emotion/react'
 import { Picker, Controls, Calendar } from 'lib/Datepicker'
 import { PlannerInterval, PlannerLayout } from './types'
 import { useOnClickOutside } from 'hooks'
-import { FiMoreVertical, FiEdit, FiMenu } from 'react-icons/fi'
+import { FiMoreVertical, FiEdit, FiMenu, FiCheck } from 'react-icons/fi'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { IoMdOptions } from 'react-icons/io'
 import { GoCalendar } from 'react-icons/go'
@@ -22,6 +22,7 @@ import {
   FaCalendar,
   FaCalendarAlt,
   FaCalendarWeek,
+  FaCheck,
 } from 'react-icons/fa'
 
 interface PlannerHeaderToolbarProps {
@@ -56,8 +57,6 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
   onNewPlannerClick,
   onImportClick,
   onExportClick,
-  onAddEventClick,
-  onAddRowClick,
   onPlannerLayoutChange,
 }) => {
   const pickerRef = createRef<HTMLDivElement>()
@@ -77,8 +76,8 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
     isPickerVisible,
   )
 
-  const handleIntervalChange = (e: MouseEvent<HTMLButtonElement>) => {
-    onPlannerIntervalChange(e.currentTarget.value as PlannerInterval)
+  const handleIntervalChange = (value: PlannerInterval) => {
+    onPlannerIntervalChange(value)
   }
 
   const handleRangeChange = (date: Date) => {
@@ -103,8 +102,8 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
     setRenameVisibility(false)
   }
 
-  const handlePlannerLayoutChange = (e: MouseEvent<HTMLButtonElement>) => {
-    onPlannerLayoutChange(e.currentTarget.value as PlannerLayout)
+  const handlePlannerLayoutChange = (value: PlannerLayout) => {
+    onPlannerLayoutChange(value)
   }
 
   return (
@@ -269,25 +268,61 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
           )}
         >
           <DropdownHeading>Time</DropdownHeading>
-          <DropdownOption onMouseDown={handleIntervalChange}>
-            <FaCalendarWeek css={iconCss} /> Week
+          <DropdownOption onMouseDown={() => handleIntervalChange('week')}>
+            {plannerInterval === 'week' ? (
+              <CheckMark />
+            ) : (
+              <FaCalendarWeek css={iconCss} />
+            )}
+            Week
           </DropdownOption>
-          <DropdownOption onMouseDown={handleIntervalChange}>
-            <FaCalendarAlt css={iconCss} /> Month
+          <DropdownOption onMouseDown={() => handleIntervalChange('month')}>
+            {plannerInterval === 'month' ? (
+              <CheckMark />
+            ) : (
+              <FaCalendarAlt css={iconCss} />
+            )}{' '}
+            Month
           </DropdownOption>
-          <DropdownOption onMouseDown={handleIntervalChange}>
-            <FaCalendar css={iconCss} /> Year
+          <DropdownOption onMouseDown={() => handleIntervalChange('year')}>
+            {plannerInterval === 'year' ? (
+              <CheckMark />
+            ) : (
+              <FaCalendar css={iconCss} />
+            )}{' '}
+            Year
           </DropdownOption>
           <DropdownDivider />
           <DropdownHeading>View</DropdownHeading>
-          <DropdownOption onMouseDown={handleRenamePlannerVisibility}>
-            <MdViewDay css={iconCss} /> Standard
+          <DropdownOption
+            onMouseDown={() => handlePlannerLayoutChange('standard')}
+          >
+            {plannerLayout === 'standard' ? (
+              <CheckMark />
+            ) : (
+              <MdViewDay css={iconCss} />
+            )}{' '}
+            Standard
           </DropdownOption>
-          <DropdownOption onMouseDown={handleRenamePlannerVisibility}>
-            <AiOutlineMenu css={iconCss} /> Condensed
+          <DropdownOption
+            onMouseDown={() => handlePlannerLayoutChange('condensed')}
+          >
+            {plannerLayout === 'condensed' ? (
+              <CheckMark />
+            ) : (
+              <AiOutlineMenu css={iconCss} />
+            )}{' '}
+            Condensed
           </DropdownOption>
-          <DropdownOption onMouseDown={handleRenamePlannerVisibility}>
-            <FiMenu css={iconCss} /> Stacked
+          <DropdownOption
+            onMouseDown={() => handlePlannerLayoutChange('stacked')}
+          >
+            {plannerLayout === 'stacked' ? (
+              <CheckMark />
+            ) : (
+              <FiMenu css={iconCss} />
+            )}{' '}
+            Stacked
           </DropdownOption>
         </Dropdown>
       </ControlWrapper>
@@ -388,16 +423,12 @@ const subCss = css`
   margin: 0 8px;
   font-weight: 100;
 `
-const IntButton = styled(Button.Alt)`
-  margin-left: 16px;
-  padding: 12px 24px;
-  font-size: 14px;
-`
 
 const iconCss = css`
   margin-right: 8px;
 `
 
-const Search = styled(Input)`
-  height: 48px;
+const CheckMark = styled(FaCheck)`
+  margin-right: 8px;
+  color: ${({ theme }) => theme.color.blue[300]};
 `

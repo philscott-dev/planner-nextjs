@@ -21,7 +21,6 @@ const PlannerRowHeader: FC<PlannerRowHeaderProps> = ({
 
   return (
     <Wrapper
-      className={className}
       ref={ref}
       isSticky={isSticky}
       onMouseDown={onMouseDown}
