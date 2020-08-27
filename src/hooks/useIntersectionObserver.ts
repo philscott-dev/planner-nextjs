@@ -30,5 +30,5 @@ export default function useIntersectionObserver(
       }
     }
   }, [element, root, offset])
-  return false
+  return hasIntersected
 }

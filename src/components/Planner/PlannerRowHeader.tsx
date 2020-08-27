@@ -17,13 +17,12 @@ const PlannerRowHeader: FC<PlannerRowHeaderProps> = ({
   onDoubleClick,
 }) => {
   const ref = useRef<HTMLDivElement>(null)
-  const isSticky = useIntersectionObserver(ref.current, null, 174)
+  //const isSticky = useIntersectionObserver(ref.current, null)
 
   return (
     <Wrapper
       ref={ref}
       className={className}
-      isSticky={isSticky}
       onMouseDown={onMouseDown}
       onDoubleClick={onDoubleClick}
     >
@@ -34,7 +33,7 @@ const PlannerRowHeader: FC<PlannerRowHeaderProps> = ({
 
 export default PlannerRowHeader
 
-const Wrapper = styled.div<{ isSticky: boolean }>`
+const Wrapper = styled.div<{ isSticky?: boolean }>`
   position: sticky;
   z-index: 150;
   top: 140px;

@@ -7,13 +7,13 @@ const Dialog = styled.div<{ isVisible: boolean }>`
   box-sizing: border-box;
   position: absolute;
   left: 8px;
-  z-index: 150;
+  z-index: 153;
   overflow: hidden;
   border-radius: 8px;
   padding: 24px;
-  background: ${({ theme }) => theme.color.blue[600]};
+  background: ${({ theme }) => theme.color.blue[700]};
   box-shadow: ${({ theme }) => theme.shadow.up.two};
-  /* display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')}; */
+  display: ${({ isVisible }) => (isVisible ? 'initial' : 'none')};
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   transition: ${({ theme }) => theme.transition.all};
@@ -26,6 +26,7 @@ const DialogLabel = styled(Text)`
 const DialogText = styled(Text.Light)`
   font-size: 14px;
   margin-bottom: 24px;
+  max-width: 300px;
 `
 
 const CancelButton = styled(Button)`
@@ -34,7 +35,7 @@ const CancelButton = styled(Button)`
   flex: 1;
   padding: 16px 0;
   margin-right: 12px;
-  background: ${({ theme }) => theme.color.blue[500]};
+  background: ${({ theme }) => theme.color.blue[600]};
   border: 0;
   color: ${({ theme }) => theme.color.gray[300]};
   &:hover {
@@ -72,8 +73,12 @@ const submitCss = css`
 
 const inputCss = css`
   margin-bottom: 24px;
-  width: 350px;
+  width: 300px;
   box-sizing: border-box;
+  > input,
+  label {
+    background: #06091f;
+  }
 `
 
 const iconCss = css`

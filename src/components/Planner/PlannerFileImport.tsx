@@ -139,27 +139,31 @@ interface ModalProps {
   isVisible: boolean
 }
 const Modal = styled.div<ModalProps>`
-  display: none;
-  visibility: ${({ isVisible }) => (!isVisible ? 'hidden' : 'visible')};
+  display: flex;
+  flex-direction: column;
   position: absolute;
-  top: ${({ isVisible }) => (isVisible ? '0' : '-450px')};
-  width: 500px;
+  max-width: 375px;
+  width: 375px;
   left: 50%;
-  margin-left: -250px;
-  padding: 0 32px 24px 32px;
+  margin-left: -187.5px;
+  padding: 0 24px 16px 24px;
   align-items: center;
   z-index: 150;
   box-sizing: border-box;
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
+  top: ${({ isVisible }) => (isVisible ? '0' : '-450px')};
   background: ${({ theme }) => theme.color.blue[700]};
   box-shadow: ${({ theme }) => theme.shadow.up.two};
   transition: ${({ theme }) => theme.transition.all};
 `
 
 const Form = styled.form`
+  box-sizing: border-box;
   font-size: 20px;
   background-color: ${({ theme }) => theme.color.blue[400]};
   position: relative;
   padding: 100px 20px;
+  width: 100%;
   outline: 2px dashed ${({ theme }) => theme.color.white[100]};
   outline-offset: -10px;
   -webkit-transition: outline-offset 0.15s ease-in-out,
@@ -195,6 +199,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-grow: 1;
+  width: 100%;
 `
 
 const Icon = styled(FaDownload)`
@@ -206,6 +212,7 @@ const Icon = styled(FaDownload)`
 const Flex = styled.div`
   display: flex;
   justify-content: space-between;
+  width: 100%;
 `
 
 const Link = styled(Text)`

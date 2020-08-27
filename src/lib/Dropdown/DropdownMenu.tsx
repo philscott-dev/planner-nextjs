@@ -1,14 +1,16 @@
 import styled from '@emotion/styled'
 import { DirectionType } from './Dropdown'
 
-export default styled.div<{
+interface DropdownMenuProps {
   isVisible: boolean
   direction?: DirectionType[] | DirectionType
   top?: number
   right?: number
   bottom?: number
   left?: number
-}>`
+}
+
+export default styled.div<DropdownMenuProps>`
   position: absolute;
   right: ${({ direction, right }) =>
     direction === 'left' || direction?.includes('left') ? right || 0 : null}px;
@@ -24,9 +26,9 @@ export default styled.div<{
   min-width: 200px;
   padding: 8px 0;
   box-shadow: 0px 4px 4px rgba(0, 0, 5, 0.25);
-  background: ${({ theme }) => theme.color.blue[600]};
+  background: ${({ theme }) => theme.color.blue[700]};
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-  /* display: ${({ isVisible }) => (isVisible ? 'inherit' : 'none')}; */
+  display: ${({ isVisible }) => (isVisible ? 'inherit' : 'none')};
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   transition: ${({ theme }) => theme.transition.all};
 `

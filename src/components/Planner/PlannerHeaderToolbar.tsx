@@ -147,14 +147,14 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
         </PickerWrapper>
       </Flex>
       <div>
-        {/* <RenameDialog
+        <RenameDialog
           value={title}
           placeholder={'Title'}
           isVisible={isRenameVisible}
           onCancel={handleRenamePlannerVisibility}
           onConfirm={handleRenamePlannerConfirm}
           onClickOutside={handleRenamePlannerVisibility}
-        /> */}
+        />
       </div>
 
       <IntervalWrapper>

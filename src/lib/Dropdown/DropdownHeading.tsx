@@ -17,7 +17,7 @@ export default styled.p<{ isDelete?: boolean; disabled?: boolean }>`
   font-family: ${({ theme }) => theme.font.family};
   transition: ${({ theme }) => theme.transition.all};
   color: ${({ theme }) => theme.color.gray[200]};
-  background: ${({ theme }) => theme.color.blue[600]};
+  background: ${({ theme }) => theme.color.blue[700]};
   &:disabled {
     opacity: 0.5;
     pointer-events: none;

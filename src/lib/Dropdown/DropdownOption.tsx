@@ -16,7 +16,7 @@ export default styled.button<{ isDelete?: boolean; disabled?: boolean }>`
   padding: 12px 24px;
   transition: ${({ theme }) => theme.transition.all};
   color: ${({ theme }) => theme.color.white[100]};
-  background: ${({ theme }) => theme.color.blue[600]};
+  background: ${({ theme }) => theme.color.blue[700]};
   &:hover {
     color: ${({ theme, isDelete }) =>
       isDelete ? theme.color.red[200] : theme.color.blue[300]};
