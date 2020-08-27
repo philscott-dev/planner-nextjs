@@ -84,8 +84,8 @@ const Form: FC<FormProps> = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const form = e.target as HTMLFormElement
-    const submittedEntries = getFormEntries(form)
+    //const form = e.target as HTMLFormElement
+    const submittedEntries = getFormEntries(e.currentTarget)
     const submittedErrors = validate(submittedEntries, rules)
     if (Object.keys(submittedErrors).length) {
       console.log(submittedErrors)

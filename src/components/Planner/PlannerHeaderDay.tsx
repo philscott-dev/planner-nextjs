@@ -76,16 +76,34 @@ export const Wrapper = styled.div<WrapperProps>`
   border-bottom: none;
 
   &:nth-of-type(even) {
-    > div > p {
-      color: ${({ plannerInterval }) =>
-        plannerInterval === 'month' ? 'transparent' : null};
-    }
-  }
-  &:nth-of-type(even) {
     background: ${({ plannerInterval, theme }) =>
       plannerInterval === 'year' || plannerInterval === 'day'
         ? theme.color.blue[600]
         : null};
+  }
+
+  /* On Large Screens, alternate text */
+  @media screen and (min-width: ${({ theme }) => theme.breakpoint.small}) {
+    &:nth-of-type(even) {
+      > div > p {
+        color: ${({ plannerInterval }) =>
+          plannerInterval === 'month' ? 'transparent' : null};
+      }
+    }
+  }
+
+  /* On Small Screens, alternate text */
+  @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
+    > div > p {
+      color: ${({ plannerInterval }) =>
+        plannerInterval === 'month' ? 'transparent' : null};
+    }
+    &:nth-of-type(3n) {
+      > div > p {
+        color: ${({ plannerInterval }) =>
+          plannerInterval === 'month' ? 'white' : null};
+      }
+    }
   }
 `
 
