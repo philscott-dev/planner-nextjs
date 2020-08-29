@@ -2,6 +2,8 @@
 import { useState, useEffect } from 'react'
 import { jsx } from '@emotion/react'
 import { NextPage } from 'next'
+import { useRouter } from 'next/router'
+import { isString } from 'helpers/typecheck'
 import { removeByIndex, addByIndex, remove, replace } from 'helpers/array'
 import { download } from 'helpers/file'
 import { v4 as uuid } from 'uuid'
@@ -11,8 +13,8 @@ import { LOCAL_STORAGE_KEY } from 'constants/constants'
 import { Entries } from 'lib/FormElements/types'
 import { EventEditor, Planner } from 'components'
 import { AddEvent } from 'components'
-import usePlannerQuery from 'components/Planner/hooks/usePlannerQuery'
 import useSWR from 'swr'
+import mock from 'constants/mock.json'
 import {
   PlannerEvent,
   PlannerEventGroup,
@@ -22,27 +24,67 @@ import {
 import {
   parse as parseDate,
   isSameDay,
+  isValid,
   differenceInDays,
   startOfDay,
   subDays,
   parseISO,
   isAfter,
 } from 'date-fns'
-import mock from '../constants/mock.json'
+
+interface PlannerQuery {
+  date: string
+  interval: string
+  layout: string
+}
 
 const IndexPage: NextPage = () => {
+  /*
+   * State Variables
+   */
   const [title, setTitle] = useState('PlannerJS')
   const [events, setEvents] = useState<PlannerEventGroup[]>([])
   const [editableDeleteIndex, setEditableDeleteIndex] = useState<number>()
   const [editableItems, setEditableItems] = useState<PlannerEvent[] | any[]>([])
   const [activeDate, setActiveDate] = useState(startOfDay(new Date()))
-  const [plannerInterval, setPlannerInterval] = useState<PlannerInterval>(
-    'week',
-  )
   const [plannerLayout, setPlannerLayout] = useState<PlannerLayout>('standard')
-  const query = usePlannerQuery()
-  const { data, error } = useSWR('/facts/random?animal_type=cat&amount=3')
+  const [plannerInterval, setPlannerInterval] = useState<PlannerInterval>(
+    'month',
+  )
 
+  /**
+   * Routing & Queries
+   */
+  const router = useRouter()
+  const { date, interval, layout } = router.query
+  useEffect(() => {
+    const d = new Date(String(date))
+    if (isValid(d)) {
+      setActiveDate(d)
+    }
+
+    if (isString(interval)) {
+      setPlannerInterval(interval as PlannerInterval)
+    }
+
+    if (isString(layout)) {
+      setPlannerLayout(layout as PlannerLayout)
+    }
+  }, [date, layout, interval])
+
+  /**
+   * Parse query string and map data
+   */
+
+  const { data, error, isValidating } = useSWR<string[]>(
+    '/facts/random?animal_type=cat&amount=3',
+  )
+
+  console.log(isValidating)
+
+  /**
+   * On Mount, load mock or localStorage
+   */
   useEffect(() => {
     const json = localStorage.getItem(LOCAL_STORAGE_KEY)
     if (json) {
@@ -52,6 +94,7 @@ const IndexPage: NextPage = () => {
         setEvents(parse.events)
       }
     } else {
+      // if no saved localStorage, update mock data
       const parse = JSON.parse(JSON.stringify(mock), parseJsonDates)
       if (parse) {
         setTitle(parse.title)
@@ -60,6 +103,9 @@ const IndexPage: NextPage = () => {
     }
   }, [])
 
+  /*
+   * Update localStorage per change
+   */
   useEffect(() => {
     const json = { title, events }
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(json))
@@ -136,15 +182,33 @@ const IndexPage: NextPage = () => {
    */
 
   const handleActiveDateChange = (date: Date) => {
-    setActiveDate(date)
+    router.push({
+      query: {
+        ...router.query,
+        date: date.toISOString(),
+      },
+    })
+    //setActiveDate(activeDate)
   }
 
   const handlePlannerIntervalChange = (interval: PlannerInterval) => {
-    setPlannerInterval(interval)
+    router.push({
+      query: {
+        ...router.query,
+        interval,
+      },
+    })
+    //setPlannerInterval(interval)
   }
 
   const handlePlannerLayoutChange = (layout: PlannerLayout) => {
-    setPlannerLayout(layout)
+    router.push({
+      query: {
+        ...router.query,
+        layout,
+      },
+    })
+    //setPlannerLayout(layout)
   }
   /**
    * Event Editor Bar Interactions

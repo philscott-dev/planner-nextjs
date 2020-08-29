@@ -9,9 +9,9 @@ import PlannerColumn, { Column } from './PlannerColumn'
 import { getDataAttrForMouseEvent } from 'helpers/event'
 import PlannerFileImport from './PlannerFileImport'
 import PlannerHeaderDayRow from './PlannerHeaderDayRow'
-import PlannerHeaderDay from './PlannerHeaderDay'
 import usePlannerDayFormat from './hooks/usePlannerDayFormat'
 import PlannerHeaderToolbar from './PlannerHeaderToolbar'
+import { startOfDay } from 'date-fns'
 import {
   PlannerEventGroup,
   PlannerEvent,
@@ -58,9 +58,9 @@ const Planner: FC<PlannerProps> = ({
   className,
   title,
   eventGroups,
-  plannerInterval,
-  plannerLayout,
-  activeDate,
+  plannerInterval = 'month',
+  plannerLayout = 'standard',
+  activeDate = startOfDay(new Date()),
   onActiveDateChange,
   onSettingsClick,
   onNewPlannerClick,
