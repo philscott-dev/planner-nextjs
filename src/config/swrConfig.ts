@@ -1,11 +1,9 @@
 import { ConfigInterface } from 'swr'
-import fetcher from 'services/api'
 
 const swrConfig: ConfigInterface = {
-  fetcher,
+  revalidateOnMount: true, // I always make sure this is true
   revalidateOnFocus: true,
   revalidateOnReconnect: true,
-  revalidateOnMount: true, //make sure this is true
 }
 
 export default swrConfig

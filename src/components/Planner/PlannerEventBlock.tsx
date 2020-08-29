@@ -6,6 +6,7 @@ import { Text } from 'lib'
 import { PlannerEvent, PlannerInterval, PlannerLayout } from './types'
 import { format } from 'date-fns'
 import { lightenColor } from 'helpers/color'
+import useColorHash from './hooks/useColorHash'
 
 interface PlannerEventBlockProps {
   className?: string
@@ -36,6 +37,8 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
   onEmptyDoubleClick,
   onEventDoubleClick,
 }) => {
+  const color = useColorHash(event?.title)
+
   const handleEmptyClick = (e: MouseEvent) => {
     e.stopPropagation()
     onEmptyClick(e)
@@ -54,11 +57,7 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
       onMouseDown={(e) => handleEventClick(e, event)}
       onDoubleClick={(e) => onEventDoubleClick(e, event)}
     >
-      <Block
-        draggable
-        isActive={event.id === activeEvent?.id}
-        color={event.color}
-      >
+      <Block draggable isActive={event.id === activeEvent?.id} color={color}>
         <Text ellipsis size="small" css={textCss}>
           {event.title}
         </Text>

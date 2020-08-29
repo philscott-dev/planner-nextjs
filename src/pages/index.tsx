@@ -31,12 +31,8 @@ import {
   parseISO,
   isAfter,
 } from 'date-fns'
-
-interface PlannerQuery {
-  date: string
-  interval: string
-  layout: string
-}
+import { fetchEvents, EventsResponse } from 'services/api'
+import useStickyResult from 'hooks/useStickyResult'
 
 const IndexPage: NextPage = () => {
   /*
@@ -46,6 +42,10 @@ const IndexPage: NextPage = () => {
   const [events, setEvents] = useState<PlannerEventGroup[]>([])
   const [editableDeleteIndex, setEditableDeleteIndex] = useState<number>()
   const [editableItems, setEditableItems] = useState<PlannerEvent[] | any[]>([])
+
+  /**
+   * Stateful Query Params
+   */
   const [activeDate, setActiveDate] = useState(startOfDay(new Date()))
   const [plannerLayout, setPlannerLayout] = useState<PlannerLayout>('standard')
   const [plannerInterval, setPlannerInterval] = useState<PlannerInterval>(
@@ -57,10 +57,12 @@ const IndexPage: NextPage = () => {
    */
   const router = useRouter()
   const { date, interval, layout } = router.query
+
+  // parse the permalink and assign to state
   useEffect(() => {
-    const d = new Date(String(date))
-    if (isValid(d)) {
-      setActiveDate(d)
+    const plannerDate = new Date(String(date))
+    if (isValid(plannerDate)) {
+      setActiveDate(plannerDate)
     }
 
     if (isString(interval)) {
@@ -73,14 +75,15 @@ const IndexPage: NextPage = () => {
   }, [date, layout, interval])
 
   /**
-   * Parse query string and map data
+   * useSWR API call
    */
 
-  const { data, error, isValidating } = useSWR<string[]>(
-    '/facts/random?animal_type=cat&amount=3',
+  const { data, error, isValidating, mutate } = useSWR<EventsResponse>(
+    ['/facts/random', activeDate, plannerInterval, plannerLayout],
+    fetchEvents,
   )
-
-  console.log(isValidating)
+  const cats = useStickyResult(data)
+  console.log(cats, isValidating, error, data)
 
   /**
    * On Mount, load mock or localStorage
@@ -277,6 +280,9 @@ const IndexPage: NextPage = () => {
 
     setEvents(updatedPlanner)
     setEditableItems(removeByIndex(editableItems, index))
+
+    // TODO: Implement swr mutate
+    mutate()
   }
 
   /**
