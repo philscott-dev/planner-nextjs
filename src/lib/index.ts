@@ -13,6 +13,7 @@ export { Modal } from './Modal'
 export {
   Form,
   Input,
+  Textarea,
   FormButton,
   Select,
   DateInput,

@@ -24,14 +24,14 @@ export default styled.input<InputProps>`
   box-sizing: border-box;
   height: ${({ inputSize }) =>
     inputSize === 'large' ? INPUT_LARGE : INPUT_SMALL}px;
-  padding: 0 24px;
-  border-radius: 8px;
+  padding: 0 16px;
   outline: none;
   width: 100%;
   font-size: 14px;
   background-clip: padding-box;
   font-family: ${({ theme }) => theme.font.family};
   font-weight: 200;
+  border-radius: 2px;
   border: 2px solid
     ${({ theme, error }) =>
       !error ? theme.color.blue[400] : theme.color.red[300]};

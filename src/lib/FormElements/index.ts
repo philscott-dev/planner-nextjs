@@ -1,5 +1,6 @@
 export { default as Form } from './Form'
 export { default as Input } from './FormInput'
+export { default as Textarea } from './FormTextarea'
 export { default as DateInput } from './FormDateInput'
 export { default as Select } from './FormSelect'
 export { default as SelectPlaceholder } from './SelectPlaceholder'

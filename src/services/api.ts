@@ -26,13 +26,13 @@ export default async function fetcher(
     const params = querystring.stringify(query)
     const res = await fetch(baseUrl + endpoint + '?' + params, {
       method,
-      body: body ? JSON.stringify(body) : null,
-      mode: 'cors',
-      cache: 'default',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      //body: body ? JSON.stringify(body) : null,
+      //mode: 'cors',
+      //cache: 'default',
+      //credentials: 'same-origin',
+      // headers: {
+      //   'Content-Type': 'application/json',
+      // },
     })
 
     // check for errors
@@ -44,6 +44,7 @@ export default async function fetcher(
     return json
   } catch (err) {
     // catch errors
+    console.log(err.statusCode)
     throw new Error(err)
   }
 }

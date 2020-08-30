@@ -150,7 +150,7 @@ export default styled(Button)`
   justify-content: space-between;
   white-space: nowrap;
   align-items: center;
-  border-radius: 8px;
+  border-radius: 2px;
   outline: none;
   pointer-events: all;
   border-style: solid;

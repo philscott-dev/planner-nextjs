@@ -140,12 +140,13 @@ const FormDateInput: FC<FormDateInputProps> = ({
 }
 
 const Container = styled.div<{ inputSize: Size }>`
+  flex: 1;
   position: relative;
   overflow-y: visible;
   overflow: visible;
   display: flex;
   box-sizing: border-box;
-  width: 100%;
+  min-width: 300px;
   border-radius: ${({ inputSize }) =>
     inputSize === 'large' ? INPUT_LARGE : INPUT_SMALL}px;
 `

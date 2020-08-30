@@ -12,6 +12,7 @@ import {
   Input,
   Select,
   DateInput,
+  Textarea,
   H3,
   SelectPlaceholder,
 } from 'lib'
@@ -58,8 +59,6 @@ const EventEditor: FC<EventEditorProps> = ({
               tabIndex={2}
               defaultValue={item.startTime}
             />
-          </Flex>
-          <Flex>
             <DateInput
               name="endTime"
               placeholder="End Date"
@@ -74,7 +73,7 @@ const EventEditor: FC<EventEditorProps> = ({
               tabIndex={4}
               defaultValue={item.assigneeId}
             >
-              <SelectPlaceholder text="Assign a User" />
+              <SelectPlaceholder text="Select a user" />
               {events &&
                 events.map((event) => (
                   <option key={event.id} value={event.id}>
@@ -82,15 +81,13 @@ const EventEditor: FC<EventEditorProps> = ({
                   </option>
                 ))}
             </Select>
-          </Flex>
-          <Flex>
             <Select
               placeholder="Color"
               name="color"
               tabIndex={5}
               defaultValue={item.color}
             >
-              <SelectPlaceholder text="Pick a Color" />
+              <SelectPlaceholder text="Pick a color" />
               {Object.entries(EventColors).map((value, index) => {
                 return (
                   <option key={index} value={value[1]}>
@@ -99,6 +96,13 @@ const EventEditor: FC<EventEditorProps> = ({
                 )
               })}
             </Select>
+          </Flex>
+          <Flex>
+            <Textarea
+              name="description"
+              placeholder="Description"
+              tabIndex={3}
+            />
           </Flex>
         </ViewportModal>
       ))}
@@ -109,18 +113,9 @@ const EventEditor: FC<EventEditorProps> = ({
 const Flex = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 32px;
   box-sizing: border-box;
-`
-
-const ModalWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  box-sizing: border-box;
-  padding: 24px 24px 0 24px;
-  @media screen and (max-width: ${({ theme }) => theme.breakpoint.xsmall}) {
-    padding: 24px 16px 0 16px;
+  > * {
+    margin: 40px 16px 24px 16px;
   }
 `
 

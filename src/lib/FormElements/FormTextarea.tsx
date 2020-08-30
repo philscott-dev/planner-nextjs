@@ -1,18 +1,19 @@
 /** @jsx jsx */
-import styled from '@emotion/styled'
 import { FC, useState, useEffect } from 'react'
 import { jsx } from '@emotion/react'
+import styled from '@emotion/styled'
 import { useInputValidation } from './hooks/useInputValidation'
+import FormLabel from './FormLabel'
+import Input from './Input'
 import { Size } from './types'
 import { INPUT_LARGE, INPUT_SMALL } from './constants'
-import FormLabel from './FormLabel'
-import Select from './Select'
-import { FaCaretDown } from 'react-icons/fa'
+import Textarea from './Textarea'
 
-export interface FormSelectProps {
+export interface FormInputProps {
   className?: string
   name: string
   placeholder: string
+  type: string
   label?: string
   autofocus?: boolean
   list?: string
@@ -22,19 +23,18 @@ export interface FormSelectProps {
   required?: boolean
   step?: number
   defaultValue?: any
-  inputSize?: Size
   tabIndex?: number
-  children: React.ReactNode
+  inputSize?: Size
 }
 
-const FormSelect: FC<FormSelectProps> = ({
+const FormInput: FC<FormInputProps> = ({
   className,
   name,
   label,
   inputSize = 'large',
   placeholder,
   defaultValue,
-  children,
+  type = 'text',
   ...props
 }) => {
   const { value, error, onBlur, ...fns } = useInputValidation(
@@ -44,6 +44,7 @@ const FormSelect: FC<FormSelectProps> = ({
 
   const [isVisible, setLabelVisibility] = useState(false)
 
+  // NEW: if defaultValue changes, update things
   useEffect(() => {
     if (defaultValue != undefined) {
       setLabelVisibility(true)
@@ -55,7 +56,7 @@ const FormSelect: FC<FormSelectProps> = ({
   }
 
   const handleOnBlur = () => {
-    if (!value || !value.length) {
+    if (!value) {
       setLabelVisibility(false)
     }
     onBlur()
@@ -66,44 +67,28 @@ const FormSelect: FC<FormSelectProps> = ({
       <FormLabel error={!!error} isVisible={isVisible || value.length > 0}>
         {placeholder}
       </FormLabel>
-
-      <Select
+      <Textarea
         name={name}
         value={value}
         error={!!error}
         placeholder={isVisible ? '' : placeholder}
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
-        inputSize={inputSize}
         {...props}
         {...fns}
-      >
-        {children}
-      </Select>
-      <ArrowDown />
+      />
     </Container>
   )
 }
 
 const Container = styled.div<{ inputSize: Size }>`
-  flex: 1;
   overflow-y: visible;
   overflow: visible;
   display: flex;
   position: relative;
-  min-width: 300px;
-  border-radius: 2px;
-  /* border-radius: ${({ inputSize }) =>
-    inputSize === 'large' ? INPUT_LARGE : INPUT_SMALL}px; */
+  width: 100%;
+  border-radius: ${({ inputSize }) =>
+    inputSize === 'large' ? INPUT_LARGE : INPUT_SMALL}px;
 `
 
-const ArrowDown = styled(FaCaretDown)`
-  position: absolute;
-  color: ${({ theme }) => theme.color.gray[200]};
-  right: 24px;
-  top: 50%;
-  margin-top: -8px;
-  pointer-events: none;
-`
-
-export default FormSelect
+export default FormInput
