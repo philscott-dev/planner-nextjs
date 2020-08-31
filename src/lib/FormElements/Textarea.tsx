@@ -27,7 +27,9 @@ export default styled.textarea<TextareaProps>`
   background-clip: padding-box;
   font-family: ${({ theme }) => theme.font.family};
   font-weight: 200;
-  border: 2px solid ${({ theme }) => theme.color.blue[400]};
+  border: 2px solid
+    ${({ theme, error }) =>
+      !error ? theme.color.blue[400] : theme.color.red[300]};
   color: ${({ theme }) => theme.color.white[100]};
   background: ${({ theme }) => theme.color.blue[500]};
   &::placeholder {
@@ -43,7 +45,9 @@ export default styled.textarea<TextareaProps>`
     transition: background-color 5000s ease-in-out 0s;
   }
   &:focus {
-    border: 2px solid ${({ theme }) => theme.color.blue[300]};
+    border: 2px solid
+      ${({ theme, error }) =>
+        !error ? theme.color.blue[300] : theme.color.red[300]};
   }
   transition: ${({ theme }) => theme.transition.all};
 `

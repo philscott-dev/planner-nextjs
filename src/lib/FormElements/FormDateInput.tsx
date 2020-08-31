@@ -92,6 +92,7 @@ const FormDateInput: FC<FormDateInputProps> = ({
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const date = parseISO(e.target.value)
+    console.log(date)
     onChange(date)
   }
 

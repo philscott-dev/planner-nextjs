@@ -38,8 +38,7 @@ export default styled.input<InputProps>`
   color: ${({ theme }) => theme.color.white[100]};
   background: ${({ theme }) => theme.color.blue[500]};
   &::placeholder {
-    color: ${({ theme, error }) =>
-      !error ? theme.color.gray[200] : theme.color.red[300]};
+    color: ${({ theme }) => theme.color.gray[200]};
     font-family: ${({ theme }) => theme.font.family};
   }
   &:-webkit-autofill,

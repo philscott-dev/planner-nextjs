@@ -43,6 +43,7 @@ const EventEditor: FC<EventEditorProps> = ({
     <ViewportModalContainer>
       {editableItems.map((item, index) => (
         <Form
+          key={item.id}
           loading={false}
           error={'error'}
           onSubmit={handleConfirm}
@@ -50,7 +51,6 @@ const EventEditor: FC<EventEditorProps> = ({
           rules={rules}
         >
           <ViewportModal
-            key={item.id}
             index={index}
             title={item.title}
             onCancel={onCancel}
