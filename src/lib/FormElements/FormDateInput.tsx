@@ -1,24 +1,16 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
-import {
-  FC,
-  useState,
-  useEffect,
-  createRef,
-  ChangeEvent,
-  FocusEvent,
-} from 'react'
 import { jsx } from '@emotion/react'
-import { useInputValidation } from './hooks/useInputValidation'
-import { useOnClickOutside } from 'hooks'
-import { Size } from './types'
-import { INPUT_LARGE, INPUT_SMALL } from './constants'
-import { parseISO, format } from 'date-fns'
+import { FC, useState, useEffect, useRef, ChangeEvent, FocusEvent } from 'react'
+import { useOnClickOutside, useMobileDetect } from 'hooks'
+import { parseISO, format, isValid, isDate } from 'date-fns'
+import { GoCalendar } from 'react-icons/go'
 import { Picker, Controls, Calendar } from 'lib/Datepicker'
+import { useInputValidation } from './hooks/useInputValidation'
+import { INPUT_LARGE, INPUT_SMALL } from './constants'
+import { Size } from './types'
 import FormLabel from './FormLabel'
 import Input from './Input'
-import { GoCalendar } from 'react-icons/go'
-import useMobileDetect from 'hooks/useMobileDetect'
 
 export interface FormDateInputProps {
   name: string
@@ -50,7 +42,8 @@ const FormDateInput: FC<FormDateInputProps> = ({
     defaultValue,
   )
 
-  const ref = createRef<HTMLDivElement>()
+  const ref = useRef<HTMLDivElement>(null)
+  const [pickerDate, setPickerDate] = useState<Date>(new Date())
   const [isPickerVisible, setPickerVisibility] = useState<boolean>(false)
   const [isLabelVisible, setLabelVisibility] = useState(false)
   const [type, setType] = useState<'date' | 'text'>('text')
@@ -66,12 +59,20 @@ const FormDateInput: FC<FormDateInputProps> = ({
     isPickerVisible,
   )
 
+  // hack: swap to date picker when theres a value
   useEffect(() => {
     if (defaultValue != undefined) {
       setLabelVisibility(true)
       setType('date')
     }
   }, [defaultValue])
+
+  //usePickerDate - keep the picker happy
+  useEffect(() => {
+    if (isDate(value) && isValid(value)) {
+      setPickerDate(value)
+    }
+  }, [value])
 
   // fix race condition when swapping from text to date on mobile
   const handleOnTouchStart = () => {
@@ -84,7 +85,7 @@ const FormDateInput: FC<FormDateInputProps> = ({
     setType('date')
   }
 
-  const handleOnBlur = () => {
+  const handleOnBlur = (e: FocusEvent<HTMLInputElement>) => {
     onBlur()
     setPickerVisibility(false)
   }
@@ -111,7 +112,7 @@ const FormDateInput: FC<FormDateInputProps> = ({
       <Input
         type={type}
         name={name}
-        value={value ? format(value, 'yyyy-MM-dd') : ''}
+        value={value && isValid(value) ? format(value, 'yyyy-MM-dd') : ''}
         error={!!error}
         placeholder={isLabelVisible ? '' : placeholder}
         inputSize={inputSize}
@@ -125,14 +126,8 @@ const FormDateInput: FC<FormDateInputProps> = ({
       <CalendarIcon />
       {!isMobile ? (
         <Picker isVisible={isPickerVisible}>
-          <Controls
-            date={value instanceof Date ? value : new Date()}
-            onChange={handleMonthChange}
-          />
-          <Calendar
-            date={value instanceof Date ? value : new Date()}
-            onSelectedDate={handleDateChange}
-          />
+          <Controls date={pickerDate} onChange={handleMonthChange} />
+          <Calendar date={pickerDate} onSelectedDate={handleDateChange} />
         </Picker>
       ) : null}
     </Container>

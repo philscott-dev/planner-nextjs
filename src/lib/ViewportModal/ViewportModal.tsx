@@ -5,15 +5,12 @@ import { FC, useState } from 'react'
 import ViewportModalTitleBar from './ViewportModalTitleBar'
 import ViewportModalActionBar from './ViewportModalActionBar'
 import ViewportModalBody from './ViewportModalBody'
-import { Form } from 'lib'
-import { Entries } from 'lib/FormElements/types'
 
 interface ViewportModalProps {
   className?: string
   title?: string
   index: number
   onCancel: (index: number) => void
-  onConfirm: (entries: Entries, index: number) => void
   onDelete?: (index: number) => void
 }
 
@@ -23,7 +20,6 @@ const ViewportModal: FC<ViewportModalProps> = ({
   title,
   index,
   onCancel,
-  onConfirm,
   onDelete,
 }) => {
   const [isMinimized, setMinimized] = useState(false)
@@ -38,10 +34,6 @@ const ViewportModal: FC<ViewportModalProps> = ({
     }
   }
 
-  const handleConfirm = (e: Entries) => {
-    onConfirm(e, index)
-  }
-
   const handleMinimize = () => {
     setMinimized(true)
   }
@@ -52,31 +44,23 @@ const ViewportModal: FC<ViewportModalProps> = ({
 
   return (
     <Container isMinimized={isMinimized} className={className}>
-      <Form
-        loading={false}
-        error={undefined}
-        onSubmit={handleConfirm}
-        autoComplete={'off'}
-        rules={{}}
-      >
-        <ViewportModalTitleBar
-          title={title}
-          isMinimized={isMinimized}
-          onMinimize={handleMinimize}
-          onMaximize={handleMaximize}
-          onClose={handleCancel}
-          onDelete={handleDelete}
-        />
-        {!isMinimized ? (
-          <>
-            <ViewportModalBody>{children}</ViewportModalBody>
-            <ViewportModalActionBar
-              onCancel={handleCancel}
-              onDelete={onDelete ? handleDelete : undefined}
-            />
-          </>
-        ) : null}
-      </Form>
+      <ViewportModalTitleBar
+        title={title}
+        isMinimized={isMinimized}
+        onMinimize={handleMinimize}
+        onMaximize={handleMaximize}
+        onClose={handleCancel}
+        onDelete={handleDelete}
+      />
+      {!isMinimized ? (
+        <>
+          <ViewportModalBody>{children}</ViewportModalBody>
+          <ViewportModalActionBar
+            onCancel={handleCancel}
+            onDelete={onDelete ? handleDelete : undefined}
+          />
+        </>
+      ) : null}
     </Container>
   )
 }

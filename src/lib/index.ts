@@ -18,6 +18,7 @@ export {
   Select,
   DateInput,
   SelectPlaceholder,
+  Error,
 } from './FormElements'
 
 export { H1 } from './H1'

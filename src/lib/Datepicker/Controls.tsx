@@ -2,7 +2,14 @@
 import { jsx } from '@emotion/react'
 import { FC, MouseEvent } from 'react'
 import styled from '@emotion/styled'
-import { subMonths, addMonths, subYears, addYears, format } from 'date-fns'
+import {
+  subMonths,
+  addMonths,
+  subYears,
+  addYears,
+  format,
+  isValid,
+} from 'date-fns'
 import { IconButton, Text } from 'lib'
 import {
   FiChevronsLeft,
@@ -47,7 +54,9 @@ const Controls: FC<ControlsProps> = ({
       <IconButton type="button" onMouseDown={handlePreviousMonth}>
         <FiChevronLeft />
       </IconButton>
-      <Text size="small">{format(date, 'MMM, yyyy')}</Text>
+      <Text size="small">
+        {date && isValid(date) ? format(date, 'MMM, yyyy') : null}
+      </Text>
       <IconButton type="button" onMouseDown={handleNextMonth}>
         <FiChevronRight />
       </IconButton>

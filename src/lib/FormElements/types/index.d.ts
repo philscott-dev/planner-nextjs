@@ -55,7 +55,7 @@ export interface AnimationProps {
 
 export interface Validator {
   isRequired?: boolean
-  fn: (args: any) => boolean
+  fn: (...args: any) => boolean
   error: FormError
 }
 

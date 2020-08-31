@@ -4,16 +4,13 @@ import { jsx } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useInputValidation } from './hooks/useInputValidation'
 import FormLabel from './FormLabel'
-import Input from './Input'
-import { Size } from './types'
 import { INPUT_LARGE, INPUT_SMALL } from './constants'
 import Textarea from './Textarea'
 
-export interface FormInputProps {
+export interface FormTextareaProps {
   className?: string
   name: string
   placeholder: string
-  type: string
   label?: string
   autofocus?: boolean
   list?: string
@@ -24,17 +21,14 @@ export interface FormInputProps {
   step?: number
   defaultValue?: any
   tabIndex?: number
-  inputSize?: Size
 }
 
-const FormInput: FC<FormInputProps> = ({
+const FormTextarea: FC<FormTextareaProps> = ({
   className,
   name,
   label,
-  inputSize = 'large',
   placeholder,
   defaultValue,
-  type = 'text',
   ...props
 }) => {
   const { value, error, onBlur, ...fns } = useInputValidation(
@@ -63,7 +57,7 @@ const FormInput: FC<FormInputProps> = ({
   }
 
   return (
-    <Container className={className} inputSize={inputSize}>
+    <Container className={className}>
       <FormLabel error={!!error} isVisible={isVisible || value.length > 0}>
         {placeholder}
       </FormLabel>
@@ -81,14 +75,13 @@ const FormInput: FC<FormInputProps> = ({
   )
 }
 
-const Container = styled.div<{ inputSize: Size }>`
+const Container = styled.div`
   overflow-y: visible;
   overflow: visible;
   display: flex;
   position: relative;
   width: 100%;
-  border-radius: ${({ inputSize }) =>
-    inputSize === 'large' ? INPUT_LARGE : INPUT_SMALL}px;
+  border-radius: 2px;
 `
 
-export default FormInput
+export default FormTextarea

@@ -17,7 +17,7 @@ interface TextareaProps {
 export default styled.textarea<TextareaProps>`
   -webkit-appearance: none;
   resize: none;
-  height: 400px;
+  height: 250px;
   box-sizing: border-box;
   border-radius: 2px;
   outline: none;

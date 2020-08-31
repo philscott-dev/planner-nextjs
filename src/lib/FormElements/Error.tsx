@@ -11,18 +11,25 @@ export interface ErrorProps {
 const Error: FC<ErrorProps> = ({ name }) => {
   const { errors } = useContext(ValidationContext)
   const error = errors[name]
-  if (!error) return null
+  if (!error)
+    return (
+      <Text.Light className="errormessage" size="small" css={errorCss}>
+        &nbsp;
+      </Text.Light>
+    )
   return (
-    <Text className="errormessage" size="small" css={errorCss}>
+    <Text.Light className="errormessage" size="small" css={errorCss}>
       {error}
-    </Text>
+    </Text.Light>
   )
 }
 
 const errorCss = (theme: Theme) => css`
+  align-self: flex-end;
   color: ${theme.color.red};
   margin-left: 24px;
-  margin-top: 8px;
+  margin-top: 0;
+  margin-bottom: 8px;
 `
 
 export default Error

@@ -74,8 +74,9 @@ const Form: FC<FormProps> = ({
   const updateEntry = (name: string, value: any) => {
     const isValueUpdated = entries[name] !== value
     const validators = rules[name]
+    console.log(name, entries[name], value)
     if (validators && isValueUpdated) {
-      const rule = validators.find((validator) => !validator.fn(value || ''))
+      const rule = validators.find((validator) => !validator.fn(value, entries))
       const error = rule ? rule.error : undefined
       setEntries({ ...entries, [name]: value })
       setErrors({ ...errors, [name]: error })
@@ -84,7 +85,6 @@ const Form: FC<FormProps> = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    //const form = e.target as HTMLFormElement
     const submittedEntries = getFormEntries(e.currentTarget)
     const submittedErrors = validate(submittedEntries, rules)
     if (Object.keys(submittedErrors).length) {
@@ -117,6 +117,7 @@ const Form: FC<FormProps> = ({
       }}
     >
       <form
+        noValidate
         ref={ref}
         css={formCss}
         onSubmit={handleSubmit}

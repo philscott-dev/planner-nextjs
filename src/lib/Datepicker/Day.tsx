@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react'
-import { FC } from 'react'
+import { FC, MouseEvent } from 'react'
 import styled from '@emotion/styled'
 import { getDate } from 'date-fns'
 
@@ -21,7 +21,8 @@ const Day: FC<DayProps> = ({
   isSameMonth,
   onClick,
 }) => {
-  const handleDateClick = () => {
+  const handleDateClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
     if (date) {
       onClick(date)
     }
@@ -35,7 +36,7 @@ const Day: FC<DayProps> = ({
           isActive={isActive}
           isToday={isToday}
           isSameMonth={isSameMonth}
-          onClick={handleDateClick}
+          onMouseDown={handleDateClick}
         >
           {getDate(date)}
         </Button>

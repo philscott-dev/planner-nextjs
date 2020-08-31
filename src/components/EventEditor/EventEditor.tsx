@@ -5,6 +5,7 @@ import { jsx, css } from '@emotion/react'
 import { EventColors } from 'constants/colors'
 import { capitalize } from 'helpers/string'
 import { Entries } from 'lib/FormElements/types'
+import { rules } from './rules'
 import { PlannerEvent, PlannerEventGroup } from 'components/Planner/types'
 import {
   ViewportModalContainer,
@@ -13,8 +14,9 @@ import {
   Select,
   DateInput,
   Textarea,
-  H3,
   SelectPlaceholder,
+  Form,
+  Error,
 } from 'lib'
 
 interface EventEditorProps {
@@ -32,79 +34,109 @@ const EventEditor: FC<EventEditorProps> = ({
   onConfirm,
   onDelete,
 }) => {
+  const handleConfirm = (e: Entries) => {
+    console.log(e)
+    onConfirm(e, 0)
+  }
+
   return (
     <ViewportModalContainer>
       {editableItems.map((item, index) => (
-        <ViewportModal
-          key={item.id}
-          index={index}
-          title={item.title}
-          onCancel={onCancel}
-          onConfirm={onConfirm}
-          onDelete={onDelete}
+        <Form
+          loading={false}
+          error={'error'}
+          onSubmit={handleConfirm}
+          autoComplete={'off'}
+          rules={rules}
         >
-          <Flex>
-            <Input
-              type="text"
-              name="title"
-              tabIndex={1}
-              placeholder="Event Title"
-              defaultValue={item.title}
-            />
-          </Flex>
-          <Flex>
-            <DateInput
-              name="startTime"
-              placeholder="Start Date"
-              tabIndex={2}
-              defaultValue={item.startTime}
-            />
-            <DateInput
-              name="endTime"
-              placeholder="End Date"
-              tabIndex={3}
-              defaultValue={item.endTime}
-            />
-          </Flex>
-          <Flex>
-            <Select
-              placeholder="User"
-              name="assigneeId"
-              tabIndex={4}
-              defaultValue={item.assigneeId}
-            >
-              <SelectPlaceholder text="Select a user" />
-              {events &&
-                events.map((event) => (
-                  <option key={event.id} value={event.id}>
-                    {event.label}
-                  </option>
-                ))}
-            </Select>
-            <Select
-              placeholder="Color"
-              name="color"
-              tabIndex={5}
-              defaultValue={item.color}
-            >
-              <SelectPlaceholder text="Pick a color" />
-              {Object.entries(EventColors).map((value, index) => {
-                return (
-                  <option key={index} value={value[1]}>
-                    {capitalize(value[0])}
-                  </option>
-                )
-              })}
-            </Select>
-          </Flex>
-          <Flex>
-            <Textarea
-              name="description"
-              placeholder="Description"
-              tabIndex={3}
-            />
-          </Flex>
-        </ViewportModal>
+          <ViewportModal
+            key={item.id}
+            index={index}
+            title={item.title}
+            onCancel={onCancel}
+            onDelete={onDelete}
+          >
+            <Flex>
+              <Wrap>
+                <Error name="summary" />
+                <Input
+                  type="text"
+                  name="summary"
+                  tabIndex={1}
+                  placeholder="Summary"
+                  defaultValue={item.title}
+                />
+              </Wrap>
+            </Flex>
+            <Flex>
+              <Wrap>
+                <Error name="startTime" />
+                <DateInput
+                  name="startTime"
+                  placeholder="Start Date"
+                  tabIndex={2}
+                  defaultValue={item.startTime}
+                />
+              </Wrap>
+              <Wrap>
+                <Error name="endTime" />
+                <DateInput
+                  name="endTime"
+                  placeholder="End Date"
+                  tabIndex={3}
+                  defaultValue={item.endTime}
+                />
+              </Wrap>
+            </Flex>
+            <Flex>
+              <Wrap>
+                <Error name="user" />
+                <Select
+                  placeholder="User"
+                  name="user"
+                  tabIndex={4}
+                  defaultValue={item.assigneeId}
+                >
+                  <SelectPlaceholder text="Select a user" />
+                  {events &&
+                    events.map((event) => (
+                      <option key={event.id} value={event.id}>
+                        {event.label}
+                      </option>
+                    ))}
+                </Select>
+              </Wrap>
+              <Wrap>
+                <Error name="color" />
+                <Select
+                  placeholder="Color"
+                  name="color"
+                  tabIndex={5}
+                  defaultValue={item.color}
+                >
+                  <SelectPlaceholder text="Pick a color" />
+                  {Object.entries(EventColors).map((value, index) => {
+                    return (
+                      <option key={index} value={value[1]}>
+                        {capitalize(value[0])}
+                      </option>
+                    )
+                  })}
+                </Select>
+              </Wrap>
+            </Flex>
+            <Flex>
+              <Wrap>
+                <Error name="description" />
+                <Textarea
+                  name="description"
+                  placeholder="Description"
+                  tabIndex={3}
+                />
+              </Wrap>
+            </Flex>
+          </ViewportModal>
+        </Form>
       ))}
     </ViewportModalContainer>
   )
@@ -114,9 +146,15 @@ const Flex = styled.div`
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;
-  > * {
-    margin: 40px 16px 24px 16px;
+  > div {
+    margin: 16px 16px 24px 16px;
   }
+`
+
+const Wrap = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 `
 
 export default EventEditor

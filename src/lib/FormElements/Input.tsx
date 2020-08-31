@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, FocusEvent } from 'react'
 import styled from '@emotion/styled'
 import { Size } from './types'
 import { INPUT_LARGE, INPUT_SMALL } from './constants'
@@ -11,8 +11,8 @@ interface InputProps {
   required?: boolean
   value?: string
   placeholder: string
-  onFocus: () => void
-  onBlur: () => void
+  onFocus: (e: FocusEvent<HTMLInputElement>) => void
+  onBlur: (e: FocusEvent<HTMLInputElement>) => void
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
