@@ -34,9 +34,9 @@ const EventEditor: FC<EventEditorProps> = ({
   onConfirm,
   onDelete,
 }) => {
-  const handleConfirm = (e: Entries) => {
-    console.log(e)
-    onConfirm(e, 0)
+  const handleConfirm = (entries: Entries) => {
+    console.log(entries)
+    onConfirm(entries, 0)
   }
 
   return (
@@ -131,7 +131,7 @@ const EventEditor: FC<EventEditorProps> = ({
                 <Textarea
                   name="description"
                   placeholder="Description"
-                  tabIndex={3}
+                  tabIndex={6}
                 />
               </Wrap>
             </Flex>

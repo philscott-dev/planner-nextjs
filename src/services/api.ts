@@ -26,6 +26,7 @@ export default async function fetcher(
     const params = querystring.stringify(query)
     const res = await fetch(baseUrl + endpoint + '?' + params, {
       method,
+      // do this stuff if you need to
       //body: body ? JSON.stringify(body) : null,
       //mode: 'cors',
       //cache: 'default',

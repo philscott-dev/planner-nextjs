@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { LoadingStatus } from './useLoadingStatus'
 import { ValidationContext } from '../Form'
 import { isString, isNumber } from 'helpers/typecheck'
+import { isDate } from 'date-fns'
 
 export function useInputValidation(name: string, defaultValue: any) {
   const [value, setValue] = useState(defaultValue || '')
@@ -10,12 +11,12 @@ export function useInputValidation(name: string, defaultValue: any) {
     ValidationContext,
   )
 
-  // NEW: if defaultValue changes, update things
   useEffect(() => {
     if (defaultValue != undefined) {
       setValue(defaultValue)
+      updateEntry(name, defaultValue)
     }
-  }, [defaultValue])
+  }, [defaultValue, name])
 
   //send to context for validation
   useEffect(() => {
@@ -27,6 +28,7 @@ export function useInputValidation(name: string, defaultValue: any) {
   // reset after successful submit
   useEffect(() => {
     if (loadingStatus === LoadingStatus.Success) {
+      console.log('33 reset useEffect')
       setValue('')
       setTouched(false)
     }
@@ -41,10 +43,11 @@ export function useInputValidation(name: string, defaultValue: any) {
       | number
       | Date,
   ) => {
-    if (isString(e) || isNumber(e) || e instanceof Date) {
-      return setValue(e)
+    if (isString(e) || isNumber(e) || isDate(e) || e instanceof Date) {
+      setValue(e)
+    } else {
+      setValue(e.target.value)
     }
-    setValue(e.target.value)
   }
 
   const onBlur = () => {

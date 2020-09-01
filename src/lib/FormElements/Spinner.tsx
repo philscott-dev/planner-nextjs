@@ -1,10 +1,9 @@
 /** @jsx jsx */
 import { FC } from 'react'
 import styled from '@emotion/styled'
-import { jsx, keyframes, Interpolation } from '@emotion/react'
+import { jsx, keyframes } from '@emotion/react'
 
 interface SpinnerProps {
-  css?: Interpolation
   style?: { [key: string]: any }
   className?: string
 }

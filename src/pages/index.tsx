@@ -31,7 +31,7 @@ import {
   parseISO,
   isAfter,
 } from 'date-fns'
-import { fetchEvents, EventsResponse } from 'services/api'
+import { fetchEvents, EventsResponse, createEvent } from 'services/api'
 import useStickyResult from 'hooks/useStickyResult'
 
 const IndexPage: NextPage = () => {
@@ -78,12 +78,12 @@ const IndexPage: NextPage = () => {
    * useSWR API call
    */
 
-  // const { data, error, isValidating, mutate } = useSWR<EventsResponse>(
-  //   ['/facts/random', activeDate, plannerInterval, plannerLayout],
-  //   fetchEvents,
-  // )
-  // const cats = useStickyResult(data)
-  // console.log(cats, isValidating, error, data)
+  const { data, error, isValidating, mutate } = useSWR(
+    ['/facts/random', activeDate, plannerInterval, plannerLayout],
+    fetchEvents,
+  )
+  const cats = useStickyResult(data)
+  console.log(cats, data)
 
   /**
    * On Mount, load mock or localStorage
@@ -162,7 +162,7 @@ const IndexPage: NextPage = () => {
     col: string,
     date: Date,
   ) => {
-    console.log('drop event')
+    console.log('drop event', event.startTime, event.endTime)
     if (event.startTime && event.endTime) {
       if (!isSameDay(event.startTime, date) || event.assigneeId !== row) {
         const diff = differenceInDays(
@@ -249,40 +249,31 @@ const IndexPage: NextPage = () => {
   }
 
   const handleEventEditorConfirm = (entries: Entries, index: number) => {
-    if (
-      !entries.title ||
-      !entries.startTime ||
-      !entries.endTime ||
-      !entries.color ||
-      !entries.assigneeId ||
-      isAfter(
-        parseISO(entries.startTime as string),
-        parseISO(entries.endTime as string),
-      )
-    ) {
-      return
-    }
+    console.log(entries)
     //get the entry by it's index,
     const event = editableItems[index]
     const newEvent: PlannerEvent = {
       ...event,
-      title: entries.title as string,
+      title: entries.summary as string,
       id: event.id,
-      startTime: parseISO(entries.startTime as string),
-      endTime: parseISO(entries.endTime as string),
+      startTime: entries.startTime,
+      endTime: entries.endTime,
       color: entries.color as string,
     }
     const updatedPlanner = updateByNextId(
       events,
       newEvent,
-      entries.assigneeId as string,
+      entries.user as string,
     )
 
     setEvents(updatedPlanner)
     setEditableItems(removeByIndex(editableItems, index))
 
     // TODO: Implement swr mutate
-    mutate()
+    // mutate(async (statefulData: any) => {
+    //   const res = await createEvent('')
+    //   return [...res, statefulData]
+    // })
   }
 
   /**

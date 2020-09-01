@@ -6,7 +6,7 @@ export const validate = (entries: Entries, rules: Rules) => {
     const validators = rules[key]
     // return the first failed rule
     const rule = validators.find(
-      (validator) => !validator.fn(entries[key] || ''),
+      (validator) => !validator.fn(entries[key], entries),
     )
 
     // update the failed entry with rules message
@@ -19,6 +19,7 @@ export const validate = (entries: Entries, rules: Rules) => {
 
 export const getFormEntries = (form: HTMLFormElement) => {
   let entries: Entries = {}
+
   new FormData(form).forEach((value, key) => {
     entries[key] = value
   })

@@ -74,26 +74,25 @@ const Form: FC<FormProps> = ({
   const updateEntry = (name: string, value: any) => {
     const isValueUpdated = entries[name] !== value
     const validators = rules[name]
-    console.log(name, entries[name], value)
-    if (validators && isValueUpdated) {
-      const rule = validators.find((validator) => !validator.fn(value, entries))
+    if (isValueUpdated) {
+      const rule =
+        validators && validators.length
+          ? validators.find((validator) => !validator.fn(value, entries))
+          : undefined
       const error = rule ? rule.error : undefined
-      setEntries({ ...entries, [name]: value })
-      setErrors({ ...errors, [name]: error })
+      setEntries((prev) => ({ ...prev, [name]: value }))
+      setErrors((prev) => ({ ...prev, [name]: error }))
     }
   }
 
+  //
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    //const submittedEntries = getFormEntries(e.currentTarget)
-    // console.log(submittedEntries, entries)
     const submittedErrors = validate(entries, rules)
-    if (Object.keys(submittedErrors).length) {
-      console.log(submittedErrors)
-    }
 
     // check all the validators
     if (!Object.keys(submittedErrors).length) {
+      //console.log(submittedErrors)
       onSubmit(entries)
     } else {
       setDirty(true)

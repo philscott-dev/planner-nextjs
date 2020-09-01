@@ -24,7 +24,6 @@ const Text = styled.p<TextProps>`
           text-overflow: ellipsis;
         `
       : null}
-  
 `
 
 const Emphasized = styled(Text)`

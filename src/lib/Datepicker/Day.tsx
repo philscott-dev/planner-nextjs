@@ -22,7 +22,6 @@ const Day: FC<DayProps> = ({
   onClick,
 }) => {
   const handleDateClick = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
     if (date) {
       onClick(date)
     }

@@ -20,7 +20,6 @@ export const rules: Rules = {
     {
       error: 'Please enter a valid date',
       fn: (value) => {
-        console.log(value)
         return isDate(value) && isValid(value)
       },
     },
@@ -42,6 +41,7 @@ export const rules: Rules = {
       error: 'Must come after Start Date',
       fn: (value, entries) => {
         if (entries?.startTime) {
+          console.log(entries)
           return (
             isAfter(value, entries.startTime) ||
             isEqual(value, entries.startTime)
@@ -63,10 +63,10 @@ export const rules: Rules = {
       fn: (value) => !!value,
     },
   ],
-  description: [
-    {
-      error: 'Please provide a description',
-      fn: (value) => !!value,
-    },
-  ],
+  // description: [
+  //   {
+  //     error: 'Please provide a description',
+  //     fn: (value) => !!value,
+  //   },
+  // ],
 }
