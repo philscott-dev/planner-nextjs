@@ -28,7 +28,6 @@ export function useInputValidation(name: string, defaultValue: any) {
   // reset after successful submit
   useEffect(() => {
     if (loadingStatus === LoadingStatus.Success) {
-      console.log('33 reset useEffect')
       setValue('')
       setTouched(false)
     }
