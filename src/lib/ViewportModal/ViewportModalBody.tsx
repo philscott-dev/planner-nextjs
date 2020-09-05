@@ -15,6 +15,9 @@ const ViewportModalBody: FC<ViewportModalBodyProps> = ({
 }
 
 export default styled(ViewportModalBody)`
+  position: sticky;
+  top: 0;
+  bottom: 0;
   overflow-y: auto;
   box-sizing: border-box;
   height: 100%;

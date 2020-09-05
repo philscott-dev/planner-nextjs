@@ -70,6 +70,11 @@ interface ContainerProps {
 }
 
 const Container = styled.div<ContainerProps>`
+  position: fixed;
+  max-height: 850px;
+  height: 100%;
+  bottom: 0;
+  right: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -77,15 +82,13 @@ const Container = styled.div<ContainerProps>`
   z-index: 1;
   box-sizing: border-box;
   width: ${({ isMinimized }) => (!isMinimized ? '768px' : 0)};
-  /* height: ${({ isMinimized }) => (!isMinimized ? '600px' : 0)}; */
   box-shadow: ${({ theme }) => theme.shadow.up.two};
   background: ${({ theme }) => theme.color.blue[500]};
   transition: ${({ theme }) => theme.transition.all};
   @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
+    max-height: 100vh;
     margin: 0;
-    position: fixed;
     width: 100%;
-    height: 100%;
     top: 0;
     bottom: 0;
     left: 0;
