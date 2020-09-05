@@ -33,6 +33,7 @@ import {
 } from 'date-fns'
 import { fetchEvents, EventsResponse, createEvent } from 'services/api'
 import useStickyResult from 'hooks/useStickyResult'
+import { LoadingIndicator } from 'components/LoadingIndicator'
 
 const IndexPage: NextPage = () => {
   /*
@@ -359,6 +360,7 @@ const IndexPage: NextPage = () => {
    */
   return (
     <>
+      <LoadingIndicator isLoading={false} />
       <Planner
         title={title}
         eventGroups={events}

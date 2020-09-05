@@ -28,5 +28,3 @@ export namespace Weight {
 
 export type Styles<K> = Record<K, SerializedStyles> 
 
-
-

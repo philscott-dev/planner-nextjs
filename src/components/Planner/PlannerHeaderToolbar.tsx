@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
-import { FC, MouseEvent, useState, useEffect, createRef } from 'react'
+import { FC, useState, useEffect, createRef } from 'react'
 import { jsx, css } from '@emotion/react'
 import { Picker, Controls, Calendar } from 'lib/Datepicker'
 import { PlannerInterval, PlannerLayout } from './types'
@@ -13,7 +13,6 @@ import { RenameDialog } from 'components'
 import { format } from 'date-fns'
 import { Dropdown, DropdownOption, IconButton, Button, H2 } from 'lib'
 import { DropdownHeading, DropdownDivider } from 'lib/Dropdown'
-import Input from 'lib/FormElements/Input'
 import { MdViewDay } from 'react-icons/md'
 import {
   FaFileImport,
