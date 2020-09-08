@@ -18,10 +18,9 @@ export default function useBlockMeasurements(
   range: Date[],
   event?: PlannerEvent,
 ) {
-  const [measurements, setMeasurement] = useState<{
-    left?: string
-    right?: string
-  }>({ left: undefined, right: undefined })
+  const [measurements, setMeasurement] = useState<
+    [left?: string, right?: string]
+  >([undefined, undefined])
   useEffect(() => {
     if (event) {
       const isYear = plannerInterval === 'year'
@@ -43,10 +42,7 @@ export default function useBlockMeasurements(
       function percent(x: number, total: number) {
         return `${(x / total) * 100}%`
       }
-      setMeasurement({
-        left: percent(left, total),
-        right: percent(right, total),
-      })
+      setMeasurement([percent(left, total), percent(right, total)])
     }
   }, [event, range, plannerInterval])
   return measurements

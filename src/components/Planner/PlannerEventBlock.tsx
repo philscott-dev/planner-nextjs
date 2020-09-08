@@ -39,7 +39,7 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
   onEventDoubleClick,
 }) => {
   const color = useColorHash(event?.title)
-  const { left, right } = useBlockMeasurements(plannerInterval, range, event)
+  const [left, right] = useBlockMeasurements(plannerInterval, range, event)
 
   const handleEmptyClick = (e: MouseEvent) => {
     e.stopPropagation()
@@ -61,7 +61,7 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
       <Block
         draggable
         isActive={event.id === activeEvent?.id}
-        color={color}
+        color={event.color || color}
         left={left}
         right={right}
         onMouseDown={(e) => handleEventClick(e, event)}
