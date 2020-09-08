@@ -125,10 +125,10 @@ interface BlockProps {
 
 const Block = styled.div<BlockProps>`
   box-sizing: border-box;
-  position: absolute;
+  /* position: absolute;
   left: ${({ left }) => left};
-  right: ${({ right }) => right};
-  box-sizing: border-box;
+  right: ${({ right }) =>
+    right}; */
   padding: 8px;
   background: ${({ color, isActive }) =>
     !isActive ? color : lightenColor(color, 40)};

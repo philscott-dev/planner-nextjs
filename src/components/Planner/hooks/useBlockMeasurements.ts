@@ -36,7 +36,7 @@ export default function useBlockMeasurements(
       const start = max([event.startTime, d1])
       const end = min([event.endTime, d2])
       const left = difference(start, d1)
-      const right = difference(d2, end)
+      const right = difference(end, d2)
       const middle = difference(end, start)
       const total = left + right + middle
       function percent(x: number, total: number) {
