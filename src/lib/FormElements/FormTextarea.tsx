@@ -1,10 +1,9 @@
 /** @jsx jsx */
-import { FC, useState, useEffect } from 'react'
+import { FC, useState, useEffect, ChangeEvent } from 'react'
 import { jsx } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useInputValidation } from './hooks/useInputValidation'
 import FormLabel from './FormLabel'
-import { INPUT_LARGE, INPUT_SMALL } from './constants'
 import Textarea from './Textarea'
 
 export interface FormTextareaProps {
@@ -21,6 +20,7 @@ export interface FormTextareaProps {
   step?: number
   defaultValue?: any
   tabIndex?: number
+  onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void
 }
 
 const FormTextarea: FC<FormTextareaProps> = ({
@@ -29,12 +29,16 @@ const FormTextarea: FC<FormTextareaProps> = ({
   label,
   placeholder,
   defaultValue,
+  onChange: onChangeProp,
   ...props
 }) => {
-  const { value, error, onBlur, ...fns } = useInputValidation(
-    name,
-    defaultValue,
-  )
+  const {
+    value,
+    error,
+    onBlur,
+    onChange: onChangeHook,
+    ...fns
+  } = useInputValidation(name, defaultValue)
 
   const [isVisible, setLabelVisibility] = useState(false)
 
@@ -56,6 +60,13 @@ const FormTextarea: FC<FormTextareaProps> = ({
     onBlur()
   }
 
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    onChangeHook(e)
+    if (onChangeProp) {
+      onChangeProp(e)
+    }
+  }
+
   return (
     <Container className={className}>
       <FormLabel error={!!error} isVisible={isVisible || value.length > 0}>
@@ -68,6 +79,7 @@ const FormTextarea: FC<FormTextareaProps> = ({
         placeholder={isVisible ? '' : placeholder}
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
+        onChange={handleChange}
         {...props}
         {...fns}
       />

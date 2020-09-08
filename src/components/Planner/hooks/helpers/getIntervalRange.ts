@@ -3,14 +3,15 @@ import { endOfDay, endOfYear, subMilliseconds } from 'date-fns'
 
 export default function getIntervalRange(
   interval: PlannerInterval,
-  range: Date[],
-  index: number,
+  start: Date,
+  end?: Date,
 ): { start: Date; end: Date } {
-  const end = range[index + 1]
-    ? subMilliseconds(range[index + 1], 1)
-    : interval === 'year'
-    ? endOfYear(range[index])
-    : endOfDay(range[index])
-
-  return { start: range[index], end }
+  return {
+    start,
+    end: end // if theres a next end range date
+      ? subMilliseconds(end, 1) //subtract 1 millisecond
+      : interval === 'year' // otherwise if interval is set to year
+      ? endOfYear(start) // get the end of the year
+      : endOfDay(start), // or the end of the day
+  }
 }

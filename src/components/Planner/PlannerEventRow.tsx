@@ -1,11 +1,10 @@
 /** @jsx jsx */
+import styled from '@emotion/styled'
 import { FC, MouseEvent } from 'react'
 import { jsx } from '@emotion/react'
-import styled from '@emotion/styled'
-import PlannerEventBlock from './PlannerEventBlock'
 import { PlannerEvent, PlannerInterval, PlannerLayout } from './types'
+import PlannerEventBlock from './PlannerEventBlock'
 import usePlannerEventBlock from './hooks/usePlannerEventBlock'
-import useNewPlannerEventBlock from './hooks/_useNewPlannerEventBlock'
 
 interface PlannerEventRowProps {
   className?: string
@@ -32,8 +31,7 @@ const PlannerEventRow: FC<PlannerEventRowProps> = ({
   onEmptyDoubleClick,
   onEventDoubleClick,
 }) => {
-  //const blocks = usePlannerEventBlock(range, events)
-  const blocks = useNewPlannerEventBlock(range, events, plannerInterval)
+  const blocks = usePlannerEventBlock(range, events, plannerInterval)
 
   if (!blocks.length) return null
   return (
@@ -42,7 +40,7 @@ const PlannerEventRow: FC<PlannerEventRowProps> = ({
         <PlannerEventBlock
           key={index}
           size={block.size}
-          range={range.length}
+          range={range}
           event={block.event}
           plannerInterval={plannerInterval}
           plannerLayout={plannerLayout}

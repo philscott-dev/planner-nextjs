@@ -11,7 +11,7 @@ interface TextareaProps {
   placeholder: string
   onFocus: () => void
   onBlur: () => void
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void
 }
 
 export default styled.textarea<TextareaProps>`

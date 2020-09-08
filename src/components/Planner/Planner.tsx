@@ -206,7 +206,6 @@ const Planner: FC<PlannerProps> = ({
   }
 
   const handleActiveDateChange = (date: Date) => {
-    console.log(date)
     onActiveDateChange(date)
   }
 

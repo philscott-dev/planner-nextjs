@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
-import { FC, useState, useEffect } from 'react'
+import { FC, useState, useEffect, ChangeEvent } from 'react'
 import { jsx } from '@emotion/react'
 import { useInputValidation } from './hooks/useInputValidation'
 import { Size } from './types'
@@ -25,6 +25,7 @@ export interface FormSelectProps {
   inputSize?: Size
   tabIndex?: number
   children: React.ReactNode
+  onChange?: (e: ChangeEvent<HTMLSelectElement>) => void
 }
 
 const FormSelect: FC<FormSelectProps> = ({
@@ -35,12 +36,16 @@ const FormSelect: FC<FormSelectProps> = ({
   placeholder,
   defaultValue,
   children,
+  onChange: onChangeProp,
   ...props
 }) => {
-  const { value, error, onBlur, ...fns } = useInputValidation(
-    name,
-    defaultValue,
-  )
+  const {
+    value,
+    error,
+    onBlur,
+    onChange: onChangeHook,
+    ...fns
+  } = useInputValidation(name, defaultValue)
 
   const [isVisible, setLabelVisibility] = useState(false)
 
@@ -61,6 +66,13 @@ const FormSelect: FC<FormSelectProps> = ({
     onBlur()
   }
 
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    onChangeHook(e)
+    if (onChangeProp) {
+      onChangeProp(e)
+    }
+  }
+
   return (
     <Container className={className} inputSize={inputSize}>
       <FormLabel error={!!error} isVisible={isVisible || value.length > 0}>
@@ -75,6 +87,7 @@ const FormSelect: FC<FormSelectProps> = ({
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
         inputSize={inputSize}
+        onChange={handleChange}
         {...props}
         {...fns}
       >

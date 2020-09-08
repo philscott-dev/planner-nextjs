@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
-import { FC } from 'react'
+import { ChangeEvent, FC, useState } from 'react'
 import { jsx, css } from '@emotion/react'
 import { EventColors } from 'constants/colors'
 import { capitalize } from 'helpers/string'
@@ -34,9 +34,14 @@ const EventEditor: FC<EventEditorProps> = ({
   onConfirm,
   onDelete,
 }) => {
+  const [issueType, setIssueType] = useState<string>()
   const handleConfirm = (entries: Entries) => {
     console.log(entries)
     onConfirm(entries, 0)
+  }
+
+  const handleSelectIssueType = (e: ChangeEvent<HTMLSelectElement>) => {
+    setIssueType(e.currentTarget.value)
   }
 
   return (
@@ -70,6 +75,65 @@ const EventEditor: FC<EventEditorProps> = ({
             </Flex>
             <Flex>
               <Wrap>
+                <Error name="user" />
+                <Select
+                  placeholder="Assignee"
+                  name="user"
+                  tabIndex={4}
+                  defaultValue={item.assigneeId}
+                >
+                  <SelectPlaceholder text="Assign a user" />
+                  {events &&
+                    events.map((event) => (
+                      <option key={event.id} value={event.id}>
+                        {event.label}
+                      </option>
+                    ))}
+                </Select>
+              </Wrap>
+              <Wrap>
+                <Error name="color" />
+                <Select
+                  placeholder="Issue Type"
+                  name="color"
+                  tabIndex={5}
+                  defaultValue={item.color}
+                  onChange={handleSelectIssueType}
+                >
+                  <SelectPlaceholder text="Select an issue type" />
+                  {Object.entries(EventColors).map((value, index) => {
+                    return (
+                      <option key={index} value={value[1]}>
+                        {capitalize(value[0])}
+                      </option>
+                    )
+                  })}
+                </Select>
+              </Wrap>
+            </Flex>
+            {/* <Flex>
+              <Wrap>
+                <Error name="epic" />
+                <Select
+                  placeholder="Epic Link"
+                  name="epic"
+                  tabIndex={5}
+                  defaultValue={item.color}
+                  onChange={handleSelectIssueType}
+                >
+                  <SelectPlaceholder text="Select an epic to link" />
+                  {Object.entries(EventColors).map((value, index) => {
+                    return (
+                      <option key={index} value={value[1]}>
+                        {capitalize(value[0])}
+                      </option>
+                    )
+                  })}
+                </Select>
+              </Wrap>
+            </Flex> */}
+            <Flex>
+              <Wrap>
                 <Error name="startTime" />
                 <DateInput
                   name="startTime"
@@ -82,47 +146,10 @@ const EventEditor: FC<EventEditorProps> = ({
                 <Error name="endTime" />
                 <DateInput
                   name="endTime"
-                  placeholder="End Date"
+                  placeholder="Due Date"
                   tabIndex={3}
                   defaultValue={item.endTime}
                 />
-              </Wrap>
-            </Flex>
-            <Flex>
-              <Wrap>
-                <Error name="user" />
-                <Select
-                  placeholder="User"
-                  name="user"
-                  tabIndex={4}
-                  defaultValue={item.assigneeId}
-                >
-                  <SelectPlaceholder text="Select a user" />
-                  {events &&
-                    events.map((event) => (
-                      <option key={event.id} value={event.id}>
-                        {event.label}
-                      </option>
-                    ))}
-                </Select>
-              </Wrap>
-              <Wrap>
-                <Error name="color" />
-                <Select
-                  placeholder="Color"
-                  name="color"
-                  tabIndex={5}
-                  defaultValue={item.color}
-                >
-                  <SelectPlaceholder text="Pick a color" />
-                  {Object.entries(EventColors).map((value, index) => {
-                    return (
-                      <option key={index} value={value[1]}>
-                        {capitalize(value[0])}
-                      </option>
-                    )
-                  })}
-                </Select>
               </Wrap>
             </Flex>
             <Flex>

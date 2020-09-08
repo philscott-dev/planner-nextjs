@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { FC, useState, useEffect } from 'react'
+import { FC, useState, useEffect, ChangeEvent } from 'react'
 import { jsx } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useInputValidation } from './hooks/useInputValidation'
@@ -24,6 +24,7 @@ export interface FormInputProps {
   defaultValue?: any
   tabIndex?: number
   inputSize?: Size
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 const FormInput: FC<FormInputProps> = ({
@@ -34,12 +35,16 @@ const FormInput: FC<FormInputProps> = ({
   placeholder,
   defaultValue,
   type = 'text',
+  onChange: onChangeProp,
   ...props
 }) => {
-  const { value, error, onBlur, ...fns } = useInputValidation(
-    name,
-    defaultValue,
-  )
+  const {
+    value,
+    error,
+    onBlur,
+    onChange: onChangeHook,
+    ...fns
+  } = useInputValidation(name, defaultValue)
 
   const [isVisible, setLabelVisibility] = useState(false)
 
@@ -61,6 +66,13 @@ const FormInput: FC<FormInputProps> = ({
     onBlur()
   }
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onChangeHook(e)
+    if (onChangeProp) {
+      onChangeProp(e)
+    }
+  }
+
   return (
     <Container className={className} inputSize={inputSize}>
       <FormLabel error={!!error} isVisible={isVisible || value.length > 0}>
@@ -75,6 +87,7 @@ const FormInput: FC<FormInputProps> = ({
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
         inputSize={inputSize}
+        onChange={handleChange}
         {...props}
         {...fns}
       />

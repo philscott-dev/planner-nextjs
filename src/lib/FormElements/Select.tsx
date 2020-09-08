@@ -12,7 +12,7 @@ interface SelectProps {
   placeholder: string
   onFocus: () => void
   onBlur: () => void
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void
 }
 
 export default styled.select<SelectProps>`

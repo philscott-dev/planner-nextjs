@@ -79,12 +79,12 @@ const IndexPage: NextPage = () => {
    * useSWR API call
    */
 
-  const { data, error, isValidating, mutate } = useSWR(
-    ['/facts/random', activeDate, plannerInterval, plannerLayout],
-    fetchEvents,
-  )
-  const cats = useStickyResult(data)
-  console.log(cats, data)
+  // const { data, error, isValidating, mutate } = useSWR(
+  //   ['/facts/random', activeDate, plannerInterval, plannerLayout],
+  //   fetchEvents,
+  // )
+  // const cats = useStickyResult(data)
+  // console.log(cats, data)
 
   /**
    * On Mount, load mock or localStorage
@@ -360,7 +360,7 @@ const IndexPage: NextPage = () => {
    */
   return (
     <>
-      <LoadingIndicator isLoading={false} />
+      <LoadingIndicator isLoading={true} />
       <Planner
         title={title}
         eventGroups={events}

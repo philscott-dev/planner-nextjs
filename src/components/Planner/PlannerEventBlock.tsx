@@ -7,6 +7,7 @@ import { PlannerEvent, PlannerInterval, PlannerLayout } from './types'
 import { format } from 'date-fns'
 import { lightenColor } from 'helpers/color'
 import useColorHash from './hooks/useColorHash'
+import useBlockMeasurements from './hooks/useBlockMeasurements'
 
 interface PlannerEventBlockProps {
   className?: string
@@ -15,7 +16,7 @@ interface PlannerEventBlockProps {
   plannerInterval: PlannerInterval
   plannerLayout: PlannerLayout
   size: number
-  range: number
+  range: Date[]
   onEmptyClick: (e: MouseEvent) => void
   onEventClick: (e: MouseEvent, plannerEvent: PlannerEvent) => void
   onEmptyDoubleClick: (e: MouseEvent) => void
@@ -38,26 +39,34 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
   onEventDoubleClick,
 }) => {
   const color = useColorHash(event?.title)
+  const { left, right } = useBlockMeasurements(plannerInterval, range, event)
 
   const handleEmptyClick = (e: MouseEvent) => {
     e.stopPropagation()
-    onEmptyClick(e)
+    //onEmptyClick(e)
   }
 
   const handleEventClick = (e: MouseEvent, event: PlannerEvent) => {
     e.stopPropagation()
     onEventClick(e, event)
   }
-
   return event ? (
     <BlockWrapper
       className={className}
       size={size}
-      range={range}
+      range={range.length}
       onMouseDown={(e) => handleEventClick(e, event)}
       onDoubleClick={(e) => onEventDoubleClick(e, event)}
     >
-      <Block draggable isActive={event.id === activeEvent?.id} color={color}>
+      <Block
+        draggable
+        isActive={event.id === activeEvent?.id}
+        color={color}
+        left={left}
+        right={right}
+        onMouseDown={(e) => handleEventClick(e, event)}
+        onDoubleClick={(e) => onEventDoubleClick(e, event)}
+      >
         <Text ellipsis size="small" css={textCss}>
           {event.title}
         </Text>
@@ -76,25 +85,27 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
   ) : (
     <Empty
       size={size}
-      range={range}
+      range={range.length}
       onMouseDown={handleEmptyClick}
       onDoubleClick={onEmptyDoubleClick}
     />
   )
 }
 
-interface BlockProps {
+interface BlockWrapProps {
   size: number
   range: number
 }
-const Empty = styled.div<BlockProps>`
+const Empty = styled.div<BlockWrapProps>`
   box-sizing: border-box;
   min-width: ${({ size, range }) => `calc(${size / range} * 100%)`};
   height: 100%;
   user-select: none;
+  pointer-events: none;
 `
 
-const BlockWrapper = styled.div<BlockProps>`
+const BlockWrapper = styled.div<BlockWrapProps>`
+  position: relative;
   box-sizing: border-box;
   min-width: ${({ size, range }) => `calc(${size / range} * 100%)`};
   padding-top: 4px;
@@ -102,15 +113,27 @@ const BlockWrapper = styled.div<BlockProps>`
   padding-left: 4px;
   padding-right: 4px;
   user-select: none;
+  pointer-events: none;
 `
 
-const Block = styled.div<{ color?: string; isActive: boolean }>`
+interface BlockProps {
+  color?: string
+  isActive: boolean
+  left?: string
+  right?: string
+}
+
+const Block = styled.div<BlockProps>`
   box-sizing: border-box;
-  height: 100%;
+  position: absolute;
+  left: ${({ left }) => left};
+  right: ${({ right }) => right};
+  box-sizing: border-box;
   padding: 8px;
   background: ${({ color, isActive }) =>
     !isActive ? color : lightenColor(color, 40)};
   cursor: pointer;
+  pointer-events: all;
 `
 
 const textCss = css`
