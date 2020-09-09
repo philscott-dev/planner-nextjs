@@ -1,14 +1,15 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
-import { FC, MouseEvent, useEffect, useState } from 'react'
+import { FC, MouseEvent, useState, useEffect } from 'react'
 import { jsx, css } from '@emotion/react'
 import { Text } from 'lib'
 import { PlannerEvent, PlannerInterval, PlannerLayout } from './types'
-import { format, getDaysInMonth, getDaysInYear } from 'date-fns'
+import { format } from 'date-fns'
 import { lightenColor } from 'helpers/color'
 import useColorHash from './hooks/useColorHash'
 import useBlockMeasurements from './hooks/useBlockMeasurements'
 import usePlannerSize from './hooks/usePlannerSize'
+import PlannerEventTooltip from './PlannerEventTooltip'
 
 interface PlannerEventBlockProps {
   className?: string
@@ -43,6 +44,20 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
 }) => {
   const color = useColorHash(event?.title)
   const [left, right] = useBlockMeasurements(plannerInterval, range, event)
+  const [dateRangeString, setDateRangeString] = useState<string>()
+  useEffect(() => {
+    if (event) {
+      const string =
+        event.startTime && event.endTime
+          ? `${format(event.startTime, formatString)} - ${format(
+              event.endTime,
+              formatString,
+            )}`
+          : undefined
+
+      setDateRangeString(string)
+    }
+  }, [event])
 
   const handleEmptyClick = (e: MouseEvent) => {
     e.stopPropagation()
@@ -53,6 +68,10 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
     e.stopPropagation()
     onEventClick(e, event)
   }
+
+  const handleMouseOver = () => {}
+
+  const handleMouseOut = () => {}
   return event ? (
     <BlockWrapper
       className={className}
@@ -72,17 +91,19 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
         onMouseDown={(e) => handleEventClick(e, event)}
         onDoubleClick={(e) => onEventDoubleClick(e, event)}
       >
+        <PlannerEventTooltip
+          isActive={event.id === activeEvent?.id}
+          color={event.color || color}
+          title={event.title}
+          dateRangeString={dateRangeString}
+          plannerInterval={plannerInterval}
+        />
         <Text ellipsis size="small" css={textCss}>
           {event.title}
         </Text>
         {plannerLayout === 'standard' ? (
           <Text.Light ellipsis size="small" css={textCss}>
-            {event.startTime && event.endTime
-              ? `${format(event.startTime, formatString)} - ${format(
-                  event.endTime,
-                  formatString,
-                )}`
-              : null}
+            {dateRangeString}
           </Text.Light>
         ) : null}
       </Block>
@@ -140,6 +161,17 @@ const Block = styled.div<BlockProps>`
     !isActive ? color : lightenColor(color, 40)};
   cursor: pointer;
   pointer-events: all;
+  > .__planner_tip {
+    /* display: none; */
+    opacity: 0;
+  }
+
+  &:hover {
+    > .__planner_tip {
+      /* display: inherit; */
+      opacity: 1;
+    }
+  }
 `
 
 const textCss = css`
