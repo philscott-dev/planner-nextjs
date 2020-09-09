@@ -91,7 +91,7 @@ const Planner: FC<PlannerProps> = ({
     string | number | undefined | null
   >()
   const range = useDateRange(activeDate, plannerInterval)
-  const events = useFilteredEvents(eventGroups, range)
+  const events = useFilteredEvents(plannerInterval, eventGroups, range)
   const dayFormat = usePlannerDayFormat(activeDate, plannerInterval)
   const plannerSize = usePlannerSize(plannerInterval, range[0])
 
