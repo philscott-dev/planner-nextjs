@@ -360,7 +360,7 @@ const IndexPage: NextPage = () => {
    */
   return (
     <>
-      <LoadingIndicator isLoading={true} />
+      <LoadingIndicator isLoading={false} />
       <Planner
         title={title}
         eventGroups={events}
