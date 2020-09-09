@@ -44,9 +44,11 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
   useEffect(() => {
     if (plannerInterval === 'year') {
       setPlannerSize(getDaysInYear(range[0]))
-    } else {
+    } else if (plannerInterval === 'month') {
       const days = getDaysInMonth(range[0])
       setPlannerSize(days)
+    } else {
+      setPlannerSize(7)
     }
   }, [plannerInterval, range])
 
