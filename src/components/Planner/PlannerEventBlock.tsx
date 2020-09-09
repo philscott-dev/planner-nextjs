@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
-import { FC, MouseEvent } from 'react'
+import { FC, MouseEvent, useEffect, useState } from 'react'
 import { jsx, css } from '@emotion/react'
 import { Text } from 'lib'
 import { PlannerEvent, PlannerInterval, PlannerLayout } from './types'
-import { format } from 'date-fns'
+import { format, getDaysInMonth, getDaysInYear } from 'date-fns'
 import { lightenColor } from 'helpers/color'
 import useColorHash from './hooks/useColorHash'
 import useBlockMeasurements from './hooks/useBlockMeasurements'
@@ -38,9 +38,17 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
   onEmptyDoubleClick,
   onEventDoubleClick,
 }) => {
+  const [plannerSize, setPlannerSize] = useState<number>(1)
   const color = useColorHash(event?.title)
   const [left, right] = useBlockMeasurements(plannerInterval, range, event)
-  const width = 365
+  useEffect(() => {
+    if (plannerInterval === 'year') {
+      setPlannerSize(getDaysInYear(range[0]))
+    } else {
+      const days = getDaysInMonth(range[0])
+      setPlannerSize(days)
+    }
+  }, [plannerInterval, range])
 
   const handleEmptyClick = (e: MouseEvent) => {
     e.stopPropagation()
@@ -55,7 +63,7 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
     <BlockWrapper
       className={className}
       size={size}
-      range={width}
+      plannerSize={plannerSize}
       onMouseDown={(e) => handleEventClick(e, event)}
       onDoubleClick={(e) => onEventDoubleClick(e, event)}
     >
@@ -86,7 +94,7 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
   ) : (
     <Empty
       size={size}
-      range={width}
+      plannerSize={plannerSize}
       onMouseDown={handleEmptyClick}
       onDoubleClick={onEmptyDoubleClick}
     />
@@ -95,11 +103,11 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
 
 interface BlockWrapProps {
   size: number
-  range: number
+  plannerSize: number
 }
 const Empty = styled.div<BlockWrapProps>`
   box-sizing: border-box;
-  min-width: ${({ size, range }) => `calc(${size / range} * 100%)`};
+  min-width: ${({ size, plannerSize }) => `calc(${size / plannerSize} * 100%)`};
   height: 100%;
   user-select: none;
   pointer-events: none;
@@ -108,7 +116,7 @@ const Empty = styled.div<BlockWrapProps>`
 const BlockWrapper = styled.div<BlockWrapProps>`
   position: relative;
   box-sizing: border-box;
-  min-width: ${({ size, range }) => `calc(${size / range} * 100%)`};
+  min-width: ${({ size, plannerSize }) => `calc(${size / plannerSize} * 100%)`};
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 4px;
