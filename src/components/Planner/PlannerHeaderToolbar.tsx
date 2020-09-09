@@ -135,8 +135,12 @@ const PlannerHeaderToolbar: FC<PlannerHeaderToolbarProps> = ({
         </Dropdown>
         <PickerWrapper ref={pickerRef}>
           <PickerButton onMouseDown={handlePickerClick}>
-            <DateHeading>{month}</DateHeading>
-            <DateHeading css={subCss}>{year}</DateHeading>
+            <DateHeading>
+              {plannerInterval === 'year' ? year : month}
+            </DateHeading>
+            {plannerInterval === 'year' ? null : (
+              <DateHeading css={subCss}>{year}</DateHeading>
+            )}
             <FaCaretDown css={arrowDown} />
           </PickerButton>
           <Picker isVisible={isPickerVisible}>

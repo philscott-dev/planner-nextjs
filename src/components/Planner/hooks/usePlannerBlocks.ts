@@ -25,7 +25,6 @@ export default function usePlannerBlocks(
   events: PlannerEvent[],
   plannerInterval: PlannerInterval,
 ) {
-  console.log(range, events)
   const [blocks, setBlocks] = useState<Block[]>([])
   useEffect(() => {
     const end =
