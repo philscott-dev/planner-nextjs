@@ -3,6 +3,8 @@ import {
   areIntervalsOverlapping,
   isSameDay,
   isSameMonth,
+  startOfHour,
+  endOfHour,
   startOfMonth,
   endOfMonth,
   startOfDay,
@@ -63,31 +65,16 @@ function areOverlapping(
   if (!prevRange.start && !prevRange.end) {
     return false
   }
-  if (interval === 'year') {
-    return areIntervalsOverlapping(
-      {
-        start: startOfMonth(range.start),
-        end: endOfMonth(range.end),
-      },
-      {
-        start: endOfMonth(prevRange.start),
-        end: endOfMonth(prevRange.end),
-      },
-      { inclusive: true },
-    )
-  }
-  if (interval === 'month' || interval === 'week') {
-    return areIntervalsOverlapping(
-      {
-        start: startOfDay(range.start),
-        end: endOfDay(range.end),
-      },
-      {
-        start: startOfDay(prevRange.start),
-        end: endOfDay(prevRange.end),
-      },
-      { inclusive: true },
-    )
-  }
-  return areIntervalsOverlapping(range, prevRange, { inclusive: true })
+  //TODO: if year, only check for day overlaps, not hour/min
+  return areIntervalsOverlapping(
+    {
+      start: range.start,
+      end: range.end,
+    },
+    {
+      start: prevRange.start,
+      end: prevRange.end,
+    },
+    { inclusive: true },
+  )
 }

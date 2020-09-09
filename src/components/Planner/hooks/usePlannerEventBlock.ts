@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react'
 import { PlannerEvent, Block, PlannerInterval } from '../types'
-import { areIntervalsOverlapping, getDaysInYear } from 'date-fns'
+import {
+  areIntervalsOverlapping,
+  getDayOfYear,
+  getDaysInMonth,
+  getDaysInYear,
+} from 'date-fns'
 import getIntervalRange from './helpers/getIntervalRange'
 
 /**
@@ -14,9 +19,17 @@ export default function usePlannerEventBlock(
   interval: PlannerInterval,
 ) {
   const [blocks, setBlocks] = useState<Block[]>([])
+  const length =
+    interval === 'year'
+      ? getDaysInYear(range[0])
+      : interval === 'month'
+      ? getDaysInMonth(range[0]) * 24
+      : 7 * 24
+  console.log(length)
   useEffect(() => {
     // reduce over the Date Range Array ex: year === Date[12]
     const result = range.reduce<Block[]>((acc, date, index) => {
+      //getDayOfYear()
       //get the start and end dates
       const dateRange = getIntervalRange(interval, date, range[index + 1])
       for (let i = 0; i < events.length; i++) {

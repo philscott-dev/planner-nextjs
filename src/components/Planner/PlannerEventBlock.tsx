@@ -40,6 +40,7 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
 }) => {
   const color = useColorHash(event?.title)
   const [left, right] = useBlockMeasurements(plannerInterval, range, event)
+  const width = 365
 
   const handleEmptyClick = (e: MouseEvent) => {
     e.stopPropagation()
@@ -54,7 +55,7 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
     <BlockWrapper
       className={className}
       size={size}
-      range={range.length}
+      range={width}
       onMouseDown={(e) => handleEventClick(e, event)}
       onDoubleClick={(e) => onEventDoubleClick(e, event)}
     >
@@ -85,7 +86,7 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
   ) : (
     <Empty
       size={size}
-      range={range.length}
+      range={width}
       onMouseDown={handleEmptyClick}
       onDoubleClick={onEmptyDoubleClick}
     />

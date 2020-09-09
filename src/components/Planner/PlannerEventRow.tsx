@@ -5,6 +5,7 @@ import { jsx } from '@emotion/react'
 import { PlannerEvent, PlannerInterval, PlannerLayout } from './types'
 import PlannerEventBlock from './PlannerEventBlock'
 import usePlannerEventBlock from './hooks/usePlannerEventBlock'
+import usePlannerBlocks from './hooks/usePlannerBlocks'
 
 interface PlannerEventRowProps {
   className?: string
@@ -31,7 +32,7 @@ const PlannerEventRow: FC<PlannerEventRowProps> = ({
   onEmptyDoubleClick,
   onEventDoubleClick,
 }) => {
-  const blocks = usePlannerEventBlock(range, events, plannerInterval)
+  const blocks = usePlannerBlocks(range, events, plannerInterval)
 
   if (!blocks.length) return null
   return (
