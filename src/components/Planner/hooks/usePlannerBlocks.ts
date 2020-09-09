@@ -11,6 +11,7 @@ import {
   isAfter,
   endOfYear,
   endOfMonth,
+  endOfWeek,
 } from 'date-fns'
 import getIntervalRange from './helpers/getIntervalRange'
 
@@ -24,28 +25,35 @@ export default function usePlannerBlocks(
   events: PlannerEvent[],
   plannerInterval: PlannerInterval,
 ) {
+  console.log(range, events)
   const [blocks, setBlocks] = useState<Block[]>([])
   useEffect(() => {
-    const end = plannerInterval === 'year' ? endOfYear : endOfMonth
+    const end =
+      plannerInterval === 'year'
+        ? endOfYear
+        : plannerInterval === 'month'
+        ? endOfMonth
+        : endOfWeek
     const difference =
       plannerInterval === 'year' ? differenceInDays : differenceInDays
     const result = events
       .map<Block>((event, index) => {
         let startTime = event.startTime
         let endTime = event.endTime
-        if (index === 0 && isBefore(event.startTime, range[0])) {
+        if (index === 0 && isBefore(startTime, range[0])) {
           startTime = range[0]
         }
 
         if (
           index === events.length - 1 &&
-          isAfter(event.endTime, range[range.length - 1])
+          isAfter(endTime, range[range.length - 1])
         ) {
           endTime = range[range.length - 1]
         }
         const size = difference(endTime, startTime) + 1
+        //return { size, event }
         return { size, event }
-      })
+      }, [])
       .reduce<Block[]>((acc, block, index) => {
         // check 1st day against start of range
         if (index === 0 && block.event) {
@@ -78,6 +86,7 @@ export default function usePlannerBlocks(
 
         return temp
       }, [])
+    console.log(result)
     setBlocks(result)
   }, [range, events, plannerInterval])
   return blocks
