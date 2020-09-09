@@ -14,6 +14,7 @@ interface PlannerEventRowProps {
   range: Date[]
   plannerInterval: PlannerInterval
   plannerLayout: PlannerLayout
+  plannerSize: number
   onEmptyClick: (e: MouseEvent) => void
   onEventClick: (e: MouseEvent, plannerEvent: PlannerEvent) => void
   onEmptyDoubleClick: (e: MouseEvent) => void
@@ -27,6 +28,7 @@ const PlannerEventRow: FC<PlannerEventRowProps> = ({
   range,
   plannerInterval,
   plannerLayout,
+  plannerSize,
   onEmptyClick,
   onEventClick,
   onEmptyDoubleClick,
@@ -45,6 +47,7 @@ const PlannerEventRow: FC<PlannerEventRowProps> = ({
           event={block.event}
           plannerInterval={plannerInterval}
           plannerLayout={plannerLayout}
+          plannerSize={plannerSize}
           activeEvent={activeEvent}
           onEmptyClick={onEmptyClick}
           onEventClick={onEventClick}

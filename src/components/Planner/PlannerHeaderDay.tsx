@@ -1,11 +1,12 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
-import { FC, MouseEvent } from 'react'
+import { FC, MouseEvent, useState, useEffect } from 'react'
 import { jsx } from '@emotion/react'
 import { Text } from 'lib'
 import { PlannerInterval } from './types'
 import { format } from 'date-fns'
 import useHighlightWeekend from './hooks/useHighlightWeekend'
+import { getDaysInMonth } from 'date-fns'
 
 interface PlannerHeaderDayProps {
   isActive?: boolean
@@ -13,6 +14,7 @@ interface PlannerHeaderDayProps {
   range: Date[]
   dayFormat: string
   plannerInterval: PlannerInterval
+  plannerSize: number
   onMouseDown: (e: MouseEvent) => void
   onDoubleClick: (e: MouseEvent) => void
   className?: string
@@ -24,17 +26,34 @@ const PlannerHeaderDay: FC<PlannerHeaderDayProps> = ({
   range,
   dayFormat,
   plannerInterval,
+  plannerSize,
   className,
   onMouseDown,
   onDoubleClick,
 }) => {
   const isWeekend = useHighlightWeekend(date, plannerInterval)
   const dateString = format(date, dayFormat).split(' ')
+  const [size, setSize] = useState<number>(30)
+  useEffect(() => {
+    if (plannerInterval === 'year') {
+      setSize(getDaysInMonth(date))
+    }
+
+    if (plannerInterval === 'month') {
+      setSize(1)
+    }
+
+    if (plannerInterval === 'week') {
+      setSize(1)
+    }
+  }, [date, plannerInterval])
   return (
     <Wrapper
       className={className}
       isActive={isActive}
       range={range}
+      size={size}
+      plannerSize={plannerSize}
       plannerInterval={plannerInterval}
       isWeekend={isWeekend}
       onMouseDown={onMouseDown}
@@ -57,13 +76,15 @@ interface WrapperProps {
   isActive?: boolean
   plannerInterval: PlannerInterval
   isWeekend?: boolean
+  size: number
+  plannerSize: number
 }
 
 export const Wrapper = styled.div<WrapperProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: ${({ range }) => `calc((100%) / ${range.length})`};
+  min-width: ${({ size, plannerSize }) => `calc(${size / plannerSize} * 100%)`};
   box-sizing: border-box;
   background: ${({ isActive, isWeekend, theme }) =>
     isActive

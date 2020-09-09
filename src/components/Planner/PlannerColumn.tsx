@@ -1,16 +1,18 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
 import { jsx } from '@emotion/react'
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { PlannerInterval } from './types'
 import useHighlightWeekend from './hooks/useHighlightWeekend'
+import { getDaysInMonth } from 'date-fns'
 
 interface PlannerColumnProps {
   className?: string
-  range: number
+  range: Date[]
   index: number
   date: Date
   col?: number
+  plannerSize: number
   plannerInterval: PlannerInterval
 }
 
@@ -20,15 +22,31 @@ const PlannerColumn: FC<PlannerColumnProps> = ({
   index,
   date,
   col,
+  plannerSize,
   plannerInterval,
 }) => {
   const isWeekend = useHighlightWeekend(date, plannerInterval)
+  const [size, setSize] = useState<number>(30)
+  useEffect(() => {
+    if (plannerInterval === 'year') {
+      setSize(getDaysInMonth(date))
+    }
+
+    if (plannerInterval === 'month') {
+      setSize(1)
+    }
+
+    if (plannerInterval === 'week') {
+      setSize(1)
+    }
+  }, [date, plannerInterval])
   return (
     <Column
       index={index}
       className={className}
       isActive={col === index}
-      range={range}
+      size={size}
+      plannerSize={plannerSize}
       plannerInterval={plannerInterval}
       isWeekend={isWeekend}
       data-planner-column={index}
@@ -38,15 +56,17 @@ const PlannerColumn: FC<PlannerColumnProps> = ({
 }
 
 interface ColumnProps {
-  range: number
   isActive: boolean
   index?: number
   isWeekend?: boolean
   plannerInterval: PlannerInterval
+  size: number
+  plannerSize: number
 }
 
 export const Column = styled.div<ColumnProps>`
-  width: ${({ range }) => `calc((100%) / ${range - 1})`};
+  min-width: ${({ size, plannerSize }) => `calc(${size / plannerSize} * 100%)`};
+
   box-sizing: border-box;
   border: ${({ isActive, theme }) =>
     isActive ? `1px solid ${theme.color.blue[300]}` : null};

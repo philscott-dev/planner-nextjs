@@ -18,6 +18,7 @@ import {
   PlannerInterval,
   PlannerLayout,
 } from './types'
+import usePlannerSize from './hooks/usePlannerSize'
 
 interface PlannerProps {
   className?: string
@@ -92,6 +93,7 @@ const Planner: FC<PlannerProps> = ({
   const range = useDateRange(activeDate, plannerInterval)
   const events = useFilteredEvents(eventGroups, range)
   const dayFormat = usePlannerDayFormat(activeDate, plannerInterval)
+  const plannerSize = usePlannerSize(plannerInterval, range[0])
 
   const handleDayClick = (e: MouseEvent) => {
     e.preventDefault()
@@ -264,10 +266,11 @@ const Planner: FC<PlannerProps> = ({
         {range.map((date, index) => (
           <PlannerColumn
             key={index}
-            range={range.length + 1}
+            range={range}
             date={date}
             col={column}
             index={index}
+            plannerSize={plannerSize}
             plannerInterval={plannerInterval}
           />
         ))}
@@ -298,6 +301,7 @@ const Planner: FC<PlannerProps> = ({
             activeDate={activeDate}
             activeColumn={column}
             range={range}
+            plannerSize={plannerSize}
             onDayClick={handleDayClick}
             onDayDoubleClick={handleDayDoubleClick}
             onRangeChange={onActiveDateChange}
@@ -313,6 +317,7 @@ const Planner: FC<PlannerProps> = ({
                 row={row}
                 plannerInterval={plannerInterval}
                 plannerLayout={plannerLayout}
+                plannerSize={plannerSize}
                 rowCount={events.length}
                 activeRow={activeRow}
                 activeEvent={activeEvent}

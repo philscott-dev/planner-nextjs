@@ -8,6 +8,7 @@ import { format, getDaysInMonth, getDaysInYear } from 'date-fns'
 import { lightenColor } from 'helpers/color'
 import useColorHash from './hooks/useColorHash'
 import useBlockMeasurements from './hooks/useBlockMeasurements'
+import usePlannerSize from './hooks/usePlannerSize'
 
 interface PlannerEventBlockProps {
   className?: string
@@ -15,6 +16,7 @@ interface PlannerEventBlockProps {
   activeEvent?: PlannerEvent
   plannerInterval: PlannerInterval
   plannerLayout: PlannerLayout
+  plannerSize: number
   size: number
   range: Date[]
   onEmptyClick: (e: MouseEvent) => void
@@ -33,24 +35,14 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
   range,
   plannerInterval,
   plannerLayout,
+  plannerSize,
   onEmptyClick,
   onEventClick,
   onEmptyDoubleClick,
   onEventDoubleClick,
 }) => {
-  const [plannerSize, setPlannerSize] = useState<number>(1)
   const color = useColorHash(event?.title)
   const [left, right] = useBlockMeasurements(plannerInterval, range, event)
-  useEffect(() => {
-    if (plannerInterval === 'year') {
-      setPlannerSize(getDaysInYear(range[0]))
-    } else if (plannerInterval === 'month') {
-      const days = getDaysInMonth(range[0])
-      setPlannerSize(days)
-    } else {
-      setPlannerSize(7)
-    }
-  }, [plannerInterval, range])
 
   const handleEmptyClick = (e: MouseEvent) => {
     e.stopPropagation()
@@ -124,7 +116,9 @@ const BlockWrapper = styled.div<BlockWrapProps>`
   box-sizing: border-box;
   min-width: ${({ size, plannerSize }) => `calc(${size / plannerSize} * 100%)`};
   padding: ${({ plannerInterval }) =>
-    plannerInterval === 'year' ? '1px' : '4px'};
+    plannerInterval === 'year' ? '0.5px' : '4px'};
+  border: ${({ plannerInterval }) =>
+    plannerInterval === 'year' ? '0px solid transparent' : null};
   user-select: none;
   pointer-events: none;
 `

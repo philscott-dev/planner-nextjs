@@ -7,6 +7,7 @@ import useSwiper from './hooks/useSwiper'
 interface PlannerHeaderDayRowProps {
   className?: string
   plannerInterval: PlannerInterval
+  plannerSize: number
   dayFormat: string
   activeDate: Date
   activeColumn?: number
@@ -20,6 +21,7 @@ const PlannerHeaderDayRow: FC<PlannerHeaderDayRowProps> = ({
   range,
   dayFormat,
   plannerInterval,
+  plannerSize,
   activeDate,
   activeColumn,
   onDayClick,
@@ -57,6 +59,7 @@ const PlannerHeaderDayRow: FC<PlannerHeaderDayRowProps> = ({
                       key={index}
                       date={date}
                       plannerInterval={plannerInterval}
+                      plannerSize={plannerSize}
                       dayFormat={dayFormat}
                       isActive={activeColumn === index}
                       range={range}
