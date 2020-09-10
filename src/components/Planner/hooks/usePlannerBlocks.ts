@@ -27,7 +27,7 @@ export default function usePlannerBlocks(
 ) {
   const [blocks, setBlocks] = useState<Block[]>([])
   useEffect(() => {
-    const end =
+    const endOf =
       plannerInterval === 'year'
         ? endOfYear
         : plannerInterval === 'month'
@@ -36,23 +36,29 @@ export default function usePlannerBlocks(
     const difference =
       plannerInterval === 'year' ? differenceInDays : differenceInDays
     const result = events
+      // assign sizes to all the events
       .map<Block>((event, index) => {
         let startTime = event.startTime
         let endTime = event.endTime
+        // handle first event
         if (index === 0 && isBefore(startTime, range[0])) {
           startTime = range[0]
         }
 
+        // handle last event
         if (
           index === events.length - 1 &&
-          isAfter(endTime, range[range.length - 1])
+          //BUG: endOf is applied to a range that is wrong... dec 1 is still end of range... this works for now but needs fixing
+          isAfter(endTime, endOf(range[range.length - 1]))
         ) {
-          endTime = range[range.length - 1]
+          endTime = endOf(range[range.length - 1])
         }
+        console.log(endTime, event)
         const size = difference(endTime, startTime) + 1
-        //return { size, event }
+
         return { size, event }
       }, [])
+      // assign empty space
       .reduce<Block[]>((acc, block, index) => {
         // check 1st day against start of range
         if (index === 0 && block.event) {
@@ -60,7 +66,7 @@ export default function usePlannerBlocks(
           if (events.length === 1) {
             // if theres only one event in the row, add the end block as well
             const endSize = difference(
-              end(range[range.length - 1]),
+              endOf(range[range.length - 1]),
               block.event.endTime,
             )
             return [...acc, { size }, block, { size: endSize }]
@@ -77,7 +83,7 @@ export default function usePlannerBlocks(
         // check event against end of range
         if (index === events.length - 1 && block.event) {
           const size = difference(
-            end(range[range.length - 1]),
+            endOf(range[range.length - 1]),
             block.event.endTime,
           )
           return size >= 1 ? [...temp, { size }] : temp

@@ -90,7 +90,7 @@ const Wrapper = styled.div<WrapperProps>`
   z-index: 1;
   position: absolute;
   box-sizing: border-box;
-  padding: 8px 4px;
+  padding: 8px;
   overflow: hidden;
   bottom: 4px;
   top: 4px;

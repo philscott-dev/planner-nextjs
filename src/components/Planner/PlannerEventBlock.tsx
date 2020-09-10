@@ -148,7 +148,7 @@ const BlockWrapper = styled.div<BlockWrapProps>`
   box-sizing: border-box;
   min-width: ${({ size, plannerSize }) => `calc(${size / plannerSize} * 100%)`};
   padding: ${({ plannerInterval }) =>
-    plannerInterval === 'year' ? '4px 1px' : '4px'};
+    plannerInterval === 'year' ? '4px 0' : '4px'};
   border: ${({ plannerInterval }) =>
     plannerInterval === 'year' ? '0px solid transparent' : null};
   user-select: none;
@@ -167,7 +167,7 @@ const Block = styled.div<BlockProps>`
   box-sizing: border-box;
   height: 100%;
   padding: ${({ plannerInterval }) =>
-    plannerInterval === 'year' ? '8px 4px' : '8px'};
+    plannerInterval === 'year' ? '8px 0' : '8px'};
   background: ${({ color, isActive }) =>
     !isActive ? color : lightenColor(color, 40)};
   cursor: pointer;
@@ -178,6 +178,7 @@ const Block = styled.div<BlockProps>`
 const textCss = css`
   pointer-events: none;
   user-select: none;
+  margin-left: 8px;
 `
 
 export default PlannerEventBlock
