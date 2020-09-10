@@ -45,6 +45,7 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
   const color = useColorHash(event?.title)
   const [left, right] = useBlockMeasurements(plannerInterval, range, event)
   const [dateRangeString, setDateRangeString] = useState<string>()
+  const [isHovered, setHovered] = useState<boolean>(false)
   useEffect(() => {
     if (event) {
       const string =
@@ -69,9 +70,14 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
     onEventClick(e, event)
   }
 
-  const handleMouseOver = () => {}
+  const handleMouseOver = () => {
+    setHovered(true)
+  }
 
-  const handleMouseOut = () => {}
+  const handleMouseOut = () => {
+    setHovered(false)
+  }
+
   return event ? (
     <BlockWrapper
       className={className}
@@ -88,16 +94,11 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
         left={left}
         right={right}
         plannerInterval={plannerInterval}
-        onMouseDown={(e) => handleEventClick(e, event)}
         onDoubleClick={(e) => onEventDoubleClick(e, event)}
+        onMouseDown={(e) => handleEventClick(e, event)}
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
       >
-        <PlannerEventTooltip
-          isActive={event.id === activeEvent?.id}
-          color={event.color || color}
-          title={event.title}
-          dateRangeString={dateRangeString}
-          plannerInterval={plannerInterval}
-        />
         <Text ellipsis size="small" css={textCss}>
           {event.title}
         </Text>
@@ -107,6 +108,14 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
           </Text.Light>
         ) : null}
       </Block>
+      <PlannerEventTooltip
+        isActive={event.id === activeEvent?.id}
+        isHovered={isHovered}
+        color={event.color || color}
+        title={event.title}
+        dateRangeString={dateRangeString}
+        plannerInterval={plannerInterval}
+      />
     </BlockWrapper>
   ) : (
     <Empty
@@ -161,15 +170,6 @@ const Block = styled.div<BlockProps>`
     !isActive ? color : lightenColor(color, 40)};
   cursor: pointer;
   pointer-events: all;
-  > .__planner_tip {
-    opacity: 0;
-  }
-
-  &:hover {
-    > .__planner_tip {
-      opacity: 1;
-    }
-  }
 `
 
 const textCss = css`
