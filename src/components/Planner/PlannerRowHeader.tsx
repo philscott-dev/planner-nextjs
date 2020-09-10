@@ -2,7 +2,6 @@
 import styled from '@emotion/styled'
 import { FC, useRef, MouseEvent } from 'react'
 import { jsx } from '@emotion/react'
-import { useIntersectionObserver } from 'hooks'
 
 interface PlannerRowHeaderProps {
   className?: string
@@ -17,7 +16,6 @@ const PlannerRowHeader: FC<PlannerRowHeaderProps> = ({
   onDoubleClick,
 }) => {
   const ref = useRef<HTMLDivElement>(null)
-  //const isSticky = useIntersectionObserver(ref.current, null)
 
   return (
     <Wrapper

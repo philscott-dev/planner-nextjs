@@ -4,7 +4,7 @@ import { FC, createRef, useRef } from 'react'
 import { jsx } from '@emotion/react'
 import { IconButton, Button } from 'lib'
 import { FiTrash2, FiX } from 'react-icons/fi'
-import { useOnClickOutside, useIntersectionObserver } from 'hooks'
+import { useOnClickOutside } from 'hooks'
 import {
   Dialog,
   DialogLabel,

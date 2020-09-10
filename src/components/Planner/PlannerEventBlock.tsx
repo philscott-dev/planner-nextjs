@@ -162,13 +162,11 @@ const Block = styled.div<BlockProps>`
   cursor: pointer;
   pointer-events: all;
   > .__planner_tip {
-    /* display: none; */
     opacity: 0;
   }
 
   &:hover {
     > .__planner_tip {
-      /* display: inherit; */
       opacity: 1;
     }
   }
