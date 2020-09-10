@@ -4,7 +4,7 @@ import { FC, useRef } from 'react'
 import { css, jsx } from '@emotion/react'
 import { Text } from 'lib'
 import { PlannerInterval } from './types'
-import useObserveOnce from 'hooks/useObserveOnce'
+import { useIntersectionObserver } from 'hooks'
 
 interface PlannerEventTooltipProps {
   className?: string
@@ -25,9 +25,10 @@ const PlannerEventTooltip: FC<PlannerEventTooltipProps> = ({
   plannerInterval,
 }) => {
   const ref = useRef<HTMLDivElement>(null)
-  const { isRight } = useObserveOnce({
+  const { isRight } = useIntersectionObserver({
     element: ref.current,
     shouldObserve: isHovered,
+    observeOnce: true,
     unobserveTimeout: 250,
   })
 
