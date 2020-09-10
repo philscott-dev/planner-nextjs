@@ -108,14 +108,16 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
           </Text.Light>
         ) : null}
       </Block>
-      <PlannerEventTooltip
-        isActive={event.id === activeEvent?.id}
-        isHovered={isHovered}
-        color={event.color || color}
-        title={event.title}
-        dateRangeString={dateRangeString}
-        plannerInterval={plannerInterval}
-      />
+      {plannerInterval === 'year' ? (
+        <PlannerEventTooltip
+          isActive={event.id === activeEvent?.id}
+          isHovered={isHovered}
+          color={event.color || color}
+          title={event.title}
+          dateRangeString={dateRangeString}
+          plannerInterval={plannerInterval}
+        />
+      ) : null}
     </BlockWrapper>
   ) : (
     <Empty
@@ -170,6 +172,7 @@ const Block = styled.div<BlockProps>`
     !isActive ? color : lightenColor(color, 40)};
   cursor: pointer;
   pointer-events: all;
+  overflow: hidden;
 `
 
 const textCss = css`

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
 import { FC, useRef } from 'react'
-import { css, jsx } from '@emotion/react'
+import { css, jsx, keyframes } from '@emotion/react'
 import { Text } from 'lib'
 import { PlannerInterval } from './types'
 import { useIntersectionObserver } from 'hooks'
@@ -25,7 +25,7 @@ const PlannerEventTooltip: FC<PlannerEventTooltipProps> = ({
   plannerInterval,
 }) => {
   const ref = useRef<HTMLDivElement>(null)
-  const { isRight } = useIntersectionObserver({
+  const { isRight, isBottom } = useIntersectionObserver({
     element: ref.current,
     shouldObserve: isHovered,
     observeOnce: true,
@@ -37,6 +37,7 @@ const PlannerEventTooltip: FC<PlannerEventTooltipProps> = ({
       ref={ref}
       className={'__planner_tip ' + className}
       isRight={isRight}
+      isBottom={isBottom}
       isHovered={isHovered}
       color={color}
       plannerInterval={plannerInterval}
@@ -58,27 +59,57 @@ interface WrapperProps {
   color?: string
   plannerInterval: PlannerInterval
   isRight: boolean
+  isBottom: boolean
   isHovered: boolean
 }
+
+const fade = keyframes`
+  0% {
+    display: none;
+    opacity: 0;
+  }
+
+  100% {
+    display: block;
+    opacity: 1;
+  }
+  `
+
+const fadeOut = keyframes`
+0% {
+  display: none;
+  opacity: 0;
+}
+100% {
+  display: none;
+  opacity: 0;
+}
+`
 
 const Wrapper = styled.div<WrapperProps>`
   z-index: 1;
   position: absolute;
   box-sizing: border-box;
-  top: 40px;
-  min-width: 375px;
-  max-width: 375px;
-  opacity: ${({ isHovered }) => (isHovered ? 1 : 0)};
+  padding: 8px 4px;
+  overflow: hidden;
+  bottom: 4px;
+  top: 4px;
+  pointer-events: none;
   right: ${({ isRight }) => (isRight ? 0 : null)};
-  padding: 8px;
   background: ${({ color }) => color};
   box-shadow: ${({ theme }) => theme.shadow.up.two};
-  transition: all 0.25s ease-in-out;
-  pointer-events: none;
+
+  animation-name: ${({ isHovered }) => (isHovered ? fade : fadeOut)};
+  animation-duration: 0.25s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
 `
 
 const textCss = css`
   word-break: normal;
-  white-space: pre-wrap;
+  white-space: nowrap;
   margin-bottom: 4px;
+  max-width: 375px;
+  pointer-events: none;
+  user-select: none;
 `
