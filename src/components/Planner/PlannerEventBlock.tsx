@@ -70,8 +70,20 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
     onEventClick(e, event)
   }
 
-  const handleMouseOver = () => {
-    setHovered(true)
+  const handleMouseOver = (e: MouseEvent<HTMLDivElement>) => {
+    const node = e.currentTarget.childNodes[0] as HTMLParagraphElement
+    node.style.display = 'inline'
+    node.style.width = 'auto'
+    const w1 = e.currentTarget.offsetWidth
+    const w2 = node.offsetWidth
+    node.style.display = 'block'
+    node.style.width = 'initial'
+
+    console.log(w2, w1)
+    if (w2 > w1) {
+      console.log('???')
+      setHovered(true)
+    }
   }
 
   const handleMouseOut = () => {
@@ -108,16 +120,14 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
           </Text.Light>
         ) : null}
       </Block>
-      {plannerInterval === 'year' ? (
-        <PlannerEventTooltip
-          isActive={event.id === activeEvent?.id}
-          isHovered={isHovered}
-          color={event.color || color}
-          title={event.title}
-          dateRangeString={dateRangeString}
-          plannerInterval={plannerInterval}
-        />
-      ) : null}
+      <PlannerEventTooltip
+        isActive={event.id === activeEvent?.id}
+        isHovered={isHovered}
+        color={event.color || color}
+        title={event.title}
+        dateRangeString={dateRangeString}
+        plannerInterval={plannerInterval}
+      />
     </BlockWrapper>
   ) : (
     <Empty
@@ -167,7 +177,7 @@ const Block = styled.div<BlockProps>`
   box-sizing: border-box;
   height: 100%;
   padding: ${({ plannerInterval }) =>
-    plannerInterval === 'year' ? '8px 0' : '8px'};
+    plannerInterval === 'year' ? '8px 0' : '8px 0'};
   background: ${({ color, isActive }) =>
     !isActive ? color : lightenColor(color, 40)};
   cursor: pointer;

@@ -87,7 +87,6 @@ const Wrapper = styled.div<WrapperProps>`
 const textCss = css`
   word-break: normal;
   white-space: nowrap;
-  margin-bottom: 4px;
   max-width: 375px;
   pointer-events: none;
   user-select: none;
