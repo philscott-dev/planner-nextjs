@@ -69,6 +69,7 @@ const Wrapper = styled.div<WrapperProps>`
   position: absolute;
   box-sizing: border-box;
   padding: 8px;
+  max-width: 375px;
   overflow: hidden;
   bottom: 4px;
   top: 4px;

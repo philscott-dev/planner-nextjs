@@ -86,8 +86,8 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
     node.style.display = 'block'
     node.style.width = 'initial'
 
-    // if text is longer than container, show tooltip
-    if (w2 > w1) {
+    // if text plus 8px padding is longer than container
+    if (w2 + 8 > w1) {
       setHovered(true)
     }
   }
@@ -160,7 +160,6 @@ const Empty = styled.div<BlockWrapProps>`
 `
 
 const BlockWrapper = styled.div<BlockWrapProps>`
-  position: relative;
   box-sizing: border-box;
   min-width: ${({ size, plannerSize }) => `calc(${size / plannerSize} * 100%)`};
   padding: ${({ plannerInterval }) =>
