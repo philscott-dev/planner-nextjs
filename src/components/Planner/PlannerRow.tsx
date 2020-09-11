@@ -88,21 +88,17 @@ const PlannerRow: FC<PlannerRowProps> = ({
       >
         <PlannerRowHeader
           isActive={row ? row.id == activeRow : false}
+          label={row ? row.label : ''}
+          id={row ? row.id : ''}
+          index={index}
+          rowCount={rowCount}
+          onRowUp={onRowUp}
+          onRowDown={onRowDown}
+          onRowRename={onRowRename}
+          onRowDelete={onRowDelete}
           onMouseDown={onRowHeaderClick}
           onDoubleClick={onRowHeaderDoubleClick}
-        >
-          <PlannerRowControls
-            label={row ? row.label : ''}
-            id={row ? row.id : ''}
-            index={index}
-            rowCount={rowCount}
-            onRowUp={onRowUp}
-            onRowDown={onRowDown}
-            onRowRename={onRowRename}
-            onRowDelete={onRowDelete}
-          />
-          <Text size="small">{row ? row.label : null}</Text>
-        </PlannerRowHeader>
+        />
         <EventWrapper plannerLayout={plannerLayout}>
           {rows.map((rowEvents, index) => (
             <PlannerEventRow
@@ -135,7 +131,7 @@ const Row = styled.div<{ plannerLayout: PlannerLayout }>`
   justify-content: flex-start;
   border-bottom: 2px solid black;
   min-height: ${({ plannerLayout }) =>
-    plannerLayout === 'standard' ? '60px' : '40px'};
+    plannerLayout === 'standard' ? '86px' : '66px'};
 `
 
 const EventWrapper = styled.div<{ plannerLayout: PlannerLayout }>`

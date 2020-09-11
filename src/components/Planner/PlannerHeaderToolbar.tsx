@@ -338,7 +338,7 @@ const subCss = css`
 `
 
 const iconCss = css`
-  margin-right: 8px;
+  margin-right: 16px;
 `
 
 const CheckMark = styled(FaCheck)`

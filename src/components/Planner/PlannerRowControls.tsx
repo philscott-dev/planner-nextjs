@@ -33,10 +33,12 @@ const PlannerRowControls: FC<PlannerRowControlsProps> = ({
   const [isRenameVisible, setRenameVisibility] = useState(false)
   const [isDeleteVisible, setDeleteVisibility] = useState(false)
 
-  const onControlsClick = (e: MouseEvent<HTMLDivElement>) => {
+  const handleControlsPropagation = (e: MouseEvent<HTMLDivElement>) => {
     //e.preventDefault()
     e.stopPropagation()
   }
+
+  const handleToggleControls = (e: MouseEvent<HTMLButtonElement>) => {}
 
   const handleRenameClick = () => {
     setRenameVisibility(true)
@@ -69,30 +71,27 @@ const PlannerRowControls: FC<PlannerRowControlsProps> = ({
   }
 
   return (
-    <div className={className} onMouseDown={onControlsClick}>
-      <Dropdown
-        renderNode={(onClick) => (
-          <IconButton onMouseDown={onClick}>
-            <FiMoreVertical />
-          </IconButton>
-        )}
+    <div className={className} onMouseDown={handleControlsPropagation}>
+      <IconButton onMouseDown={handleToggleControls}>
+        <FiMoreVertical />
+      </IconButton>
+
+      <Button onMouseDown={handleRenameClick}>
+        <FiEdit css={iconCss} /> Rename
+      </Button>
+      <Button disabled={index === 0} onMouseDown={handleRowUpClick}>
+        <FaAngleDoubleUp css={iconCss} /> Row Up
+      </Button>
+      <Button
+        disabled={rowCount === index + 1}
+        onMouseDown={handleRowDownClick}
       >
-        <DropdownOption onMouseDown={handleRenameClick}>
-          <FiEdit css={iconCss} /> Rename
-        </DropdownOption>
-        <DropdownOption disabled={index === 0} onMouseDown={handleRowUpClick}>
-          <FaAngleDoubleUp css={iconCss} /> Row Up
-        </DropdownOption>
-        <DropdownOption
-          disabled={rowCount === index + 1}
-          onMouseDown={handleRowDownClick}
-        >
-          <FaAngleDoubleDown css={iconCss} /> Row Down
-        </DropdownOption>
-        <DropdownOption isDelete={true} onMouseDown={handleDeleteRowClick}>
-          <FaTrashAlt css={iconCss} /> Delete Row
-        </DropdownOption>
-      </Dropdown>
+        <FaAngleDoubleDown css={iconCss} /> Row Down
+      </Button>
+      <Button isDelete={true} onMouseDown={handleDeleteRowClick}>
+        <FaTrashAlt css={iconCss} /> Delete Row
+      </Button>
+
       <DeleteDialog
         id={id}
         isVisible={isDeleteVisible}

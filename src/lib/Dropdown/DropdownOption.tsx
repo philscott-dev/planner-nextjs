@@ -2,10 +2,12 @@ import styled from '@emotion/styled'
 
 export default styled.button<{ isDelete?: boolean; disabled?: boolean }>`
   display: flex;
+  align-items: center;
   align-items: left;
   white-space: nowrap;
   align-items: flex-start;
   outline: none;
+  line-height: 1;
   border-style: solid;
   cursor: pointer;
   width: 100%;
@@ -17,6 +19,8 @@ export default styled.button<{ isDelete?: boolean; disabled?: boolean }>`
   transition: ${({ theme }) => theme.transition.all};
   color: ${({ theme }) => theme.color.white[100]};
   background: ${({ theme }) => theme.color.blue[700]};
+  font-weight: 300;
+  font-family: ${({ theme }) => theme.font.family};
   &:hover {
     color: ${({ theme, isDelete }) =>
       isDelete ? theme.color.red[200] : theme.color.blue[300]};

@@ -24,6 +24,7 @@ export interface FormInputProps {
   defaultValue?: any
   tabIndex?: number
   inputSize?: Size
+  shouldShowLabel?: boolean
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -35,6 +36,7 @@ const FormInput: FC<FormInputProps> = ({
   placeholder,
   defaultValue,
   type = 'text',
+  shouldShowLabel = true,
   onChange: onChangeProp,
   ...props
 }) => {
@@ -75,9 +77,11 @@ const FormInput: FC<FormInputProps> = ({
 
   return (
     <Container className={className} inputSize={inputSize}>
-      <FormLabel error={!!error} isVisible={isVisible || value.length > 0}>
-        {placeholder}
-      </FormLabel>
+      {shouldShowLabel ? (
+        <FormLabel error={!!error} isVisible={isVisible || value.length > 0}>
+          {placeholder}
+        </FormLabel>
+      ) : null}
       <Input
         type={type}
         name={name}

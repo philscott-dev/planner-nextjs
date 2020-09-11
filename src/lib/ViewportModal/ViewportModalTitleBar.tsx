@@ -46,7 +46,7 @@ const ViewportModalTitleBar: FC<ViewportModalTitleBarProps> = ({
             <FiMinimize2 />
           </IconButton>
         )} */}
-        <IconButton onMouseDown={onClose}>
+        <IconButton onMouseDown={onClose} style={{ marginRight: 16 }}>
           <FiX />
         </IconButton>
       </Flex>
@@ -68,7 +68,10 @@ export default styled(ViewportModalTitleBar)`
 `
 
 const Title = styled(Text)`
-  margin-right: 8px;
+  margin-right: 16px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `
 
 const iconCss = css`
@@ -78,4 +81,6 @@ const iconCss = css`
 const Flex = styled.div`
   display: flex;
   align-items: center;
+  overflow: hidden;
+  box-sizing: border-box;
 `
