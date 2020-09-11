@@ -71,17 +71,23 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
   }
 
   const handleMouseOver = (e: MouseEvent<HTMLDivElement>) => {
+    // get the text node
     const node = e.currentTarget.childNodes[0] as HTMLParagraphElement
+
+    // make it full width, removing ellipses
     node.style.display = 'inline'
     node.style.width = 'auto'
+
+    // take width measurements
     const w1 = e.currentTarget.offsetWidth
     const w2 = node.offsetWidth
+
+    // reset the text to ellipses
     node.style.display = 'block'
     node.style.width = 'initial'
 
-    console.log(w2, w1)
+    // if text is longer than container, show tooltip
     if (w2 > w1) {
-      console.log('???')
       setHovered(true)
     }
   }
