@@ -1,10 +1,11 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
 import { FC, useRef } from 'react'
-import { css, jsx, keyframes } from '@emotion/react'
+import { css, jsx } from '@emotion/react'
 import { Text } from 'lib'
 import { PlannerInterval } from './types'
 import { useIntersectionObserver } from 'hooks'
+import { fade, fadeOut } from 'styles/keyframes'
 
 interface PlannerEventTooltipProps {
   className?: string
@@ -54,29 +55,6 @@ const PlannerEventTooltip: FC<PlannerEventTooltipProps> = ({
 }
 
 export default PlannerEventTooltip
-
-const fade = keyframes`
-  0% {
-    display: none;
-    opacity: 0;
-  }
-
-  100% {
-    display: block;
-    opacity: 1;
-  }
-  `
-
-const fadeOut = keyframes`
-0% {
-  display: block;
-  opacity: 1;
-}
-100% {
-  display: none;
-  opacity: 0;
-}
-`
 
 interface WrapperProps {
   color?: string
