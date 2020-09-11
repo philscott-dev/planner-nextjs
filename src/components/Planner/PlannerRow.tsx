@@ -6,8 +6,6 @@ import PlannerEventRow from './PlannerEventRow'
 import PlannerRowHeader from './PlannerRowHeader'
 import PlannerRowWrapper from './PlannerRowWrapper'
 import usePlannerEventRow from './hooks/usePlannerEventRow'
-import { Text } from 'lib'
-import PlannerRowControls from './PlannerRowControls'
 import {
   PlannerEvent,
   PlannerEventGroup,
