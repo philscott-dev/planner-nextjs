@@ -55,14 +55,6 @@ const PlannerEventTooltip: FC<PlannerEventTooltipProps> = ({
 
 export default PlannerEventTooltip
 
-interface WrapperProps {
-  color?: string
-  plannerInterval: PlannerInterval
-  isRight: boolean
-  isBottom: boolean
-  isHovered: boolean
-}
-
 const fade = keyframes`
   0% {
     display: none;
@@ -77,14 +69,22 @@ const fade = keyframes`
 
 const fadeOut = keyframes`
 0% {
-  display: none;
-  opacity: 0;
+  display: block;
+  opacity: 1;
 }
 100% {
   display: none;
   opacity: 0;
 }
 `
+
+interface WrapperProps {
+  color?: string
+  plannerInterval: PlannerInterval
+  isRight: boolean
+  isBottom: boolean
+  isHovered: boolean
+}
 
 const Wrapper = styled.div<WrapperProps>`
   z-index: 1;
@@ -99,6 +99,7 @@ const Wrapper = styled.div<WrapperProps>`
   background: ${({ color }) => color};
   box-shadow: ${({ theme }) => theme.shadow.up.two};
 
+  display: ${({ isHovered }) => (isHovered ? 'block' : 'none')};
   animation-name: ${({ isHovered }) => (isHovered ? fade : fadeOut)};
   animation-duration: 0.25s;
   animation-timing-function: ease-in-out;
