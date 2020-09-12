@@ -141,7 +141,7 @@ const PlannerRowHeader: FC<PlannerRowHeaderProps> = ({
             <FaTrashAlt css={iconCss} /> Delete
           </Button>
         </Menu>
-        <SubMenu isVisible={isRenameVisible}>
+        <Menu isVisible={isRenameVisible}>
           <Form
             loading={false}
             error={undefined}
@@ -170,7 +170,7 @@ const PlannerRowHeader: FC<PlannerRowHeaderProps> = ({
               <FiCheck />
             </IB>
           </Form>
-        </SubMenu>
+        </Menu>
         <Menu isVisible={isDeleteVisible}>
           <IB onMouseDown={handleDeleteCancel}>
             <FiX />
@@ -224,21 +224,6 @@ const Menu = styled.div<{ isVisible: boolean }>`
   min-height: 62px;
   max-height: 62px;
 `
-
-const SubMenu = styled.div<{ isVisible: boolean }>`
-  display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
-  align-items: center;
-  flex: 1;
-  max-width: 375px;
-  padding-top: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-bottom: 8px;
-  box-sizing: border-box;
-  min-height: 61px;
-  max-height: 61px;
-`
-
 const iconCss = css`
   margin-right: 8px;
 `
@@ -252,12 +237,12 @@ const Button = styled(DefaultButton.Tertiary)`
   justify-content: center;
   align-items: center;
   border: none;
+  box-sizing: border-box;
   background: transparent;
   padding: 0;
   font-size: 14px;
   margin-right: 24px;
   font-weight: 300;
-  line-height: 24;
   font-family: ${({ theme }) => theme.font.family};
 `
 
