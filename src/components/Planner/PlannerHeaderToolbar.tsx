@@ -342,6 +342,6 @@ const iconCss = css`
 `
 
 const CheckMark = styled(FaCheck)`
-  margin-right: 8px;
+  margin-right: 16px;
   color: ${({ theme }) => theme.color.blue[300]};
 `

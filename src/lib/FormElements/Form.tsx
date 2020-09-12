@@ -92,8 +92,7 @@ const Form: FC<FormProps> = ({
 
     // check all the validators
     if (!Object.keys(submittedErrors).length) {
-      //console.log(submittedErrors)
-      onSubmit(entries)
+      onSubmit(entries, e)
     } else {
       setDirty(true)
       setErrors(submittedErrors)

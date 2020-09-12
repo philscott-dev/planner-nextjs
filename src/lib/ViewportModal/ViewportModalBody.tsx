@@ -22,7 +22,7 @@ export default styled(ViewportModalBody)`
   box-sizing: border-box;
   height: 100%;
   padding: 24px 12px 0 12px;
-  @media screen and (max-width: ${({ theme }) => theme.breakpoint.xsmall}) {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
     padding: 24px 8px 0 8px;
   }
 `

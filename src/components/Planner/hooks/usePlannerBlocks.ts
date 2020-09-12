@@ -53,7 +53,6 @@ export default function usePlannerBlocks(
         ) {
           endTime = endOf(range[range.length - 1])
         }
-        console.log(endTime, event)
         const size = difference(endTime, startTime) + 1
 
         return { size, event }
@@ -91,7 +90,6 @@ export default function usePlannerBlocks(
 
         return temp
       }, [])
-    console.log(result)
     setBlocks(result)
   }, [range, events, plannerInterval])
   return blocks

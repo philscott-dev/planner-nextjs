@@ -240,9 +240,9 @@ const Button = styled(DefaultButton.Tertiary)`
   box-sizing: border-box;
   background: transparent;
   padding: 0;
-  font-size: 14px;
+  font-size: 12px;
   margin-right: 24px;
-  font-weight: 300;
+  font-weight: 500;
   font-family: ${({ theme }) => theme.font.family};
 `
 

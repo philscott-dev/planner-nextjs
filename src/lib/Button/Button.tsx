@@ -22,6 +22,8 @@ const Button = styled.button<ButtonProps>`
   pointer-events: all;
   border-style: solid;
   cursor: pointer;
+  font-weight: 300;
+  font-family: ${({ theme }) => theme.font.family};
   transition: ${({ theme }) => theme.transition.all};
   &:hover {
     background-size: 100% 100%;

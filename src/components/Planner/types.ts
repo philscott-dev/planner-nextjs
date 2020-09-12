@@ -6,7 +6,7 @@ export interface PlannerEventGroup {
 }
 
 export interface PlannerEvent {
-  id: number | string
+  id?: number | string
   assigneeId?: number | string
   title?: string
   startTime: Date

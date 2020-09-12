@@ -132,7 +132,7 @@ const IndexPage: NextPage = () => {
   const handleEmptyDoubleClick = (row: string | number, date: Date) => {
     console.log('handleEmptyDoubleClick')
     const newEvent: PlannerEvent = {
-      id: uuid(),
+      //id: uuid(),
       assigneeId: row,
       startTime: date,
       endTime: date,
@@ -237,26 +237,15 @@ const IndexPage: NextPage = () => {
     setEvents(groups)
   }
 
-  const handleEventConfirmDelete = () => {
-    // remove the bottom editable event modal
-    if (editableDeleteIndex) {
-      setEditableItems(removeByIndex(editableItems, editableDeleteIndex))
-
-      //hide the fullscreen modal
-      setEditableDeleteIndex(undefined)
-
-      // remove the event from the real events array
-    }
-  }
-
   const handleEventEditorConfirm = (entries: Entries, index: number) => {
     console.log(entries)
     //get the entry by it's index,
     const event = editableItems[index]
+    console.log(event)
     const newEvent: PlannerEvent = {
       ...event,
+      id: event.id || uuid(),
       title: entries.summary as string,
-      id: event.id,
       startTime: entries.startTime,
       endTime: entries.endTime,
       color: entries.color as string,
@@ -275,6 +264,21 @@ const IndexPage: NextPage = () => {
     //   const res = await createEvent('')
     //   return [...res, statefulData]
     // })
+  }
+
+  const handleEventEditorClone = (entries: Entries, index: number) => {
+    const event = editableItems[index]
+
+    const cloned: PlannerEvent = {
+      ...event,
+      id: null,
+      title: ('[ CLONE ] ' + entries.summary) as string,
+      color: entries.color as string,
+    }
+
+    console.log(cloned)
+
+    setEditableItems([cloned])
   }
 
   /**
@@ -313,7 +317,7 @@ const IndexPage: NextPage = () => {
     setEditableItems([
       //...editableItems.slice(0, 1),
       {
-        id: uuid(),
+        //id: uuid(),
       },
     ])
   }
@@ -395,6 +399,7 @@ const IndexPage: NextPage = () => {
         onCancel={handleEventEditorCancel}
         onDelete={handleEventEditorDelete}
         onConfirm={handleEventEditorConfirm}
+        onClone={handleEventEditorClone}
       />
       <AddEvent onAddEvent={handleAddEventClick} onAddRow={handleAddRowClick} />
     </>

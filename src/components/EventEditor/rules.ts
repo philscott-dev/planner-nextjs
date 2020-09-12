@@ -41,7 +41,6 @@ export const rules: Rules = {
       error: 'Must come after Start Date',
       fn: (value, entries) => {
         if (entries?.startTime) {
-          console.log(entries)
           return (
             isAfter(value, entries.startTime) ||
             isEqual(value, entries.startTime)

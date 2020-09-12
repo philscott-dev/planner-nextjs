@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
-import { FC, useState, useContext, useEffect } from 'react'
+import { FC, MouseEvent, useState, useContext, useEffect } from 'react'
 import { jsx, css } from '@emotion/react'
 import { ValidationContext } from './Form'
 import { LoadingStatus } from './hooks/useLoadingStatus'
@@ -8,9 +8,17 @@ import { LoadingStatus } from './hooks/useLoadingStatus'
 export interface ButtonProps {
   className?: string
   name?: string
+  onMouseDown?: (e: MouseEvent<HTMLButtonElement>) => void
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void
 }
 
-const Button: FC<ButtonProps> = ({ name, children, className }) => {
+const Button: FC<ButtonProps> = ({
+  name,
+  children,
+  className,
+  onMouseDown,
+  onClick,
+}) => {
   const { delayedStatus, animationSpeed } = useContext(ValidationContext)
   const [previousStatus, setPreviousStatus] = useState(LoadingStatus.Normal)
   const [animation, setAnimation] = useState(baseCss)
@@ -50,7 +58,14 @@ const Button: FC<ButtonProps> = ({ name, children, className }) => {
   const disabled = delayedStatus !== LoadingStatus.Normal
 
   return (
-    <button type="submit" disabled={disabled} name={name} className={className}>
+    <button
+      type="submit"
+      disabled={disabled}
+      name={name}
+      className={className}
+      onMouseDown={onMouseDown}
+      onClick={onClick}
+    >
       {children}
     </button>
   )
@@ -167,6 +182,9 @@ export default styled(Button)`
     display: block;
     width: 100%;
   }
+
+  font-weight: 300;
+  font-family: ${({ theme }) => theme.font.family};
   color: ${({ theme }) => theme.color.white[100]};
   background: ${({ theme }) => theme.color.blue[400]};
   border-color: ${({ theme }) => theme.color.blue[400]};

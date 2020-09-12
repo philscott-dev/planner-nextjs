@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
-import { ChangeEvent, FC, useState } from 'react'
+import { ChangeEvent, FC, FormEvent, useState } from 'react'
 import { jsx, css } from '@emotion/react'
 import { EventColors } from 'constants/colors'
 import { capitalize } from 'helpers/string'
@@ -19,12 +19,18 @@ import {
   Error,
 } from 'lib'
 
+export enum Submit {
+  Confirm,
+  Clone,
+}
+
 interface EventEditorProps {
   events: PlannerEventGroup[]
   editableItems: PlannerEvent[]
   onCancel: (index: number) => void
-  onConfirm: (entries: Entries, index: number) => void
   onDelete: (index: number) => void
+  onClone: (entries: Entries, index: number) => void
+  onConfirm: (entries: Entries, index: number) => void
 }
 
 const EventEditor: FC<EventEditorProps> = ({
@@ -33,33 +39,52 @@ const EventEditor: FC<EventEditorProps> = ({
   onCancel,
   onConfirm,
   onDelete,
+  onClone,
 }) => {
   const [issueType, setIssueType] = useState<string>()
-  const handleConfirm = (entries: Entries) => {
-    console.log(entries)
-    onConfirm(entries, 0)
+  const [submitType, setSubmitType] = useState<Submit>()
+
+  const handleSubmit = (entries: Entries) => {
+    if (submitType === Submit.Confirm) {
+      onConfirm(entries, 0)
+    }
+
+    if (submitType === Submit.Clone) {
+      onClone(entries, 0)
+    }
   }
 
   const handleSelectIssueType = (e: ChangeEvent<HTMLSelectElement>) => {
     setIssueType(e.currentTarget.value)
   }
 
+  const handleConfirm = () => {
+    setSubmitType(Submit.Confirm)
+  }
+
+  const handleClone = () => {
+    setSubmitType(Submit.Clone)
+  }
+
   return (
     <ViewportModalContainer>
       {editableItems.map((item, index) => (
         <Form
-          key={item.id}
+          key={item.id || index}
           loading={false}
           error={'error'}
-          onSubmit={handleConfirm}
+          onSubmit={handleSubmit}
           autoComplete={'off'}
           rules={rules}
         >
           <ViewportModal
             index={index}
+            id={item.id}
             title={item.title}
             onCancel={onCancel}
             onDelete={onDelete}
+            onConfirm={handleConfirm}
+            onClone={handleClone}
           >
             <Flex>
               <Wrap>

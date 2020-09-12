@@ -11,6 +11,7 @@ export function useInputValidation(name: string, defaultValue: any) {
     ValidationContext,
   )
 
+  //TODO: BUGFIX - this dependency array breaks when updateEntry is added
   useEffect(() => {
     if (defaultValue != undefined) {
       setValue(defaultValue)

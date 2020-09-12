@@ -9,18 +9,24 @@ import ViewportModalBody from './ViewportModalBody'
 interface ViewportModalProps {
   className?: string
   title?: string
+  id?: number | string
   index: number
   onCancel: (index: number) => void
   onDelete?: (index: number) => void
+  onClone: (index: number) => void
+  onConfirm: (index: number) => void
 }
 
 const ViewportModal: FC<ViewportModalProps> = ({
   className,
   children,
   title,
+  id,
   index,
   onCancel,
   onDelete,
+  onClone,
+  onConfirm,
 }) => {
   const [isMinimized, setMinimized] = useState(false)
 
@@ -34,6 +40,14 @@ const ViewportModal: FC<ViewportModalProps> = ({
     }
   }
 
+  const handleClone = () => {
+    onClone(index)
+  }
+
+  const handleConfirm = () => {
+    onConfirm(index)
+  }
+
   const handleMinimize = () => {
     setMinimized(true)
   }
@@ -45,19 +59,21 @@ const ViewportModal: FC<ViewportModalProps> = ({
   return (
     <Container isMinimized={isMinimized} className={className}>
       <ViewportModalTitleBar
+        id={id}
         title={title}
         isMinimized={isMinimized}
         onMinimize={handleMinimize}
         onMaximize={handleMaximize}
         onClose={handleCancel}
         onDelete={handleDelete}
+        onClone={handleClone}
       />
       {!isMinimized ? (
         <>
           <ViewportModalBody>{children}</ViewportModalBody>
           <ViewportModalActionBar
             onCancel={handleCancel}
-            onDelete={onDelete ? handleDelete : undefined}
+            onConfirm={handleConfirm}
           />
         </>
       ) : null}

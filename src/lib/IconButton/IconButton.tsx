@@ -19,6 +19,10 @@ const IconButton = styled.button`
       transition: ${({ theme }) => theme.transition.color};
     }
   }
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
 `
 
 export default IconButton

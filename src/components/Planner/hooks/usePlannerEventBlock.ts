@@ -25,7 +25,6 @@ export default function usePlannerEventBlock(
       : interval === 'month'
       ? getDaysInMonth(range[0]) * 24
       : 7 * 24
-  console.log(length)
   useEffect(() => {
     // reduce over the Date Range Array ex: year === Date[12]
     const result = range.reduce<Block[]>((acc, date, index) => {

@@ -7,20 +7,22 @@ import { FormButton, Button } from 'lib'
 interface ActionBarProps {
   className?: string
   onCancel: () => void
-  onDelete?: () => void
+  onConfirm: () => void
 }
 
 const ViewportModalActionBar: FC<ActionBarProps> = ({
   className,
   onCancel,
-  onDelete,
+  onConfirm,
 }) => {
   return (
     <div className={className}>
       <Button.Tertiary type="reset" css={buttonCss} onMouseDown={onCancel}>
         Cancel
       </Button.Tertiary>
-      <FormButton css={buttonCss}>Confirm</FormButton>
+      <FormButton css={buttonCss} onClick={onConfirm}>
+        Confirm
+      </FormButton>
     </div>
   )
 }

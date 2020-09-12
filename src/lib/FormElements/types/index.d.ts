@@ -42,7 +42,7 @@ export interface FormProps {
   loading: boolean
   error: FormError
   rules: Rules
-  onSubmit: (entries: Entries) => void
+  onSubmit: (entries: Entries, e: React.FormEvent<HTMLFormElement>) => void
   onError?: (errors: Errors) => void
 }
 
