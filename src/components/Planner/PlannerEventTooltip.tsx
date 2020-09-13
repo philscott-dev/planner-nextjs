@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { FC, useRef } from 'react'
 import { css, jsx } from '@emotion/react'
 import { Text } from 'lib'
-import { PlannerInterval } from './types'
+import { PlannerInterval, PlannerLayout } from './types'
 import { useIntersectionObserver } from 'hooks'
 import { fade, fadeOut } from 'styles/keyframes'
 
@@ -13,6 +13,7 @@ interface PlannerEventTooltipProps {
   isActive: boolean
   isHovered: boolean
   plannerInterval: PlannerInterval
+  plannerLayout: PlannerLayout
   title?: string
   dateRangeString?: string
 }
@@ -24,6 +25,7 @@ const PlannerEventTooltip: FC<PlannerEventTooltipProps> = ({
   title,
   dateRangeString,
   plannerInterval,
+  plannerLayout,
 }) => {
   const ref = useRef<HTMLDivElement>(null)
   const { isRight, isBottom } = useIntersectionObserver({
@@ -47,9 +49,11 @@ const PlannerEventTooltip: FC<PlannerEventTooltipProps> = ({
         {title}
       </Text>
 
-      <Text.Light ellipsis size="small">
-        {dateRangeString}
-      </Text.Light>
+      {plannerLayout === 'standard' ? (
+        <Text.Light ellipsis size="small">
+          {dateRangeString}
+        </Text.Light>
+      ) : null}
     </Wrapper>
   )
 }
@@ -84,24 +88,6 @@ const Wrapper = styled.div<WrapperProps>`
   animation-fill-mode: forwards;
 
   max-width: 100vw;
-
-  /* @media screen and (max-width: ${({ theme }) => theme.breakpoint.xlarge}) {
-    max-width: ${({ theme }) => theme.breakpoint.xlarge};
-  }
-
-  @media screen and (max-width: ${({ theme }) => theme.breakpoint.large}) {
-    max-width: ${({ theme }) => theme.breakpoint.large};
-  }
-
-  @media screen and (max-width: ${({ theme }) => theme.breakpoint.medium}) {
-    max-width: ${({ theme }) => theme.breakpoint.medium};
-  }
-  @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
-    max-width: ${({ theme }) => theme.breakpoint.small};
-  }
-  @media screen and (max-width: ${({ theme }) => theme.breakpoint.xsmall}) {
-    max-width: ${({ theme }) => theme.breakpoint.xsmall};
-  } */
 `
 
 const textCss = css`
