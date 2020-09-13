@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
-import { ChangeEvent, FC, FormEvent, useState } from 'react'
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
 import { jsx, css } from '@emotion/react'
 import { EventColors } from 'constants/colors'
 import { capitalize } from 'helpers/string'
@@ -44,6 +44,11 @@ const EventEditor: FC<EventEditorProps> = ({
   const [issueType, setIssueType] = useState<string>()
   const [submitType, setSubmitType] = useState<Submit>()
 
+  useEffect(() => {
+    console.log('changed editable')
+    const color = editableItems[0]?.color ?? ''
+    setIssueType(color)
+  }, [editableItems])
   const handleSubmit = (entries: Entries) => {
     if (submitType === Submit.Confirm) {
       onConfirm(entries, 0)
@@ -65,6 +70,8 @@ const EventEditor: FC<EventEditorProps> = ({
   const handleClone = () => {
     setSubmitType(Submit.Clone)
   }
+
+  console.log(issueType)
 
   return (
     <ViewportModalContainer>
@@ -136,27 +143,28 @@ const EventEditor: FC<EventEditorProps> = ({
                 </Select>
               </Wrap>
             </Flex>
-            {/* <Flex>
-              <Wrap>
-                <Error name="epic" />
-                <Select
-                  placeholder="Epic Link"
-                  name="epic"
-                  tabIndex={5}
-                  defaultValue={item.color}
-                  onChange={handleSelectIssueType}
-                >
-                  <SelectPlaceholder text="Select an epic to link" />
-                  {Object.entries(EventColors).map((value, index) => {
-                    return (
-                      <option key={index} value={value[1]}>
-                        {capitalize(value[0])}
-                      </option>
-                    )
-                  })}
-                </Select>
-              </Wrap>
-            </Flex> */}
+            {issueType === '#FF00B8' ? (
+              <Flex>
+                <Wrap>
+                  <Error name="epic" />
+                  <Select
+                    placeholder="Epic Link"
+                    name="epic"
+                    tabIndex={5}
+                    defaultValue={item.color}
+                  >
+                    <SelectPlaceholder text="Select an epic to link" />
+                    {Object.entries(EventColors).map((value, index) => {
+                      return (
+                        <option key={index} value={value[1]}>
+                          {capitalize(value[0])}
+                        </option>
+                      )
+                    })}
+                  </Select>
+                </Wrap>
+              </Flex>
+            ) : null}
             <Flex>
               <Wrap>
                 <Error name="startTime" />

@@ -69,7 +69,6 @@ const Wrapper = styled.div<WrapperProps>`
   position: absolute;
   box-sizing: border-box;
   padding: 8px;
-  max-width: 375px;
   overflow: hidden;
   bottom: 4px;
   top: 4px;
@@ -83,12 +82,31 @@ const Wrapper = styled.div<WrapperProps>`
   animation-duration: 0.25s;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
+
+  max-width: 100vw;
+
+  /* @media screen and (max-width: ${({ theme }) => theme.breakpoint.xlarge}) {
+    max-width: ${({ theme }) => theme.breakpoint.xlarge};
+  }
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoint.large}) {
+    max-width: ${({ theme }) => theme.breakpoint.large};
+  }
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoint.medium}) {
+    max-width: ${({ theme }) => theme.breakpoint.medium};
+  }
+  @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
+    max-width: ${({ theme }) => theme.breakpoint.small};
+  }
+  @media screen and (max-width: ${({ theme }) => theme.breakpoint.xsmall}) {
+    max-width: ${({ theme }) => theme.breakpoint.xsmall};
+  } */
 `
 
 const textCss = css`
   word-break: normal;
   white-space: nowrap;
-  max-width: 375px;
   pointer-events: none;
   user-select: none;
 `

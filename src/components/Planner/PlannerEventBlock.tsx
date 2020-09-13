@@ -72,19 +72,19 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
 
   const handleMouseOver = (e: MouseEvent<HTMLDivElement>) => {
     // get the text node
-    const node = e.currentTarget.childNodes[0] as HTMLParagraphElement
+    const pTag = e.currentTarget.childNodes[0] as HTMLParagraphElement
 
     // make it full width, removing ellipses
-    node.style.display = 'inline'
-    node.style.width = 'auto'
+    pTag.style.display = 'inline'
+    pTag.style.width = 'auto'
 
     // take width measurements
     const w1 = e.currentTarget.offsetWidth
-    const w2 = node.offsetWidth
+    const w2 = pTag.offsetWidth
 
     // reset the text to ellipses
-    node.style.display = 'block'
-    node.style.width = 'initial'
+    pTag.style.display = 'block'
+    pTag.style.width = 'initial'
 
     // if text plus 8px padding is longer than container
     if (w2 + 8 > w1) {
