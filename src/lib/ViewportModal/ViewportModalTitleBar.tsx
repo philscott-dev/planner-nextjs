@@ -87,7 +87,7 @@ const ViewportModalTitleBar: FC<ViewportModalTitleBarProps> = ({
           </IconButton>
         </Flex>
       </Bar>
-      <Bar isVisible={isMenuVisible}>
+      <SubBar isVisible={isMenuVisible}>
         <Flex>
           <Button.Tertiary
             type="submit"
@@ -105,10 +105,10 @@ const ViewportModalTitleBar: FC<ViewportModalTitleBarProps> = ({
             <FiTrash2 css={iconCss} /> Delete
           </Button.Tertiary>
         </Flex>
-      </Bar>
-      <Bar isVisible={isDeleteVisible}>
+      </SubBar>
+      <SubBar isVisible={isDeleteVisible}>
         <Flex>
-          <Text>Are you sure you want to delete?</Text>
+          <Text.Light>Are you sure you want to delete?</Text.Light>
         </Flex>
         <Flex>
           <Button.Tertiary
@@ -127,7 +127,7 @@ const ViewportModalTitleBar: FC<ViewportModalTitleBarProps> = ({
             <FiTrash2 css={iconCss} /> Confirm
           </Button.Tertiary>
         </Flex>
-      </Bar>
+      </SubBar>
     </div>
   )
 }
@@ -136,7 +136,6 @@ export default styled(ViewportModalTitleBar)``
 
 const Bar = styled.div<{ isVisible: boolean }>`
   display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
@@ -146,6 +145,10 @@ const Bar = styled.div<{ isVisible: boolean }>`
   @media screen and (max-width: ${({ theme }) => theme.breakpoint.small}) {
     padding: 0 24px;
   }
+`
+
+const SubBar = styled(Bar)`
+  flex-wrap: wrap;
 `
 
 const Title = styled(Text)`
