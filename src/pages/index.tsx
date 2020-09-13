@@ -9,6 +9,7 @@ import { download } from 'helpers/file'
 import { v4 as uuid } from 'uuid'
 import { parseJsonDates } from 'helpers/date'
 import { updateByNextId, keepMockUpdated } from 'helpers/_planner'
+import { fetchEvents, EventsResponse, createEvent } from 'services/api'
 import { LOCAL_STORAGE_KEY } from 'constants/constants'
 import { Entries } from 'lib/FormElements/types'
 import { EventEditor, Planner } from 'components'
@@ -28,11 +29,7 @@ import {
   differenceInDays,
   startOfDay,
   subDays,
-  parseISO,
-  isAfter,
 } from 'date-fns'
-import { fetchEvents, EventsResponse, createEvent } from 'services/api'
-import useStickyResult from 'hooks/useStickyResult'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 
 const IndexPage: NextPage = () => {

@@ -1,11 +1,12 @@
 /** @jsx jsx */
 import styled from '@emotion/styled'
-import { FC } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { jsx, css } from '@emotion/react'
 import AddEventButton from './AddEventButton'
 import { Dropdown, DropdownOption } from 'lib'
 import { FaCalendarPlus } from 'react-icons/fa'
 import { MdViewDay } from 'react-icons/md'
+import { useIntersectionObserver } from 'hooks'
 
 interface AddEventProps {
   className?: string
@@ -13,6 +14,12 @@ interface AddEventProps {
   onAddRow: () => void
 }
 const AddEvent: FC<AddEventProps> = ({ className, onAddEvent, onAddRow }) => {
+  const entry = useIntersectionObserver({
+    element: '#planner__bottom',
+  })
+
+  console.log(entry?.isBottom)
+
   const handleAddEvent = () => {
     onAddEvent()
   }
@@ -21,13 +28,17 @@ const AddEvent: FC<AddEventProps> = ({ className, onAddEvent, onAddRow }) => {
   }
 
   return (
-    <div className={className}>
+    <Container className={className} disabled={!entry?.isBottom}>
       <Wrapper>
         <Dropdown
           direction={['left', 'up']}
           bottom={60}
           renderNode={(onClick, isVisible) => (
-            <AddEventButton isVisible={isVisible} onMouseDown={onClick} />
+            <AddEventButton
+              disabled={!entry?.isBottom}
+              isVisible={isVisible}
+              onMouseDown={onClick}
+            />
           )}
         >
           <DropdownOption onMouseDown={handleAddRow}>
@@ -38,15 +49,18 @@ const AddEvent: FC<AddEventProps> = ({ className, onAddEvent, onAddRow }) => {
           </DropdownOption>
         </Dropdown>
       </Wrapper>
-    </div>
+    </Container>
   )
 }
 
-export default styled(AddEvent)`
+export default AddEvent
+
+const Container = styled.div<{ disabled?: boolean }>`
   z-index: 152;
   position: fixed;
   bottom: 32px;
   right: 32px;
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : null)};
 `
 const Wrapper = styled.div`
   position: relative;

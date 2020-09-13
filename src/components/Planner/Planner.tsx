@@ -344,6 +344,18 @@ const Planner: FC<PlannerProps> = ({
         onImport={handleImportJSON}
         onClose={() => setImportVisibility(false)}
       />
+      <div
+        id="planner__bottom"
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          maxWidth: 1,
+          maxHeight: 1,
+          width: 1,
+          height: 1,
+          background: 'red',
+        }}
+      />
     </div>
   )
 }

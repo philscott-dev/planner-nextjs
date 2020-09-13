@@ -28,7 +28,7 @@ const PlannerEventTooltip: FC<PlannerEventTooltipProps> = ({
   plannerLayout,
 }) => {
   const ref = useRef<HTMLDivElement>(null)
-  const { isRight, isBottom } = useIntersectionObserver({
+  const entry = useIntersectionObserver({
     element: ref.current,
     shouldObserve: isHovered,
     observeOnce: true,
@@ -39,8 +39,8 @@ const PlannerEventTooltip: FC<PlannerEventTooltipProps> = ({
     <Wrapper
       ref={ref}
       className={'__planner_tip ' + className}
-      isRight={isRight}
-      isBottom={isBottom}
+      isRight={entry?.isRight}
+      isBottom={entry?.isBottom}
       isHovered={isHovered}
       color={color}
       plannerInterval={plannerInterval}
@@ -63,8 +63,8 @@ export default PlannerEventTooltip
 interface WrapperProps {
   color?: string
   plannerInterval: PlannerInterval
-  isRight: boolean
-  isBottom: boolean
+  isRight?: boolean
+  isBottom?: boolean
   isHovered: boolean
 }
 

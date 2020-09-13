@@ -45,7 +45,6 @@ const EventEditor: FC<EventEditorProps> = ({
   const [submitType, setSubmitType] = useState<Submit>()
 
   useEffect(() => {
-    console.log('changed editable')
     const color = editableItems[0]?.color ?? ''
     setIssueType(color)
   }, [editableItems])
@@ -70,8 +69,6 @@ const EventEditor: FC<EventEditorProps> = ({
   const handleClone = () => {
     setSubmitType(Submit.Clone)
   }
-
-  console.log(issueType)
 
   return (
     <ViewportModalContainer>

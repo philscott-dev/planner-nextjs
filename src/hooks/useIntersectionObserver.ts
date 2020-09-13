@@ -1,3 +1,4 @@
+import { isString } from 'helpers/typecheck'
 import { useEffect, useState } from 'react'
 
 export interface Bounds {
@@ -5,37 +6,38 @@ export interface Bounds {
   isLeft: boolean
   isBottom: boolean
   isRight: boolean
+  entry: IntersectionObserverEntry
 }
 
 export interface IntersectionObserverConfig {
-  element: Element | null
+  element?: Element | string | null
   root?: Element | null
   offset?: number
   observeOnce?: boolean
   shouldObserve?: boolean
   unobserveTimeout?: number
+  threshold?: number
 }
 
 export default function useIntersectionObserver({
-  element,
+  element: elem,
   root,
   offset = 0,
   observeOnce = false,
   shouldObserve = true,
   unobserveTimeout = 0,
+  threshold = 0,
 }: IntersectionObserverConfig) {
-  const [bounds, setBounds] = useState<Bounds>({
-    isRight: false,
-    isLeft: false,
-    isBottom: false,
-    isTop: false,
-  })
+  const [bounds, setBounds] = useState<Bounds>()
   useEffect(() => {
+    // string or actual element
+    const element = isString(elem) ? document.querySelector(elem) : elem
+
     //configure observer
     const observer = new IntersectionObserver(handleObserve, {
       root, // null === watch viewport
       rootMargin: '0px',
-      threshold: 0.5,
+      threshold,
     })
 
     // turn on the observer
@@ -44,19 +46,14 @@ export default function useIntersectionObserver({
     }
 
     // clear if should unobserve
-    let timeout
     if (!shouldObserve) {
-      timeout = setTimeout(() => {
-        setBounds({
-          isRight: false,
-          isLeft: false,
-          isBottom: false,
-          isTop: false,
-        })
+      const timeout = setTimeout(() => {
+        setBounds(undefined)
       }, unobserveTimeout)
-    }
-    if (timeout && shouldObserve) {
-      clearTimeout(timeout)
+
+      if (timeout && shouldObserve) {
+        clearTimeout(timeout)
+      }
     }
 
     // observer handler
@@ -70,6 +67,7 @@ export default function useIntersectionObserver({
           isLeft: rect.left < 0,
           isBottom: rect.bottom > root.bottom,
           isRight: rect.right > root.right,
+          entry,
         })
       }
       // immediately unobserve, if specified
@@ -84,6 +82,14 @@ export default function useIntersectionObserver({
         observer.unobserve(element)
       }
     }
-  }, [element, root, offset, shouldObserve, observeOnce, unobserveTimeout])
+  }, [
+    elem,
+    root,
+    offset,
+    shouldObserve,
+    observeOnce,
+    unobserveTimeout,
+    threshold,
+  ])
   return bounds
 }
