@@ -4,11 +4,10 @@ import { FC, MouseEvent, useState, useEffect } from 'react'
 import { jsx, css } from '@emotion/react'
 import { Text } from 'lib'
 import { PlannerEvent, PlannerInterval, PlannerLayout } from './types'
-import { format } from 'date-fns'
+import { format, isEqual } from 'date-fns'
 import { lightenColor } from 'helpers/color'
 import useColorHash from './hooks/useColorHash'
 import useBlockMeasurements from './hooks/useBlockMeasurements'
-import usePlannerSize from './hooks/usePlannerSize'
 import PlannerEventTooltip from './PlannerEventTooltip'
 
 interface PlannerEventBlockProps {
@@ -49,12 +48,14 @@ const PlannerEventBlock: FC<PlannerEventBlockProps> = ({
   useEffect(() => {
     if (event) {
       const string =
-        event.startTime && event.endTime
+        event.startTime &&
+        event.endTime &&
+        !isEqual(event.startTime, event.endTime)
           ? `${format(event.startTime, formatString)} - ${format(
               event.endTime,
               formatString,
             )}`
-          : undefined
+          : format(event.startTime, formatString)
 
       setDateRangeString(string)
     }
