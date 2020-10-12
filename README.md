@@ -1,3 +1,3 @@
 # planner-nextjs
 
-A simple planner app. Work in progress.
+Planner web application with drag and drop, import/export, and browser storage.
