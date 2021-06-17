@@ -34,11 +34,7 @@ const AddEvent: FC<AddEventProps> = ({ className, onAddEvent, onAddRow }) => {
           direction={['left', 'up']}
           bottom={60}
           renderNode={(onClick, isVisible) => (
-            <AddEventButton
-              disabled={!entry?.isBottom}
-              isVisible={isVisible}
-              onMouseDown={onClick}
-            />
+            <AddEventButton isVisible={isVisible} onMouseDown={onClick} />
           )}
         >
           <DropdownOption onMouseDown={handleAddRow}>
