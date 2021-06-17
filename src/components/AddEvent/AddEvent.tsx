@@ -28,7 +28,7 @@ const AddEvent: FC<AddEventProps> = ({ className, onAddEvent, onAddRow }) => {
   }
 
   return (
-    <Container className={className} disabled={!entry?.isBottom}>
+    <Container className={className}>
       <Wrapper>
         <Dropdown
           direction={['left', 'up']}
